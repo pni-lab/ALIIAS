@@ -1,0 +1,19 @@
+<!doctype html>
+<title>{% block title %}{% endblock %} - PseudoID</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<nav>
+  <h1>PseudoID</h1>
+</nav>
+<section class="content">
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  <div class="flash">PseudoID has exited. You can now unmount the HW key. Goodbye!</div>
+</section>
+
+<footer>
+  <ul>
+      Author: <a href="https://pni-lab.github.io">PNI-Lab</a>, University Hopsital Essen, Germany
+      <a href="mailto:tamas.spisak@uk-essen.de">(tamas.spisak@uk-essen.de)</a>
+  </ul>
+</footer>

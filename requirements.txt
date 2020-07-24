@@ -1,0 +1,3 @@
+flask
+pycryptodome
+limesurveyrc2api

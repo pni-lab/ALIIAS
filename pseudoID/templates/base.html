@@ -1,0 +1,27 @@
+<!doctype html>
+<title>{% block title %}{% endblock %} - PseudoID</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<nav>
+  <h1>PseudoID</h1>
+  <ul>
+      <li><a href="{{ url_for('pseudoID.generate') }}">New PseudoID</a>
+      <li><a href="{{ url_for('pseudoID.exit') }}">Exit</a>
+  </ul>
+</nav>
+
+<section class="content">
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  {% block content %}{% endblock %}
+  {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+</section>
+
+<footer>
+  <ul>
+      Author: <a href="https://pni-lab.github.io">PNI-Lab</a>, University Hopsital Essen, Germany
+      <a href="mailto:tamas.spisak@uk-essen.de">(tamas.spisak@uk-essen.de)</a>
+  </ul>
+</footer>
