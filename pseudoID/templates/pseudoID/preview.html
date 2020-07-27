@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Preview{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+      <fieldset>
+        <legend> <p style="font-size:18px;">First Name</p> </legend>
+
+          <label> <h1 style="font-size:32px;">{{first_name}}</h1> </label>
+
+      </fieldset>
+
+  </form>
+{% endblock %}
+
