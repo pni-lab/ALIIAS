@@ -16,8 +16,10 @@ def generate():
         first_name = request.form['first_name']
         family_name = request.form['family_name']
         place_of_birth = request.form['place_of_birth']
-        date_of_birth = request.form['date_of_birth']
+
+        date_of_birth = request.form['dob_d'] + request.form['dob_m'] + request.form['dob_y']
         maiden_name = request.form['maiden_name']
+
 
         enc = Encryptor()
         long_id = enc.long_id(first_name + family_name + place_of_birth + date_of_birth + maiden_name)
