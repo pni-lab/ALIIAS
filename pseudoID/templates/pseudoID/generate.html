@@ -7,19 +7,26 @@
 {% block content %}
   <form method="post">
     <label for="first_name">First name</label>
-    <input name="first_name" id="first_name" required>
+    <input name="first_name" id="first_name" required placeholder="Max/Martina">
 
     <label for="family_name">Family name</label>
-    <input name="family_name" id="family_name" required>
+    <input name="family_name" id="family_name" required placeholder="Mustermann">
 
     <label for="place_of_birth">Place of birth</label>
-    <input name="place_of_birth" id="place_of_birth" required>
+    <input name="place_of_birth" id="place_of_birth" required placeholder="Berlin">
 
-    <label for="date_of_birth">Date of birth</label>
-    <input name="date_of_birth" id="date_of_birth" required>
+    <label for="dob_d">Date of birth</label>
+    <div class="input-group">
+      <input name="dob_d" id="dob_d" type="number" min="1" max="31"
+             required class="form-control" placeholder="dd">
+      <input name="dob_m" id="dob_m" type="number" min="1" max="12"
+             required class="form-control" placeholder="mm">
+      <input name="dob_y" id="dob_y" type="number" min="1900" max="2010"
+             required class="form-control" placeholder="yyyy">
+    </div>
 
     <label for="maiden_name">Mothers maiden name</label>
-    <input name="maiden_name" id="maiden_name" required>
+    <input name="maiden_name" id="maiden_name" required placeholder="Müller">
 
     <input type="submit" value="Generate">
   </form>
