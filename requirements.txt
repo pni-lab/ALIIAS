@@ -1,3 +1,4 @@
 flask
 pycryptodome
 limesurveyrc2api
+python-barcode
