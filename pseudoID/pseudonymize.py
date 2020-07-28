@@ -9,24 +9,40 @@ from pseudoID.ls_api_wrapper import LimeSurveyController
 
 bp = Blueprint('pseudoID', __name__, url_prefix='/pseudoID')
 
+first_name = None
+subject = {}
+ids = {}
+lime_warning = {}
 
 @bp.route('/generate', methods=('GET', 'POST'))
 def generate():
     if request.method == 'POST':
-        first_name = request.form['first_name']
-        family_name = request.form['family_name']
-        place_of_birth = request.form['place_of_birth']
+        global subject
+        subject['first_name'] = request.form['first_name']
+        subject['family_name'] = request.form['family_name']
+        subject['place_of_birth'] = request.form['place_of_birth']
+        subject['date_of_birth'] = request.form['dob_d'] + '.' + \
+                                   request.form['dob_m'] + '.' + \
+                                   request.form['dob_y']
 
-        date_of_birth = request.form['dob_d'] + request.form['dob_m'] + request.form['dob_y']
-        maiden_name = request.form['maiden_name']
+        subject['maiden_name'] = request.form['maiden_name']
 
         enc = Encryptor()
-        long_id = enc.long_id(first_name + family_name + place_of_birth + date_of_birth + maiden_name)
-        short_id = enc.short_id(long_id)
-        flash("ShortID:\n" + short_id.decode('utf-8'))
-        mid = int(len(long_id.decode('utf-8')) / 2)
-        flash("LongID:\n" + long_id.decode('utf-8')[:mid] + "\n" + long_id.decode('utf-8')[mid:])
+        long_id = enc.long_id(subject['first_name'] +
+                              subject['family_name'] +
+                              subject['place_of_birth'] +
+                              subject['date_of_birth'] +
+                              subject['maiden_name'])
 
+        short_id = enc.short_id(long_id)
+
+        global ids
+        ids['short_id'] = short_id.decode('utf-8')
+        ids['long_id'] = long_id.decode('utf-8')
+
+        global lime_warning
+        lime_warning['warning_color'] = 'tomato'
+        lime_warning['warning_text'] = 'I should be red like a tomato'
         # limesurvey integration
         # lscontrol = LimeSurveyController()
         # response = lscontrol.register_in_cpdb(short_id.decode('utf-8'), long_id.decode('utf-8'))
@@ -36,14 +52,18 @@ def generate():
         # else:
         #    flash("Participant successfully registered in LimeSurvey!")
 
-        return render_template('pseudoID/preview.html', first_name=first_name)
+        return redirect(url_for('pseudoID.preview'))
 
     return render_template('pseudoID/generate.html')
 
 
 @bp.route('/preview', methods=('GET', 'POST'))
 def preview():
-    return render_template('pseudoID/empty_preview.html')
+    if request.method == 'GET':
+        # access the global vars when redirected to the /preview page
+        global subject, ids, lime_warning
+    # return unpickeled dicts to access the keys directly in the html files
+    return render_template('pseudoID/preview.html', **subject, **ids, **lime_warning)
 
 
 def shutdown_server():
