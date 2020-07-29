@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Preview{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+
+<style>
+fieldset {
+  background-color: #eeeeee;
+}
+
+legend {
+  background-color: grey;
+  color: white;
+  padding: 5px 10px;
+}
+
+input {
+  margin: 5px;
+}
+h2 {
+  word-break: break-all;
+  width: 800px;
+}
+</style>
+
+  <fieldset>
+    <legend>Personal Info</legend>
+
+	<p><small>Name</small></p>
+    <h2>{{first_name}} {{family_name}}</h2>
+
+    <p><small>Place & date of birth</small></p>
+    <h2>{{place_of_birth}} {{date_of_birth}}</h2>
+
+    <p><small>Mothers Maiden Name</small></p>
+    <h2>{{maiden_name}}</h2>
+
+  </fieldset>
+
+  <p>   </p>
+
+  <fieldset>
+    <legend>PseudoID</legend>
+
+	<p><small>Short ID</small></p>
+    <h2>{{short_id}}</h2>
+
+    <p><small>Long ID</small></p>
+    <h2>{{long_id}}</h2>
+
+
+  </fieldset>
+
+  <p>   </p>
+
+  <fieldset>
+    <legend>LimeSurvey</legend>
+
+	<p style="color:{{warning_color}};"><small>{{warning_text}}</small></p>
+
+  </fieldset>
+  </form>
+{% endblock %}
+
