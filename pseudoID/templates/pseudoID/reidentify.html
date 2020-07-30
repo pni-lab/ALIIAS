@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Re-Identify{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="long_id">Long Id</label>
+    <input name="long_id" id="long_id" required placeholder="5a8f4d55as8d...">
+
+    <input type="submit" value="Re-identify">
+  </form>
+{% endblock %}

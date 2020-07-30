@@ -1,10 +1,15 @@
 import time
+import os
 
 
 class PseudonymLogger:
     def __init__(self):
-        dt_string = time.strftime("%Y%m%d_%H%M%S")
-        self.filename = '/LogFiles/log_' + dt_string + '.txt'
+
+        i = 1
+        while os.path.exists('/LogFiles/log_' + str(i).zfill(4) + '.txt'):
+            i += 1
+        self.filename = '/LogFiles/log_' + str(i).zfill(4) + '.txt'
+
         f = open(self.filename, 'w')
         f.close
 
@@ -13,3 +18,18 @@ class PseudonymLogger:
         f.write(log_input + '\n')
         f.close
         return None
+
+
+def norm_str(str_in):
+    char_dict = {ord('ä'): 'ae',
+                 ord('ü'): 'ue',
+                 ord('ö'): 'oe',
+                 ord('ß'): 'ss',
+                 ord(' '): None,
+                 ord('-'): None,
+                 ord(','): None,
+                 ord('('): None,
+                 ord(')'): None,
+                 ord('.'): None,
+                 }
+    return str_in.lower().translate(char_dict)
