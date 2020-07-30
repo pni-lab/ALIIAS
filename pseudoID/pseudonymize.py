@@ -6,6 +6,7 @@ from flask import (
 
 from pseudoID.encryption import Encryptor
 from pseudoID.ls_api_wrapper import LimeSurveyController
+from pseudoID.utility import PseudonymLogger
 
 bp = Blueprint('pseudoID', __name__, url_prefix='/pseudoID')
 
@@ -13,6 +14,8 @@ first_name = None
 subject = {}
 ids = {}
 lime_warning = {}
+
+logger = PseudonymLogger()
 
 @bp.route('/generate', methods=('GET', 'POST'))
 def generate():
@@ -62,6 +65,7 @@ def preview():
     if request.method == 'GET':
         # access the global vars when redirected to the /preview page
         global subject, ids, lime_warning
+        logger.add_entry(ids['short_id'])
     # return unpickeled dicts to access the keys directly in the html files
     return render_template('pseudoID/preview.html', **subject, **ids, **lime_warning)
 
