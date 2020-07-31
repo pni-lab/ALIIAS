@@ -28,6 +28,7 @@ def generate():
                                    request.form['dob_m'].zfill(2) + '.' + \
                                    request.form['dob_y']
         subject['maiden_name'] = request.form['maiden_name']
+        flash(request.form['registered'])
         global enc
         long_id = enc.long_id(norm_str(subject['first_name']) + ' ' +
                               norm_str(subject['family_name']) + ' ' +
@@ -41,16 +42,17 @@ def generate():
         ids['long_id'] = long_id
 
         global lime_warning
-        lime_warning['warning_color'] = 'tomato'
-        lime_warning['warning_text'] = 'I should be red like a tomato'
-        # limesurvey integration
-        # lscontrol = LimeSurveyController()
-        # response = lscontrol.register_in_cpdb(short_id.decode('utf-8'), long_id.decode('utf-8'))
 
-        # if response['result']['ImportCount'] == 0:
-        #    flash("Participant already registered in LimeSurvey. No new participant added.")
-        # else:
-        #    flash("Participant successfully registered in LimeSurvey!")
+        # limesurvey integration
+        lscontrol = LimeSurveyController()
+        response = lscontrol.register_in_cpdb(short_id, long_id)
+
+        if response['result']['ImportCount'] == 0:
+            lime_warning['warning_color'] = 'Orange'
+            lime_warning['warning_text'] = 'Participant already registered in LimeSurvey. No new participant added.'
+        else:
+            lime_warning['warning_color'] = 'MediumSeaGreen'
+            lime_warning['warning_text'] = 'Participant successfully registered in LimeSurvey!'
 
         return redirect(url_for('pseudoID.preview'))
 
