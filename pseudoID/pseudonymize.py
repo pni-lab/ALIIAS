@@ -28,13 +28,14 @@ def generate():
                                    request.form['dob_m'].zfill(2) + '.' + \
                                    request.form['dob_y']
         subject['maiden_name'] = request.form['maiden_name']
-        flash(request.form['registered'])
+        # request.form['registered']
         global enc
         long_id = enc.long_id(norm_str(subject['first_name']) + ' ' +
                               norm_str(subject['family_name']) + ' ' +
                               norm_str(subject['place_of_birth']) + ' ' +
                               norm_str(subject['date_of_birth']) + ' ' +
-                              norm_str(subject['maiden_name']))
+                              norm_str(subject['maiden_name']) + ' ' +
+                              request.form['exp_tag'])
 
         short_id = enc.short_id(long_id)
         global ids

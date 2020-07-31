@@ -9,14 +9,13 @@
   <form method="post">
     <div class="form-field">
     <p><b>Is this user registered already?</b></p>
-     <input type="radio" style="vertical-align: left; margin: 0px;" id="reg_t" name="registered" value=True>
+     <input type="radio" style="vertical-align: left; margin: 0px;" id="reg_t" name="registered" value=True required>
      <label for="reg_t"> <small>YES </small> </label>
-     <input type="radio" style="vertical-align: left; margin: 0px;" id="reg_f" name="registered" value=False>
+     <input type="radio" style="vertical-align: left; margin: 0px;" id="reg_f" name="registered" value=False required>
      <label for="reg_f"> <small> NO </small> </label>
     </div>
 
     <p>   </p>
-    <div class="reveal-if-active">
 
     <label for="exp_tag">Add experimental tag:</label>
 
@@ -28,7 +27,6 @@
       <option value="-wk4">Week 4</option>
     </select>
 
-    </div>
 
     <p>   </p>
 
