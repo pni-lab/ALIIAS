@@ -8,6 +8,7 @@ class PseudonymLogger:
         i = 1
         while os.path.exists('/LogFiles/log_' + str(i).zfill(4) + '.txt'):
             i += 1
+
         self.filename = '/LogFiles/log_' + str(i).zfill(4) + '.txt'
 
         f = open(self.filename, 'w')

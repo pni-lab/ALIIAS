@@ -1,32 +1,33 @@
 import binascii
-import hashlib
 import config
-from base64 import b64encode, b64decode
+
 
 from Crypto.Cipher import AES
-from Crypto.Random import get_random_bytes
 
 
 class Encryptor:
     def __init__(self, user_key=config._user_key_, pseudonym_key_encripted=config._pseudonym_key_encripted_):
-        self.iv = b'0123456789abcdef'
-        self.key = b'e7d97fa7c1cc8a4e2489basd1f09a9d3'
+
+        cipher = AES.new(user_key, AES.MODE_SIV)
+        self.key = cipher.decrypt_and_verify(pseudonym_key_encripted[0],
+                                             pseudonym_key_encripted[1])
 
     def long_id(self, message):
-        cipher = AES.new(self.key, AES.MODE_OFB, iv=self.iv)
-        ciphertext = cipher.encrypt(message.ljust(64, '0').encode("utf-8"))
-        # return longid as string
-        return b64encode(ciphertext).decode('utf-8')
-        # return hashlib.sha3_256(binascii.hexlify(ciphertext)).hexdigest()[0:8]
+        cipher = AES.new(self.key, AES.MODE_SIV)
+        ciphertext, tag = cipher.encrypt_and_digest(message.rjust(64, '0').encode("utf-8"))
 
-    def short_id(self, long_id, length=8):  # ToDo: length from conf file
+        return binascii.hexlify(ciphertext + tag).decode('utf-8')
+
+    def short_id(self, long_id, length=8): #ToDo: length from conf file
         return long_id[0:length]
 
     def reidentify(self, longID):
-        cipher = AES.new(self.key, AES.MODE_OFB, iv=self.iv)
-        pt = cipher.decrypt(b64decode(longID))
-        return pt.decode("utf-8").rstrip('0')
-        # unhexlify
-        # pass
-        # cipher = AES.new(self.key, AES.MODE_SIV)
-        # data = self.cipher.decrypt(message.rjust(64, '0').encode("utf-8"))
+
+        tag = binascii.unhexlify(longID[-32:].encode('utf-8'))
+        message = binascii.unhexlify(longID[:-32].encode('utf-8'))
+
+        cipher = AES.new(self.key, AES.MODE_SIV)
+        plaintext = cipher.decrypt_and_verify(message, mac_tag=tag)
+
+        return plaintext.decode('utf-8').lstrip('0')
+        #data = self.cipher.decrypt(message.rjust(64, '0').encode("utf-8"))
