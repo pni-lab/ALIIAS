@@ -4,8 +4,32 @@
   <h1>{% block title %}Create Pseudonym{% endblock %}</h1>
 {% endblock %}
 
+
 {% block content %}
   <form method="post">
+    <div class="form-field">
+    <p><b>Is this user registered already?</b></p>
+     <input type="radio" style="vertical-align: left; margin: 0px;" id="reg_t" name="registered" value=True required>
+     <label for="reg_t"> <small>YES </small> </label>
+     <input type="radio" style="vertical-align: left; margin: 0px;" id="reg_f" name="registered" value=False required>
+     <label for="reg_f"> <small> NO </small> </label>
+    </div>
+
+    <p>   </p>
+
+    <label for="exp_tag">Add experimental tag:</label>
+
+    <select id="exp_tag" name="exp_tag">
+      <option value=""> </option>
+      <option value="-wk1">Week 1</option>
+      <option value="-wk2">Week 2</option>
+      <option value="-wk3">Week 3</option>
+      <option value="-wk4">Week 4</option>
+    </select>
+
+
+    <p>   </p>
+
     <label for="first_name">First name</label>
     <input name="first_name" id="first_name" required placeholder="Max/Martina">
 
