@@ -44,13 +44,13 @@ def generate():
         lime_warning['warning_color'] = 'tomato'
         lime_warning['warning_text'] = 'I should be red like a tomato'
         # limesurvey integration
-        # lscontrol = LimeSurveyController()
-        # response = lscontrol.register_in_cpdb(short_id.decode('utf-8'), long_id.decode('utf-8'))
+        lscontrol = LimeSurveyController()
+        response = lscontrol.register_in_cpdb(short_id.decode('utf-8'), long_id.decode('utf-8'))
 
-        # if response['result']['ImportCount'] == 0:
-        #    flash("Participant already registered in LimeSurvey. No new participant added.")
-        # else:
-        #    flash("Participant successfully registered in LimeSurvey!")
+        if response['result']['ImportCount'] == 0:
+            flash("Participant already registered in LimeSurvey. No new participant added.")
+        else:
+            flash("Participant successfully registered in LimeSurvey!")
 
         return redirect(url_for('pseudoID.preview'))
 
