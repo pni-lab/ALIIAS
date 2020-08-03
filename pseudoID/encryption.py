@@ -1,16 +1,13 @@
 import binascii
-import config
-
 
 from Crypto.Cipher import AES
-
+import config
 
 class Encryptor:
-    def __init__(self, user_key=config._user_key_, pseudonym_key_encripted=config._pseudonym_key_encripted_):
-
+    def __init__(self, user_key=config._user_key_, pseudonym_key_encrypted=config._pseudonym_key_encrypted_):
         cipher = AES.new(user_key, AES.MODE_SIV)
-        self.key = cipher.decrypt_and_verify(pseudonym_key_encripted[0],
-                                             pseudonym_key_encripted[1])
+        self.key = cipher.decrypt_and_verify(pseudonym_key_encrypted[0],
+                                             pseudonym_key_encrypted[1])
 
     def long_id(self, message):
         cipher = AES.new(self.key, AES.MODE_SIV)
@@ -18,7 +15,7 @@ class Encryptor:
 
         return binascii.hexlify(ciphertext + tag).decode('utf-8')
 
-    def short_id(self, long_id, length=8): #ToDo: length from conf file
+    def short_id(self, long_id, length=8):  # ToDo: length from conf file
         return long_id[0:length]
 
     def reidentify(self, longID):
@@ -30,4 +27,4 @@ class Encryptor:
         plaintext = cipher.decrypt_and_verify(message, mac_tag=tag)
 
         return plaintext.decode('utf-8').lstrip('0')
-        #data = self.cipher.decrypt(message.rjust(64, '0').encode("utf-8"))
+        # data = self.cipher.decrypt(message.rjust(64, '0').encode("utf-8"))

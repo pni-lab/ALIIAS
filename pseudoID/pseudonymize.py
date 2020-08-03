@@ -14,6 +14,7 @@ subject = {}
 ids = {}
 lime_warning = {}
 enc = Encryptor()
+
 logger = PseudonymLogger()
 
 
@@ -34,12 +35,11 @@ def generate():
                               norm_str(subject['family_name']) + ' ' +
                               norm_str(subject['place_of_birth']) + ' ' +
                               norm_str(subject['date_of_birth']) + ' ' +
-                              norm_str(subject['maiden_name']) + ' ' +
-                              request.form['exp_tag'])
+                              norm_str(subject['maiden_name']))
 
         short_id = enc.short_id(long_id)
         global ids
-        ids['short_id'] = short_id
+        ids['short_id'] = short_id + request.form['exp_tag']
         ids['long_id'] = long_id
 
         global lime_warning

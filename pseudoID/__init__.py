@@ -1,6 +1,7 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash, redirect, url_for
 import socket
+import config
 from datetime import timedelta
 
 
@@ -27,6 +28,8 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
+
+
 
     from . import pseudonymize
     app.register_blueprint(pseudonymize.bp)
