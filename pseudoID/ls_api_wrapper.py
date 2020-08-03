@@ -25,17 +25,18 @@ class LimeSurveyController:
 
         return ret
 
-    def register_in_cpdb(self, short_id, long_id, update=False):
+    def register_in_cpdb(self, short_id, long_id, logical_delete=False):
 
         participant_data = [{"lastname" : short_id,
                              "longID" : long_id,
+                             "blacklisted" : logical_delete,
                              "language" : "de"
                              }]
 
         params = OrderedDict([
             ('sSessionKey', self.session_key),
             ('aParticipants', participant_data),
-            ('update', update)
+            ('update', logical_delete)
         ])
 
         data = self.api.utils.prepare_params('cpd_importParticipants', params)

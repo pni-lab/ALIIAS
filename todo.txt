@@ -2,12 +2,13 @@
 docker build -t demo-dockerflask:latest .
 
 # run it
-docker run -d -p 80:80 --mount type=bind,source="$(pwd)"/dev_key,target=/key,readonly demo-dockerflask
+docker run -d -p 80:80 --mount type=bind,source="$(pwd)"/dev_key,target=/key,readonly \
+                       --mount type=bind,source="$(pwd)"/LogFiles,target=/LogFiles demo-dockerflask
 
 # check if it runs
 docker ps
 
 # simply type this into the browser:
-# 127.0.0.1/pseudoID/input
+# 127.0.0.1/pseudoID/generate
 
 # docker-machine ip default to check the localhost adress
