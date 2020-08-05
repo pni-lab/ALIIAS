@@ -1,6 +1,8 @@
 import os
 from flask import Flask, render_template, request, flash, redirect, url_for
 import socket
+import sys
+sys.path.append('/..')
 import config
 from datetime import timedelta
 
