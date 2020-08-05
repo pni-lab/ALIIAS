@@ -1,15 +1,20 @@
 import time
 import os
+import config
 
 
 class PseudonymLogger:
     def __init__(self):
 
+        if not os.path.exists(config._key_dir_):
+            os.makedirs(config._key_dir_)
+            # todo warning
+
         i = 1
-        while os.path.exists('/LogFiles/log_' + str(i).zfill(4) + '.txt'):
+        while os.path.exists(config._key_dir_ + '/log_' + str(i).zfill(4) + '.txt'):
             i += 1
 
-        self.filename = '/LogFiles/log_' + str(i).zfill(4) + '.txt'
+        self.filename = config._key_dir_ + '/log_' + str(i).zfill(4) + '.txt'
 
         f = open(self.filename, 'w')
         f.close

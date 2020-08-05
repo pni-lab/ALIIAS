@@ -5,7 +5,7 @@ import config
 
 class LimeSurveyController:
 
-    def __init__(self, user_key=config._user_key_, url=config._ls_rc_url_, username='admin', password='admin'):
+    def __init__(self, user_key=config._user_key_, url=config._ls_url_rc_, username='admin', password='admin'):
         self.username = username  # todo: encrypt with user key
         self.password = password  # todo: encrypt with user key
 

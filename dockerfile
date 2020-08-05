@@ -5,6 +5,8 @@ RUN pip install flask pycryptodome limesurveyrc2api
 
 WORKDIR /usr/app/
 COPY . /usr/app/
+COPY ./dev_key /key
+# todo do not copy key!!
 
 #RUN pip install -r requirements.txt
 

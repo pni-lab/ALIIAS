@@ -1,4 +1,5 @@
 import functools
+import config
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for, Response
 )
@@ -29,7 +30,7 @@ def generate():
                                    request.form['dob_m'].zfill(2) + '.' + \
                                    request.form['dob_y']
         subject['maiden_name'] = request.form['maiden_name']
-        # request.form['registered']
+        status = request.form['registered']
         global enc
         long_id = enc.long_id(norm_str(subject['first_name']) + ' ' +
                               norm_str(subject['family_name']) + ' ' +
@@ -48,12 +49,30 @@ def generate():
         lscontrol = LimeSurveyController()
         response = lscontrol.register_in_cpdb(short_id, long_id)
 
-        if response['result']['ImportCount'] == 0:
-            lime_warning['warning_color'] = 'Orange'
-            lime_warning['warning_text'] = 'Participant already registered in LimeSurvey. No new participant added.'
-        else:
+        if response['result']['ImportCount'] == 0 and status == 'registered':
             lime_warning['warning_color'] = 'MediumSeaGreen'
-            lime_warning['warning_text'] = 'Participant successfully registered in LimeSurvey!'
+            lime_warning['warning_text'] = 'Participant already registered in LimeSurvey. No new participant added.'
+        elif response['result']['ImportCount'] == 0 and status == 'not_registered':
+            lime_warning['warning_color'] = 'Tomato'
+            lime_warning['warning_text'] = 'ID already registered in LimeSurvey. ' \
+                                           'Are your sure the participant has not been registered yet?' \
+                                           'Go back to the previous page and double-check.' \
+            # todo
+        elif response['result']['ImportCount'] != 0 and status == 'not_registered':
+            lime_warning['warning_color'] = 'MediumSeaGreen'
+            lime_warning['warning_text'] = 'Participant successfully registered in LimeSurvey!' \
+                                           'This is the initial registration. Please carefully check all data.' \
+                                           'Typographical errors can result database corruption in case' \
+                                           'of repeated measures!' \
+                                           'Make sure to assign the participants to the required surveys at ' \
+                                           + config._ls_url_login_
+        elif response['result']['ImportCount'] != 0 and status == 'registered':
+            lime_warning['warning_color'] = 'Tomato'
+            lime_warning['warning_text'] = 'No participant is registered with this id!' \
+                                           'Double-check participant data!' \
+                                           'Only proceed if all details are correct and contact the developers.'
+
+        lime_warning['warning_short'] = "LS: " + str((response['result']['ImportCount'], status))
 
         return redirect(url_for('pseudoID.preview'))
 
@@ -65,7 +84,7 @@ def preview():
     if request.method == 'GET':
         # access the global vars when redirected to the /preview page
         global subject, ids, lime_warning, logger
-        logger.add_entry(ids['short_id'] + '\t' + ids['long_id'])
+        logger.add_entry(ids['short_id'] + '\t' + lime_warning['warning_short'] + '\t' + ids['long_id'])
     # return unpickeled dicts to access the keys directly in the html files
     return render_template('pseudoID/preview.html', **subject, **ids, **lime_warning)
 
