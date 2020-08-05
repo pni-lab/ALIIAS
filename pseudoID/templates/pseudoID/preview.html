@@ -21,23 +21,32 @@ legend {
 input {
   margin: 5px;
 }
-h2 {
+h3 {
   word-break: break-all;
   width: 800px;
 }
 </style>
+    <fieldset>
+    <legend>Error Checking</legend>
+
+	<h3 style="color:{{warning_color}};"><small>{{warning_text}}</small></h3>
+
+  </fieldset>
+
+      <p>   </p>
+
 
   <fieldset>
     <legend>Personal Info</legend>
 
 	<p><small>Name</small></p>
-    <h2>{{first_name}} {{family_name}}</h2>
+    <h3>{{first_name}} {{family_name}}</h3>
 
     <p><small>Place & date of birth</small></p>
-    <h2>{{place_of_birth}} {{date_of_birth}}</h2>
+    <h3>{{place_of_birth}} {{date_of_birth}}</h3>
 
-    <p><small>Mothers Maiden Name</small></p>
-    <h2>{{maiden_name}}</h2>
+    <p><small>Mothers maiden name</small></p>
+    <h3>{{maiden_name}}</h3>
 
   </fieldset>
 
@@ -47,22 +56,17 @@ h2 {
     <legend>PseudoID</legend>
 
 	<p><small>Short ID</small></p>
-    <h2>{{short_id}}</h2>
+    <h3>{{short_id}}</h3>
 
     <p><small>Long ID</small></p>
-    <h2>{{long_id}}</h2>
+    <h3>{{long_id}}</h3>
 
 
   </fieldset>
 
   <p>   </p>
 
-  <fieldset>
-    <legend>LimeSurvey</legend>
 
-	<p style="color:{{warning_color}};"><small>{{warning_text}}</small></p>
-
-  </fieldset>
   </form>
 {% endblock %}
 

@@ -1,13 +1,15 @@
 # build docker
-docker build -t demo-dockerflask:latest .
+docker build -t pseudoid:latest .
 
 # run it
-docker run -d -p 80:80 --mount type=bind,source="$(pwd)"/dev_key,target=/key,readonly demo-dockerflask
+docker run -d -p 80:80 --mount type=bind,source="$(pwd)"/dev_key,target=/key pseudoid
 
 # check if it runs
 docker ps
 
 # simply type this into the browser:
-# 127.0.0.1/pseudoID/input
+# 127.0.0.1/pseudoID/generate
 
-# docker-machine ip default to check the localhost adress
+# docker-machine ip default to check the localhost address
+
+# pyinstaller -F -p pseudoID/ --add-data "pseudoID/templates:pseudoID/templates" --add-data "pseudoID/static:pseudoID/static" scripts/start_pseudoid.py

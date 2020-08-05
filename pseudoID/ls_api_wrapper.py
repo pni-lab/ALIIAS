@@ -5,7 +5,7 @@ import config
 
 class LimeSurveyController:
 
-    def __init__(self, user_key=config._user_key_, url=config._ls_rc_url_, username='admin', password='admin'):
+    def __init__(self, user_key=config._user_key_, url=config._ls_url_rc_, username='admin', password='admin'):
         self.username = username  # todo: encrypt with user key
         self.password = password  # todo: encrypt with user key
 
@@ -25,17 +25,18 @@ class LimeSurveyController:
 
         return ret
 
-    def register_in_cpdb(self, short_id, long_id, update=False):
+    def register_in_cpdb(self, short_id, long_id, logical_delete=False):
 
         participant_data = [{"lastname" : short_id,
                              "longID" : long_id,
+                             "blacklisted" : logical_delete,
                              "language" : "de"
                              }]
 
         params = OrderedDict([
             ('sSessionKey', self.session_key),
             ('aParticipants', participant_data),
-            ('update', update)
+            ('update', logical_delete)
         ])
 
         data = self.api.utils.prepare_params('cpd_importParticipants', params)
