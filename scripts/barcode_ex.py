@@ -1,13 +1,19 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import barcode
 from barcode.writer import ImageWriter
+import PIL
+from PIL import Image
 
-def testEan():
-    EAN = barcode.get_barcode_class('ean13')
-    ean = EAN(u'123456789011', writer=ImageWriter())
-    fullname = ean.save('my_ean13_barcode')
+writer = ImageWriter()
+barcode = barcode.get('code128', 'f2d5h60a', writer=writer)
+filename = barcode.save('barcode_test',
+                        {"module_width": 38.1/110,
+                         "module_height": 19.05,
+                         "text_distance": 1.0,
+                         "font_size": 16})
 
-if __name__ == '__main__':
-    testEan()
+to_be_resized = Image.open(filename)
+
+newSize = (750, 375)  # for 38.1mmx19.05mm at 500dpi
+resized = to_be_resized.resize(newSize, resample=PIL.Image.BICUBIC)
+
+resized.save('barcode_test.png')

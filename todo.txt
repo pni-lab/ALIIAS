@@ -10,4 +10,4 @@ docker ps
 # simply type this into the browser:
 # 127.0.0.1/pseudoID/generate
 
-# docker-machine ip default to check the localhost adress
+# docker-machine ip default to check the localhost address
