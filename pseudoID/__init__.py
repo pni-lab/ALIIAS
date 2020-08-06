@@ -1,13 +1,15 @@
 import os
 from flask import Flask, render_template, request, flash, redirect, url_for
 import socket
+import sys
+sys.path.append('/..')
 import config
 from datetime import timedelta
 
-
 hostname = socket.gethostname()
 IPAddr = socket.gethostbyname(hostname)
-print(IPAddr+"/pseudoID/generate")
+print(IPAddr + "/pseudoID/generate")
+
 
 def create_app(test_config=None):
     # create and configure the app
@@ -29,10 +31,7 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-
-
     from . import pseudonymize
     app.register_blueprint(pseudonymize.bp)
-
 
     return app

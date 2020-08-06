@@ -1,0 +1,66 @@
+\begin{titlepage}.
+    \input{lib/overlay.tikz}
+
+    % Margin to begin the text under the uttsquare
+    \vspace{2.5cm}
+
+    % title
+    \begin{textblock*}{15cm}(9cm, 1cm)
+        \begin{huge}
+            %\begin{center}
+                \makeatletter
+                \noindent\textcolor{black}{\@title}
+                \makeatother
+            %\end{center}
+        \end{huge}
+    \end{textblock*}
+    \begin{textblock*}{11cm}(9cm, 1.8cm)
+        \begin{LARGE}
+            %\begin{center}
+                \makeatletter
+                \noindent\textcolor{black}{\mysubtitle}
+                \makeatother
+            %\end{center}
+        \end{LARGE}
+    \end{textblock*}
+
+    % Info box
+    \begin{textblock*}{22cm}(1cm,4.3cm)
+        \makeatletter
+        \begin{large}
+            \setcellgapes{0.5pt}
+            \makegapedcells
+            {\color{black}\begin{tabularx}{22cm}{p{6.5cm}p{8.5cm}}
+                \textbf{Tamas Spisak} & \mbox{Institute for Artificial Intelligence in Medicine}   \\
+                Junior Research Group Leader \newline Lab. of Predictive Neuroimaging & Institute for Diagnostic and Interventional \mbox{Radiology} and Neuroradiology  \\
+                \href{https://pni-lab.github.io}{\color{pniblue}\underline{https://pni-lab.github.io}} & University Hospital Essen, Germany
+            \end{tabularx}}
+        \end{large}
+        \makeatother
+    \end{textblock*}
+
+    % Abstract
+    \begin{textblock*}{18cm}(1.5cm,6.5cm)
+        \begin{large}
+            \begin{center}
+                \par\noindent\rule{\textwidth\color{pniblue}}{0.4pt}
+                \textbf{\color{pniblue}Summary}
+                %\par\noindent\rule{\textwidth\color{pniblue}}{0.4pt}
+            \end{center}
+
+            \makeatletter
+            \@abstracttext
+            \makeatother
+            \par\noindent\rule{\textwidth\color{pniblue}}{0.4pt}
+         \end{large}
+    \end{textblock*}
+    
+    \begin{textblock*}{18cm}(1.5cm,16.5cm)
+        \begin{large}
+           % \input{parts/01-Intro}
+         \end{large}
+    \end{textblock*}
+    
+    
+
+\end{titlepage}

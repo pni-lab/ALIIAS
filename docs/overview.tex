@@ -1,0 +1,52 @@
+\documentclass[11pt]{paper}
+
+\input{insbox}
+\usepackage[x11names]{xcolor}
+\usepackage{lineno}
+
+\usepackage{lib/utt-report-template}
+\usepackage{lipsum}
+
+\author{Tamas Spisak}
+\date{2020}
+\newcommand*\mytitle{\color{pniblue}\textbf{'PseudoID'}}
+
+\newcommand*\mysubtitle{\color{pniblue} a pseudonymization system with \\ LimeSurvey integration \\ - dedicated for SFB289 -}
+
+\newcommand*\myshorttitle{PseudoID}
+\title{\mytitle} % Max 144 chars
+
+\schooltutor{}
+\semester{}
+\branch{}
+\abstracttext{
+\input{parts/00-Abstract}
+}
+
+\begin{document}
+
+    %\setlength{\parskip}{0mm}
+    %\linenumbers
+    \titlespacing*{\section}
+    {0pt}{0.2cm plus 2cm minus 0cm}{0.2cm plus 2cm}
+    \titlespacing*{\subsection}
+    {0pt}{0.2cm plus 2cm minus 0cm}{0.2cm plus 2cm}
+
+    \frontpage
+    
+    
+    \pagenumbering{arabic}
+    \setcounter{page}{2}
+
+    \begin{large}
+    \input{parts/01-workflow}
+    \input{parts/02-usecases}
+    \input{parts/10-developers}
+        
+    \end{large}
+
+    %\nocite{*}
+    \bibliographystyle{apalike}
+    \footnotesize
+    {\linespread{0}\selectfont\bibliography{references}}
+\end{document}
