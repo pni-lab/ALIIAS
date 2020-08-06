@@ -5,7 +5,7 @@ from flask import Flask, redirect, url_for
 app = Flask(__name__)
 
 
-_user_key_file_ = '/key/user_key.pckl'
+_user_key_file_ = '/key/.user_key.pckl'
 
 try:
     with open(_user_key_file_, 'br') as f:
