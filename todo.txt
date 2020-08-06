@@ -1,5 +1,9 @@
 # build docker
-docker build -t pseudoid:latest .
+docker build -t sfb289/pseudoid:v0.1 .
+docker build -t sfb289/pseudoid:latest .
+
+docker push  sfb289/pseudoid:v0.1
+docker push  sfb289/pseudoid:latest
 
 # run it
 docker run -d -p 80:80 --mount type=bind,source="$(pwd)"/dev_key,target=/key pseudoid
