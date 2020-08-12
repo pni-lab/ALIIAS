@@ -4,7 +4,7 @@ from flask import Flask, redirect, url_for
 
 app = Flask(__name__)
 
-_key_dir_ = "../dev_key"   # root directory of the USB-stick. to be mounted to the docker container
+_key_dir_ = "dev_key"   # root directory of the USB-stick. to be mounted to the docker container
 
 _user_key_file_ = _key_dir_ + '/.user_key.pckl'
 
