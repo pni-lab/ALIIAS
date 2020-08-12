@@ -1,6 +1,5 @@
-import time
 import os
-import config
+from pseudoID import config
 
 
 class PseudonymLogger:

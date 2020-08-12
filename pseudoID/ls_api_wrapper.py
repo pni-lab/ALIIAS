@@ -1,6 +1,6 @@
 from limesurveyrc2api import LimeSurveyRemoteControl2API
 from collections import OrderedDict
-import config
+from pseudoID import config
 
 
 class LimeSurveyController:

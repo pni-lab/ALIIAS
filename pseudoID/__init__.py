@@ -1,10 +1,9 @@
 import os
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask
 import socket
 import sys
 sys.path.append('/..')
-import config
-from datetime import timedelta
+from pseudoID import config
 
 hostname = socket.gethostname()
 IPAddr = socket.gethostbyname(hostname)

@@ -1,7 +1,6 @@
-import functools
-import config
+from pseudoID import config
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for, Response
+    Blueprint, flash, redirect, render_template, request, url_for
 )
 
 from pseudoID.encryption import Encryptor
