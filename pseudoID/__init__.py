@@ -1,14 +1,8 @@
 import os
-from flask import Flask
-import socket
+from flask import Flask, redirect, url_for
 import sys
 sys.path.append('/..')
 from pseudoID import config
-
-hostname = socket.gethostname()
-IPAddr = socket.gethostbyname(hostname)
-print(IPAddr + "/pseudoID/generate")
-
 
 def create_app(test_config=None):
     # create and configure the app
@@ -32,5 +26,9 @@ def create_app(test_config=None):
 
     from . import pseudonymize
     app.register_blueprint(pseudonymize.bp)
+
+    @app.route('/')
+    def start():
+        return redirect(url_for('pseudoID.generate'))
 
     return app

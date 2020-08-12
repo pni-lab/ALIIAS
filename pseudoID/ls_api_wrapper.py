@@ -27,10 +27,15 @@ class LimeSurveyController:
 
     def register_in_cpdb(self, short_id, long_id, logical_delete=False):
 
-        participant_data = [{"lastname" : short_id,
-                             "longID" : long_id,
-                             "blacklisted" : logical_delete,
-                             "language" : "de"
+        if logical_delete:
+            blacklisted = 'Y'
+        else:
+            blacklisted = 'N'
+
+        participant_data = [{"lastname": short_id,
+                             "longID": long_id,
+                             "blacklisted": blacklisted,
+                             "language": "de"
                              }]
 
         params = OrderedDict([

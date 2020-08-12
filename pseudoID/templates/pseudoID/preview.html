@@ -52,20 +52,37 @@ h3 {
 
   <p>   </p>
 
+
+  {% if not show_pseudonym %}
+   <fieldset>
+       <legend>Are all details correct?</legend>
+    <input type="submit" name="proceed" value="No! Undo Transaction.">
+    <input type="submit" name="proceed" value="Yes! Proceed to the pseudonym.">
+   </fieldset>
+  {% endif %}
+
+      <p>   </p>
+
+  {% if show_pseudonym %}
   <fieldset>
     <legend>PseudoID</legend>
 
 	<p><small>Short ID</small></p>
-    <h3>{{short_id}}</h3>
+    <h3>{{short_id}}{{exp_tag}}</h3>
 
     <p><small>Long ID</small></p>
     <h3>{{long_id}}</h3>
 
+  </fieldset>
 
+  <fieldset>
+      <input type="submit" name="proceed" value="Undo Transaction">
+      <input type="submit" name="proceed" value="New participant">
+      <input type="submit" name="proceed" value="Exit PseudoID">
   </fieldset>
 
   <p>   </p>
-
+ {% endif %}
 
   </form>
 {% endblock %}

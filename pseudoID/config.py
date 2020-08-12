@@ -22,3 +22,5 @@ _pseudonym_key_encrypted_ = (
 _ls_url_base_ = 'https://www.uni-due.de/~ht2203/limesurvey'
 _ls_url_rc_ = _ls_url_base_ + '/index.php/admin/remotecontrol'
 _ls_url_login_ = _ls_url_base_ + "/index.php/admin/authentication/sa/login"
+
+hexchars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'f'}
