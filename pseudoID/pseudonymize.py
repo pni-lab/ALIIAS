@@ -1,11 +1,12 @@
 from pseudoID import config
 from flask import (
-    Blueprint, flash, redirect, render_template, request, url_for
+    Blueprint, flash, redirect, render_template, request, url_for, send_from_directory
 )
 
 from pseudoID.encryption import Encryptor
 from pseudoID.ls_api_wrapper import LimeSurveyController
 from pseudoID.utility import PseudonymLogger, norm_str
+from pseudoID.barcode import generate_barcodeset
 
 bp = Blueprint('pseudoID', __name__, url_prefix='/pseudoID')
 
@@ -100,6 +101,7 @@ def generate():
 
 @bp.route('/preview', methods=('GET', 'POST'))
 def preview():
+    barcodes = []
     global possible_duplicate
     global show_pseudonym
     if request.method == 'GET':
@@ -126,7 +128,7 @@ def preview():
             if possible_duplicate:
                 # add a random character to the shortID to eliminate the duplicate
                 import random
-                ids['short_id'] = ids['short_id'] + random.choice(config.hexchars)
+                ids['short_id'] = ids['short_id'] + random.choice(config._hexchars_)
                 # add participant with the modified ID
                 lscontrol = LimeSurveyController()
                 response = lscontrol.register_in_cpdb(ids['short_id'], ids['long_id'])
@@ -137,6 +139,10 @@ def preview():
                 logger.add_entry(
                 "ACCEPTED:  " + ids['short_id'] + '\t' + lime_warning['warning_short'] + '\t' + ids['long_id'])
 
+            barcodes = generate_barcodeset(ids['short_id'])
+            #for f in barcodes:
+            #    send_from_directory('static', f)
+
             show_pseudonym['show_pseudonym'] = True
 
         if request.form['proceed'] == "New participant":
@@ -146,7 +152,7 @@ def preview():
            #shutdown_server()
            return redirect(url_for('pseudoID.exit'))
 
-    return render_template('pseudoID/preview.html', **subject, **ids, **lime_warning, **show_pseudonym)
+    return render_template('pseudoID/preview.html', items=barcodes, **subject, **ids, **lime_warning, **show_pseudonym)
 
 
 #@bp.route('/finalize', methods=('GET', 'POST'))

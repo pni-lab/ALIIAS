@@ -73,6 +73,12 @@ h3 {
     <p><small>Long ID</small></p>
     <h3>{{long_id}}</h3>
 
+    <p><small>Barcodes</small></p>
+
+    {% for bc in items %}
+      <a href=file://{{bc}} target="_blank">file://{{bc}}</a>
+    {% endfor %}
+
   </fieldset>
 
   <fieldset>
