@@ -1,7 +1,8 @@
 import binascii
 
 from Crypto.Cipher import AES
-import config
+from pseudoID import config
+
 
 class Encryptor:
     def __init__(self, user_key=config._user_key_, pseudonym_key_encrypted=config._pseudonym_key_encrypted_):

@@ -1,6 +1,5 @@
-import time
 import os
-import config
+from pseudoID import config
 
 
 class PseudonymLogger:
@@ -11,10 +10,10 @@ class PseudonymLogger:
             # todo warning
 
         i = 1
-        while os.path.exists(config._key_dir_ + '/log_' + str(i).zfill(4) + '.txt'):
+        while os.path.exists(config._key_dir_ + '/log_' + str(i).zfill(6) + '.txt'):
             i += 1
 
-        self.filename = config._key_dir_ + '/log_' + str(i).zfill(4) + '.txt'
+        self.filename = config._key_dir_ + '/log_' + str(i).zfill(6) + '.txt'
 
         f = open(self.filename, 'w')
         f.close

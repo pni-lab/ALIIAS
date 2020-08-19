@@ -1,0 +1,20 @@
+\begin{tikzpicture}[remember picture,overlay]
+
+% UTT Background under the title and info box
+\coordinate [right=15mm, below=8mm] (uttbackground_anchor) at (current page.north west);
+\node [name=uttsquare,
+anchor=north west
+] at (uttbackground_anchor){
+\includegraphics[width=16.5cm]{fig/header.png}};
+
+% Logo company
+\coordinate [right=194mm, below=63mm] (companylogo_anchor) at (current page.north west);
+\node [name=companylogo,
+anchor=south east,
+] at (companylogo_anchor){
+\includegraphics[width=1.7cm]{logo_uke.png}};
+
+
+
+
+\end{tikzpicture}

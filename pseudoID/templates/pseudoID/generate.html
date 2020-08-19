@@ -8,7 +8,7 @@
 {% block content %}
   <form method="post">
     <div class="form-field">
-    <p><b>Is this user registered already?</b></p>
+    <p><b>Has this participant already been registered (via an initial registration)?</b></p>
      <input type="radio" style="vertical-align: left; margin: 0px;" id="reg_t" name="registered" value='registered' required>
      <label for="reg_t"> <small>YES </small> </label>
      <input type="radio" style="vertical-align: left; margin: 0px;" id="reg_f" name="registered" value='not_registered' required>
@@ -17,14 +17,18 @@
 
     <p>   </p>
 
-    <label for="exp_tag">Add experimental tag:</label>
+    <label for="exp_tag">Add experimental tag (optional):</label>
 
     <select id="exp_tag" name="exp_tag">
       <option value=""> </option>
-      <option value="-wk1">Week 1</option>
-      <option value="-wk2">Week 2</option>
-      <option value="-wk3">Week 3</option>
-      <option value="-wk4">Week 4</option>
+      <option value="-pre">Pre</option>
+      <option value="-post">Post</option>
+      <option value="-w1">Week 1</option>
+      <option value="-w2">Week 2</option>
+      <option value="-w3">Week 3</option>
+      <option value="-w4">Week 4</option>
+      <option value="-w5">Week 4</option>
+      <option value="-w6">Week 4</option>
     </select>
 
 
@@ -36,7 +40,7 @@
     <label for="family_name">Family name</label>
     <input name="family_name" id="family_name" required placeholder="Mustermann">
 
-    <label for="place_of_birth">Place of birth</label>
+    <label for="place_of_birth">Place of birth (without country)</label>
     <input name="place_of_birth" id="place_of_birth" required placeholder="Berlin">
 
     <label for="dob_d">Date of birth</label>
@@ -49,7 +53,7 @@
              required class="form-control" placeholder="yyyy">
     </div>
 
-    <label for="maiden_name">Mothers maiden name</label>
+    <label for="maiden_name">Mothers maiden name (Surname only)</label>
     <input name="maiden_name" id="maiden_name" required placeholder="Müller">
 
     <input type="submit" value="Generate">

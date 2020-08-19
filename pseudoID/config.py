@@ -4,10 +4,9 @@ from flask import Flask, redirect, url_for
 
 app = Flask(__name__)
 
-# _key_dir_ = "/key"   # root directory of the USB-stick. to be mounted to the docker container
-# _user_key_file_ = _key_dir_ + '/.user_key.pckl'
-_key_dir_ = "C:\\Users\\rober\\PycharmProjects\\PseudoID_v2"
-_user_key_file_ = _key_dir_ + '/user_key.pckl'
+_key_dir_ = "dev_key"   # root directory of the USB-stick. to be mounted to the docker container
+
+_user_key_file_ = _key_dir_ + '/.user_key.pckl'
 
 try:
     with open(_user_key_file_, 'br') as f:
@@ -23,3 +22,8 @@ _pseudonym_key_encrypted_ = (
 _ls_url_base_ = 'https://www.uni-due.de/~ht2203/limesurvey'
 _ls_url_rc_ = _ls_url_base_ + '/index.php/admin/remotecontrol'
 _ls_url_login_ = _ls_url_base_ + "/index.php/admin/authentication/sa/login"
+
+_hexchars_ = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'f']
+
+_num_barcodes_ = 6
+_blank_barcode_ = True
