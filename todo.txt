@@ -13,3 +13,8 @@ docker ps
 # docker-machine ip default to check the localhost address
 
 # pyinstaller -F -p pseudoID/ --add-data "pseudoID/templates:pseudoID/templates" --add-data "pseudoID/static:pseudoID/static" scripts/start_pseudoid.py
+
+# pyinstaller -F -p pseudoID\ --add-data "pseudoID\templates;pseudoID\templates" --add-data "pseudoID\static;pseudoID\static" scripts\start_pseudoid.py
+
+
+# pyinstaller

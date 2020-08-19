@@ -4,9 +4,10 @@ from flask import Flask, redirect, url_for
 
 app = Flask(__name__)
 
-_key_dir_ = "/key"   # root directory of the USB-stick. to be mounted to the docker container
-
-_user_key_file_ = _key_dir_ + '/.user_key.pckl'
+# _key_dir_ = "/key"   # root directory of the USB-stick. to be mounted to the docker container
+# _user_key_file_ = _key_dir_ + '/.user_key.pckl'
+_key_dir_ = "C:\\Users\\rober\\PycharmProjects\\PseudoID_v2"
+_user_key_file_ = _key_dir_ + '/user_key.pckl'
 
 try:
     with open(_user_key_file_, 'br') as f:

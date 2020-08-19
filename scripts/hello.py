@@ -1,7 +1,7 @@
-import flask
-import pseudoID
+#import flask
+#import pseudoID
 
-app = pseudoID.create_app()
-app.run()
+#app = pseudoID.create_app()
+#app.run()
 
 print("Hello2PNI")
