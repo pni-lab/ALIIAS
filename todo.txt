@@ -18,6 +18,7 @@ docker ps
 
 # pyinstaller -F -p pseudoID/ --add-data "pseudoID/templates:pseudoID/templates" --add-data "pseudoID/static:pseudoID/static" scripts/start_pseudoid.py
 
+# for windows:
 # pyinstaller -F -p pseudoID\ --add-data "pseudoID\templates;pseudoID\templates" --add-data "pseudoID\static;pseudoID\static" scripts\start_pseudoid.py
 
 

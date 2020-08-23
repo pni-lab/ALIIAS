@@ -6,7 +6,7 @@ from flask import (
 from pseudoID.encryption import Encryptor
 from pseudoID.ls_api_wrapper import LimeSurveyController
 from pseudoID.utility import PseudonymLogger, norm_str
-from pseudoID.barcode import generate_barcodeset
+from pseudoID.barcode_gen import generate_barcodeset
 
 bp = Blueprint('pseudoID', __name__, url_prefix='/pseudoID')
 
