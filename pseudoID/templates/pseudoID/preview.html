@@ -8,29 +8,17 @@
   <form method="post">
 
 <style>
-fieldset {
-  background-color: #eeeeee;
-}
-
-legend {
-  background-color: grey;
-  color: white;
-  padding: 5px 10px;
-}
-
-input {
-  margin: 5px;
-}
-h3 {
-  word-break: normal;
-  width: 850px;
-}
+fieldset { background-color: #eeeeee; }
+legend {  background-color: grey;  color: white;  padding: 5px 10px; }
+input {  margin: 5px; }
+h3 {  word-break: normal;  width: 880px; }
+h4 {  word-break: break-all; width: 880px; }
 </style>
-    <fieldset>
+
+
+  <fieldset>
     <legend>Error Checking</legend>
-
 	<h3 style="color:{{warning_color}};"><small>{{warning_text}}</small></h3>
-
   </fieldset>
 
       <p>   </p>
@@ -71,7 +59,7 @@ h3 {
     <h3>{{short_id}}{{exp_tag}}</h3>
 
     <p><small>Long ID</small></p>
-    <h3>{{long_id}}</h3>
+    <h4>{{long_id}}</h4>
 
     <p><small>Barcodes</small></p>
 
