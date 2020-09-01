@@ -29,15 +29,9 @@
     <label for="exp_tag">Add experimental tag (optional):</label>
 
     <select id="exp_tag" name="exp_tag">
-      <option value=""> </option>
-      <option value="-pre">Pre</option>
-      <option value="-post">Post</option>
-      <option value="-w1">Week 1</option>
-      <option value="-w2">Week 2</option>
-      <option value="-w3">Week 3</option>
-      <option value="-w4">Week 4</option>
-      <option value="-w5">Week 5</option>
-      <option value="-w6">Week 6</option>
+      {% for key in _exp_tag_ %}
+        <option value="{{ _exp_tag_[key] }}">{{ key }}</option>
+      {% endfor %}
     </select>
 
 

@@ -21,6 +21,7 @@ show_pseudonym = {}
 
 logger = PseudonymLogger()
 
+
 @bp.route('/generate', methods=('GET', 'POST'))
 def generate():
     # reset globals
@@ -50,7 +51,7 @@ def generate():
 
         short_id = enc.short_id(long_id)
         ids['short_id'] = short_id
-        ids['exp_tag'] =  request.form['exp_tag']
+        ids['exp_tag'] = request.form['exp_tag']
         ids['long_id'] = long_id
 
         # limesurvey integration
@@ -68,7 +69,7 @@ def generate():
             lime_warning['warning_text'] = 'ERROR: ID already registered in LimeSurvey. ' \
                                            'Are your sure the participant has not been registered yet?' \
                                            'If this participant has already been registered, click "undo", and choose' \
-                                           '"yes" at the first point. '  \
+                                           '"yes" at the first point. ' \
                                            'If you are sure that this participant has not been registered yet,' \
                                            'click "Proceed to the pseudonym" and CONTACT THE DEVELOPERS!' \
                                            '(possible duplicate)!'
@@ -96,7 +97,7 @@ def generate():
 
         return redirect(url_for('pseudoID.preview'))
 
-    return render_template('pseudoID/generate.html')
+    return render_template('pseudoID/generate.html', _exp_tag_=config._exp_tag_)
 
 
 @bp.route('/preview', methods=('GET', 'POST'))
@@ -137,26 +138,26 @@ def preview():
                         'long_id'])
             else:
                 logger.add_entry(
-                "ACCEPTED:  " + ids['short_id'] + '\t' + lime_warning['warning_short'] + '\t' + ids['long_id'])
+                    "ACCEPTED:  " + ids['short_id'] + '\t' + lime_warning['warning_short'] + '\t' + ids['long_id'])
 
             barcodes = generate_barcodeset(ids['short_id'])
-            #for f in barcodes:
+            # for f in barcodes:
             #    send_from_directory('static', f)
 
             show_pseudonym['show_pseudonym'] = True
 
         if request.form['proceed'] == "New participant":
-           return redirect(url_for('pseudoID.generate'))
+            return redirect(url_for('pseudoID.generate'))
 
         if request.form['proceed'] == "Exit PseudoID":
-           #shutdown_server()
-           return redirect(url_for('pseudoID.exit'))
+            # shutdown_server()
+            return redirect(url_for('pseudoID.exit'))
 
     return render_template('pseudoID/preview.html', items=barcodes, **subject, **ids, **lime_warning, **show_pseudonym)
 
 
-#@bp.route('/finalize', methods=('GET', 'POST'))
-#def preview():
+# @bp.route('/finalize', methods=('GET', 'POST'))
+# def preview():
 #    if request.method == 'GET':
 #        # access the global vars when redirected to the /preview page
 #        global subject, ids, lime_warning, logger

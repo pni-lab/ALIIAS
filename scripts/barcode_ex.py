@@ -11,8 +11,8 @@ filename = barcode.save('barcode_test',
                          "text_distance": 1.0,
                          "font_size": 16})
 
-to_be_resized = Image.open(filename)
 
+to_be_resized = Image.open(filename)
 newSize = (750, 375)  # for 38.1mmx19.05mm at 500dpi
 resized = to_be_resized.resize(newSize, resample=PIL.Image.BICUBIC)
 
