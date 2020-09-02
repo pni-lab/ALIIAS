@@ -33,6 +33,7 @@ def generate():
     ids = {}
     lime_warning = {}
     show_pseudonym = {}
+    print(request.cookies)
     if request.method == 'POST':
         subject['first_name'] = request.form['first_name']
         subject['family_name'] = request.form['family_name']
