@@ -8,7 +8,8 @@ import os
 
 #lib = pkcs11.lib(os.environ['PKCS11_MODULE'])
 #lib = pkcs11.lib('/usr//local/lib/opensc-pkcs11.so')
-lib = pkcs11.lib('C:/Program Files/OpenSC Project/OpenSC/pkcs11/opensc-pkcs11.dll')
+lib = pkcs11.lib('/usr/lib/x86_64-linux-gnu/opensc-pkcs11.so')
+#lib = pkcs11.lib('C:/Program Files/OpenSC Project/OpenSC/pkcs11/opensc-pkcs11.dll')
 
 
 
