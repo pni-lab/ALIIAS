@@ -16,7 +16,8 @@ _exp_tag_ = {
 }
 
 config['BASE'] = {"Log_level": 10,
-                  "exp_tag": _exp_tag_}
+                  "exp_tag": _exp_tag_,
+                  "opensc_path": '/usr/lib/x86_64-linux-gnu/opensc-pkcs11.so'}
 
 config['PSEUDOKEYS'] = {}
 
