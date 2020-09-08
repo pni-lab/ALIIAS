@@ -16,7 +16,7 @@ class Encryptor:
 
         return binascii.hexlify(ciphertext + tag).decode('utf-8')
 
-    def short_id(self, long_id, length=8):  # ToDo: length from conf file
+    def short_id(self, long_id, length=config.settings['ENCRYPTION'].getint('short_id_length')):
         return long_id[0:length]
 
     def reidentify(self, longID):

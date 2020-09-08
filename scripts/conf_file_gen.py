@@ -4,19 +4,7 @@ import configparser
 
 config = configparser.ConfigParser()
 
-_exp_tag_ = {
-    "": "",
-    "Pre": "-pre",
-    "Post": "-post",
-    "Baseline": "-bsl",
-    "Week 1": "-wk1",
-    "Week 2": "-wk2",
-    "Week 3": "-wk3",
-    "Week 4": "-wk4",
-}
-
 config['BASE'] = {"Log_level": 10,
-                  "exp_tag": _exp_tag_,
                   "opensc_path": '/usr/lib/x86_64-linux-gnu/opensc-pkcs11.so'}
 
 config['PSEUDOKEYS'] = {}
@@ -30,7 +18,7 @@ config['LIMESURVEY'] = {"active": True,
                         "url_rc": _ls_url_base_ + '/index.php/admin/remotecontrol',
                         "url_login": _ls_url_base_ + '/index.php/admin/authentication/sa/login'}
 
-config['BARCODES'] = {"n_diff_bc": 6, "n_identical_bc": 3}
+config['BARCODES'] = {"n_diff_bc": 6, "n_identical_bc": 3, "blank": True}
 
 with open('../pseudoID/settings.conf', 'w') as configfile:
     config.write(configfile)

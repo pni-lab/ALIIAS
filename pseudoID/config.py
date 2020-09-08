@@ -1,8 +1,12 @@
 import pickle
 from Crypto.Cipher import AES
 from flask import Flask, redirect, url_for
+import configparser
 
 app = Flask(__name__)
+
+settings = configparser.ConfigParser()
+settings.read('../pseudoID/settings.conf')
 
 _key_dir_ = "dev_key"   # root directory of the USB-stick. to be mounted to the docker container
 _bc_dir_ = "barcode"
@@ -35,5 +39,4 @@ _ls_url_login_ = _ls_url_base_ + "/index.php/admin/authentication/sa/login"
 
 _hexchars_ = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'f']
 
-_num_barcodes_ = 6
 _blank_barcode_ = True

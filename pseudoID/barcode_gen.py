@@ -24,7 +24,9 @@ def generate_barcode(short_ID, outdir=config._key_dir_):
     return pathlib.Path(filename).absolute()
 
 
-def generate_barcodeset(short_ID, outdir=config._key_dir_, n=config._num_barcodes_, blank=config._blank_barcode_):
+def generate_barcodeset(short_ID, outdir=config._key_dir_,
+                        n=config.settings['BARCODES'].getint('n_diff_bc'),
+                        blank=config.settings['BARCODES'].getboolean('blank')):
     barcodes = []
     if blank:
         f = generate_barcode(short_ID, outdir=config._key_dir_)
