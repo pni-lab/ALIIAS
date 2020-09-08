@@ -10,12 +10,7 @@ _bc_dir_ = "barcode"
 
 _user_key_file_ = _key_dir_ + '/.user_key.pckl'
 
-#try:
-#    with open(_user_key_file_, 'br') as f:
-#        _user_key_ = pickle.load(f)
-#except:
-#    raise Exception('Something went wrong while loading the Encryption Key. '
-#                    'Please check if your USB drive is plugged in correctly and retry!')
+
 # ToDo: remove the hard coded user key
 _user_key_ = b'\xbf\xabb]\xb3\x94\xd8}>Z\x84QO\xdb\tD\xb1wl\xef@7\xa9$\x91\xb0>#\xe4\x10\x07u'
 

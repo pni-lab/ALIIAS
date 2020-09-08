@@ -28,13 +28,13 @@ h4 {  word-break: break-all; width: 880px; }
     <legend>Personal Info</legend>
 
 	<p><small>Name</small></p>
-    <h3>{{first_name}} {{family_name}}</h3>
+    <h3>{{subject['first_name']}} {{subject['family_name']}}</h3>
 
     <p><small>Place & date of birth</small></p>
-    <h3>{{place_of_birth}} {{date_of_birth}}</h3>
+    <h3>{{subject['place_of_birth']}} {{subject['date_of_birth']}}</h3>
 
     <p><small>Mothers maiden name</small></p>
-    <h3>{{maiden_name}}</h3>
+    <h3>{{subject['maiden_name']}}</h3>
 
   </fieldset>
 
@@ -56,10 +56,10 @@ h4 {  word-break: break-all; width: 880px; }
     <legend>PseudoID</legend>
 
 	<p><small>Short ID</small></p>
-    <h3>{{short_id}}{{exp_tag}}</h3>
+    <h3>{{ids['short_id']}}{{ids['exp_tag']}}</h3>
 
     <p><small>Long ID</small></p>
-    <h4>{{long_id}}</h4>
+    <h4>{{ids['long_id']}}</h4>
 
     <p><small>Barcodes</small></p>
 

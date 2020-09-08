@@ -109,7 +109,6 @@ def preview():
     if request.method == 'GET':
         # access the global vars when redirected to the /preview page
         global subject, ids, lime_warning, logger
-    # return unpickeled dicts to access the keys directly in the html files
 
     if request.method == 'POST':
         if request.form['proceed'] == "No! Undo Transaction." \
@@ -154,17 +153,12 @@ def preview():
             # shutdown_server()
             return redirect(url_for('pseudoID.exit'))
 
-    return render_template('pseudoID/preview.html', items=barcodes, **subject, **ids, **lime_warning, **show_pseudonym)
-
-
-# @bp.route('/finalize', methods=('GET', 'POST'))
-# def preview():
-#    if request.method == 'GET':
-#        # access the global vars when redirected to the /preview page
-#        global subject, ids, lime_warning, logger
-#        logger.add_entry(ids['short_id'] + '\t' + lime_warning['warning_short'] + '\t' + ids['long_id'])
-#    # return unpickeled dicts to access the keys directly in the html files
-#    return render_template('pseudoID/preview.html', **subject, **ids, **lime_warning)
+    return render_template('pseudoID/preview.html',
+                           items=barcodes,
+                           subject=subject,
+                           ids=ids,
+                           **lime_warning,
+                           **show_pseudonym)
 
 
 @bp.route('/reidentify', methods=('GET', 'POST'))
