@@ -1,5 +1,6 @@
 import configparser
-
+from pseudoID import config
+import os
 # sc: https://linuxhint.com/read_write_ini_conf_python/
 
 config = configparser.ConfigParser()
@@ -22,5 +23,5 @@ config['LIMESURVEY'] = {"active": True,
 
 config['BARCODES'] = {"n_diff_bc": 6, "n_identical_bc": 3, "blank": True}
 
-with open('../pseudoID/settings.conf', 'w') as configfile:
+with open(os.path.join(config.ROOR_DIR, '../pseudoID/settings.conf'), 'w') as configfile:
     config.write(configfile)

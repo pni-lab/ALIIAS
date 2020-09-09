@@ -2,11 +2,25 @@ import pickle
 from Crypto.Cipher import AES
 from flask import Flask, redirect, url_for
 import configparser
-import os
+import os, sys
 
 app = Flask(__name__)
 
-ROOT_DIR = os.path.dirname(os.path.abspath(__file__))  # This is your Project Root
+if 'linux' in sys.platform:
+    ROOT_DIR = os.path.dirname(os.path.abspath(__file__))  # This is your Project Root
+else:
+    if getattr(sys, 'frozen', False):
+        ROOT_DIR = os.path.dirname(sys.executable)
+        running_mode = 'Frozen/executable'
+    else:
+        try:
+            app_full_path = os.path.realpath(__file__)
+            ROOT_DIR = os.path.dirname(app_full_path)
+            running_mode = "Non-interactive (e.g. 'python myapp.py')"
+        except NameError:
+            ROOT_DIR = os.getcwd()
+            running_mode = 'Interactive'
+
 
 OUTPUT_DIR = os.path.expanduser('~/pseudoID')
 if not os.path.exists(OUTPUT_DIR):
@@ -21,7 +35,7 @@ if not os.path.exists(BC_DIR):
     os.makedirs(BC_DIR)
 
 settings = configparser.ConfigParser()
-settings.read(os.path.join(ROOT_DIR, '../pseudoID/settings.conf'))
+settings.read(os.path.join(ROOT_DIR, 'settings.conf'))
 
 # ToDo: remove the hard coded user key
 _user_key_ = b'\xbf\xabb]\xb3\x94\xd8}>Z\x84QO\xdb\tD\xb1wl\xef@7\xa9$\x91\xb0>#\xe4\x10\x07u'
