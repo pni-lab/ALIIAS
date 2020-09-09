@@ -8,12 +8,10 @@ app = Flask(__name__)
 settings = configparser.ConfigParser()
 settings.read('../pseudoID/settings.conf')
 
-_key_dir_ = "dev_key"   # root directory of the USB-stick. to be mounted to the docker container
+_key_dir_ = "dev_key"  # root directory of the USB-stick. to be mounted to the docker container
 _bc_dir_ = "barcode"
 
-
 _user_key_file_ = _key_dir_ + '/.user_key.pckl'
-
 
 # ToDo: remove the hard coded user key
 _user_key_ = b'\xbf\xabb]\xb3\x94\xd8}>Z\x84QO\xdb\tD\xb1wl\xef@7\xa9$\x91\xb0>#\xe4\x10\x07u'
@@ -33,10 +31,33 @@ _exp_tag_ = {
     "Week 4": "-wk4",
 }
 
+_warnings_ = {'known': 'Participant already registered in LimeSurvey. \n ' \
+                       'No new participant added this time. ' \
+                       'Click "Proceed to the pseudonym" to obtain the short ID.',
+
+              'duplicate': 'ERROR: ID already registered in LimeSurvey. \n' \
+                           'Are your sure the participant has not been registered yet? ' \
+                           'If this participant has already been registered, click "undo", and choose' \
+                           '"yes" at the first point. ' \
+                           'If you are sure that this participant has not been registered yet, ' \
+                           'click "Proceed to the pseudonym" and CONTACT THE DEVELOPERS! ' \
+                           '(possible duplicate)!',
+
+              'new': 'Participant successfully registered in LimeSurvey!\n' \
+                     'This is the initial registration. Please carefully check all data. ' \
+                     'Typographical errors can result database corruption! ' \
+                     'Make sure to assign the participants to the required surveys at ' \
+                     + settings['LIMESURVEY']['url_login'],
+
+              'unknown': 'ERROR: No participant has previously been registered with this id! \n' \
+                         'Double-check participant data! ' \
+                         'In case of typographical error, click "Undo" to ' \
+                         'logically delete this transaction. ' \
+                         'If all details are correct, you can now proceed with the experiment, but ' \
+                         'make sure to CONTACT THE DEVELOPERS!'}
+
 _ls_url_base_ = 'https://www.uni-due.de/~ht2203/limesurvey'
 _ls_url_rc_ = _ls_url_base_ + '/index.php/admin/remotecontrol'
 _ls_url_login_ = _ls_url_base_ + "/index.php/admin/authentication/sa/login"
 
 _hexchars_ = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'f']
-
-_blank_barcode_ = True

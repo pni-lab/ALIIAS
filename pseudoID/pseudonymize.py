@@ -33,7 +33,7 @@ def generate():
     ids = {}
     lime_warning = {}
     show_pseudonym = {}
-    print(request.cookies)
+
     if request.method == 'POST':
         subject['first_name'] = request.form['first_name']
         subject['family_name'] = request.form['family_name']
@@ -61,35 +61,18 @@ def generate():
 
         if response['result']['ImportCount'] == 0 and status == 'registered':
             lime_warning['warning_color'] = 'MediumSeaGreen'
-            lime_warning['warning_text'] = 'Participant already registered in LimeSurvey. \n ' \
-                                           'No new participant added this time. ' \
-                                           'Click "Proceed to the pseudonym" to obtain the short ID.'
+            lime_warning['warning_text'] = config._warnings_['known']
             already_registered = True
         elif response['result']['ImportCount'] == 0 and status == 'not_registered':
             lime_warning['warning_color'] = 'Tomato'
-            lime_warning['warning_text'] = 'ERROR: ID already registered in LimeSurvey. \n' \
-                                           'Are your sure the participant has not been registered yet? ' \
-                                           'If this participant has already been registered, click "undo", and choose' \
-                                           '"yes" at the first point. ' \
-                                           'If you are sure that this participant has not been registered yet, ' \
-                                           'click "Proceed to the pseudonym" and CONTACT THE DEVELOPERS! ' \
-                                           '(possible duplicate)!'
+            lime_warning['warning_text'] = config._warnings_['duplicate']
             possible_duplicate = True
         elif response['result']['ImportCount'] != 0 and status == 'not_registered':
             lime_warning['warning_color'] = 'MediumSeaGreen'
-            lime_warning['warning_text'] = 'Participant successfully registered in LimeSurvey!\n' \
-                                           'This is the initial registration. Please carefully check all data. ' \
-                                           'Typographical errors can result database corruption! ' \
-                                           'Make sure to assign the participants to the required surveys at ' \
-                                           + config._ls_url_login_
+            lime_warning['warning_text'] = config._warnings_['new']
         elif response['result']['ImportCount'] != 0 and status == 'registered':
             lime_warning['warning_color'] = 'Tomato'
-            lime_warning['warning_text'] = 'ERROR: No participant has previously been registered with this id! \n' \
-                                           'Double-check participant data! ' \
-                                           'In case of typographical error, click "Undo" to ' \
-                                           'logically delete this transaction. ' \
-                                           'If all details are correct, you can now proceed with the experiment, but ' \
-                                           'make sure to CONTACT THE DEVELOPERS!'
+            lime_warning['warning_text'] = config._warnings_['unknown']
 
         lime_warning['warning_short'] = "LS: " + str((response['result']['ImportCount'], status))
 
