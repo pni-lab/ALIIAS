@@ -16,7 +16,7 @@ first_name = None
 subject = {}
 ids = {}
 lime_warning = {}
-enc = Encryptor()
+enc = Encryptor(site_tag=config._site_tag_['Test'])
 show_pseudonym = {}
 
 logger = PseudonymLogger()

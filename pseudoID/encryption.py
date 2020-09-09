@@ -7,21 +7,30 @@ from pseudoID.base_conversion import BaseConverter
 conv = BaseConverter(config.settings['ENCRYPTION']['char_base'])
 
 class Encryptor:
-    def __init__(self, user_key=config._user_key_, pseudonym_key_encrypted=config._pseudonym_key_encrypted_):
+    def __init__(self, user_key=config._user_key_, pseudonym_key_encrypted=config._pseudonym_key_encrypted_, site_tag=None):
         cipher = AES.new(user_key, AES.MODE_SIV)
+        self.site_tag = site_tag
         self.key = cipher.decrypt_and_verify(pseudonym_key_encrypted[0],
                                              pseudonym_key_encrypted[1])
 
     def long_id(self, message):
         cipher = AES.new(self.key, AES.MODE_SIV)
         ciphertext, tag = cipher.encrypt_and_digest(message.rjust(64, '0').encode("utf-8"))
-
-        return conv.hex2custom(binascii.hexlify(ciphertext + tag).decode('utf-8'))
+        if self.site_tag == None:
+            return conv.hex2custom(binascii.hexlify(ciphertext + tag).decode('utf-8'))
+        else:
+            return self.site_tag + conv.hex2custom(binascii.hexlify(ciphertext + tag).decode('utf-8'))
 
     def short_id(self, long_id, length=config.settings['ENCRYPTION'].getint('short_id_length')):
-        return long_id[0:length]
+        if self.site_tag == None:
+            return long_id[0:length]
+        else:
+            return long_id[0:length + 1]
 
     def reidentify(self, longID):
+        if self.site_tag != None:
+            longID = longID[1:]
+
         longID = conv.custom2hex(longID)
 
         tag = binascii.unhexlify(longID[-32:].encode('utf-8'))

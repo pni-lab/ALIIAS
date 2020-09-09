@@ -4,9 +4,11 @@ import PIL
 from PIL import Image, ImageFont
 import pseudoID.config as config
 import pathlib
+import os
 
 
-def generate_barcode(short_ID, outdir=config._key_dir_):
+def generate_barcode(short_ID, outdir=config.BC_DIR):
+
     writer = ImageWriter()
     bc = barcode.get('code128', short_ID, writer=writer)
     filename = bc.save(pathlib.Path(outdir).joinpath('barcode_' + short_ID),
@@ -24,16 +26,22 @@ def generate_barcode(short_ID, outdir=config._key_dir_):
     return pathlib.Path(filename).absolute()
 
 
-def generate_barcodeset(short_ID, outdir=config._key_dir_,
+def generate_barcodeset(short_ID,
                         n=config.settings['BARCODES'].getint('n_diff_bc'),
                         blank=config.settings['BARCODES'].getboolean('blank')):
+
+    TARGET_DIR = os.path.join(config.BC_DIR, short_ID)
+    if not os.path.exists(TARGET_DIR):
+        os.makedirs(TARGET_DIR)
+
     barcodes = []
     if blank:
-        f = generate_barcode(short_ID, outdir=config._key_dir_)
+        f = generate_barcode(short_ID, outdir=TARGET_DIR)
         barcodes.append(f)
 
     for i in range(n):
-        bc = generate_barcode(short_ID + "-" + str(i + 1), outdir=config._key_dir_)
+        bc = generate_barcode(short_ID + "-" + str(i + 1), outdir=TARGET_DIR)
         barcodes.append(bc)
 
     return barcodes
+
