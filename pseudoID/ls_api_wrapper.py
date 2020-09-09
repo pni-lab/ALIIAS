@@ -104,3 +104,10 @@ class LimeSurveyController:
         data = self.api.utils.prepare_params('release_session_key', params)
         response = self.api.utils.request(data)
         return response
+
+
+class LimeSurveyIntegration:
+
+    def __init__(self, mode="survey"):
+        # mode is either "survey" or "global"
+        self.mode = mode
