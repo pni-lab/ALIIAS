@@ -9,7 +9,9 @@ config['BASE'] = {"Log_level": 10,
 
 config['PSEUDOKEYS'] = {}
 
-config['ENCRYPTION'] = {"Type": "AES", "short_id_length": "8"}
+config['ENCRYPTION'] = {"Type": "AES",
+                        "short_id_length": "8",
+                        "char_base": "123456789abcdefghjklmnpqrstuvwxyz"}
 
 _ls_url_base_ = 'https://www.uni-due.de/~ht2203/limesurvey'
 
