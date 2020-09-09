@@ -35,7 +35,7 @@ _warnings_ = {'known': 'Participant already registered in LimeSurvey. \n ' \
                        'No new participant added this time. ' \
                        'Click "Proceed to the pseudonym" to obtain the short ID.',
 
-              'duplicate': 'ERROR: ID already registered in LimeSurvey. \n' \
+              'duplicate': 'DUPLICATE ERROR: short ID (but not longID) already registered in LimeSurvey. \n' \
                            'Are your sure the participant has not been registered yet? ' \
                            'If this participant has already been registered, click "undo", and choose' \
                            '"yes" at the first point. ' \

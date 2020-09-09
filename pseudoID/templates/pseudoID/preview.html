@@ -19,6 +19,7 @@ h4 {  word-break: break-all; width: 880px; }
   <fieldset>
     <legend>Error Checking</legend>
 	<h3 style="color:{{warning_color}};"><small>{{warning_text}}</small></h3>
+      <h3 style="color:{{warning_color}};"><small>{{warning_details}}</small></h3>
   </fieldset>
 
       <p>   </p>
@@ -39,6 +40,22 @@ h4 {  word-break: break-all; width: 880px; }
   </fieldset>
 
   <p>   </p>
+
+   {% if session.username %}
+   <fieldset>
+      <label for="to_survey">Add to survey(s) (optional, press&hold Ctr to select multiple surveys):</label>
+
+       <p>   </p>
+
+    <select id="to_survey" name="to_survey" multiple size="{{survey_names|length}}">
+      {% for key in survey_names %}
+        <option value="{{ key }}">{{ survey_names[key] }}</option>
+      {% endfor %}
+    </select>
+
+    <p>   </p>
+    </fieldset>
+    {% endif %}
 
 
   {% if not show_pseudonym %}
@@ -73,7 +90,6 @@ h4 {  word-break: break-all; width: 880px; }
 
 
   <fieldset>
-      <input type="submit" name="proceed" value="Undo Transaction">
       <input type="submit" name="proceed" value="New participant">
       <input type="submit" name="proceed" value="Exit PseudoID">
   </fieldset>
