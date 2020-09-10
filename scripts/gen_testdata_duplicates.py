@@ -5,8 +5,8 @@ from tqdm import tqdm
 import xlsxwriter
 
 
-n_subjects = 1000000
-target_path = '../data_test/duplicates.xlsx'
+n_subjects = 10000000
+target_path = '../../data_test/duplicates.xlsx'
 
 data = generate_n_personal_info(n_subjects)
 

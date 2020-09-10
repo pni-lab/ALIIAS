@@ -6,7 +6,7 @@
 
 
 {% block content %}
-  <form method="post">
+  <form method="post" autocomplete="off">
     <fieldset>
     <legend>Warning</legend>
 
@@ -33,7 +33,6 @@
         <option value="{{ _exp_tag_[key] }}">{{ key }}</option>
       {% endfor %}
     </select>
-
 
     <p>   </p>
 

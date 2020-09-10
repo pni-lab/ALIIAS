@@ -30,6 +30,6 @@ def create_app(test_config=None):
 
     @app.route('/')
     def start():
-        return redirect(url_for('pseudoID.generate'))
+        return redirect(url_for('pseudoID.login'))
 
     return app
