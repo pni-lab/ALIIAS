@@ -6,9 +6,9 @@ from datetime import datetime, timedelta
 
 def generate_n_personal_info(n_items=10000):
     # Names
-    with open('../data_test/names_female', 'r') as female, \
-            open('../data_test/names_male', 'r') as male, \
-            open('../data_test/names_family', 'r') as name:
+    with open('../../data_test/names_female', 'r') as female, \
+            open('../../data_test/names_male', 'r') as male, \
+            open('../../data_test/names_family', 'r') as name:
         names_female = female.read().split("   ")[1::2]
         names_male = male.read().split("   ")[1::2]
         names_family = name.read().split("   ")[1::2]
@@ -20,7 +20,7 @@ def generate_n_personal_info(n_items=10000):
     rand_date = age_mean + timedelta(days=random.gauss(0, age_std_days))
 
     # Place of Birth
-    with open('../data_test/staedte_osm.txt', 'r', encoding="utf8") as file:
+    with open('../../data_test/staedte_osm.txt', 'r', encoding="utf8") as file:
         cities = file.read().split("\"")[1::2]
 
     data = []
