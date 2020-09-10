@@ -105,7 +105,7 @@ def generate():
                 ids['short_id'] = ids['short_id'] + random.choice(config._hexchars_)
 
             if already_added:
-                already_added_to.append(survey['surveyls_title'])
+                already_added_to.append(survey['sid'])
 
         if len(already_added_to) > 0:
             lime_warning['warning_details'] += "This participant has already been added to the following surveys: " \
@@ -151,18 +151,21 @@ def preview():
     barcodes = []
     global possible_duplicate
     global show_pseudonym
-    global subject, ids, lime_warning, logger, lscontrol
+    global subject, ids, lime_warning, logger, lscontrol, survey_not_added
 
     surveys = lscontrol.get_surveys(filter="A01") #Todo: include the actual project name here dynamically!
-    survey_names = dict()
+    survey_not_added = dict()
+    survey_added = dict()
     for survey in surveys:
-        if survey['surveyls_title'] not in already_added_to:
-
-            survey_names[survey['sid']] = survey['surveyls_title']
+        if survey['sid'] not in already_added_to:
+            survey_not_added[survey['sid']] = survey['surveyls_title']
+        else:
+            survey_added[survey['sid']] = survey['surveyls_title']
 
     if request.method == 'POST':
 
-        surveys_to_add = request.form.getlist('to_survey')
+        surveys_to_add = request.form.getlist('checkbox_survey_not_added')
+        print(surveys_to_add)
 
         # undo
         if request.form['proceed'] == "No! Undo Transaction.":
@@ -194,12 +197,24 @@ def preview():
             # shutdown_server()
             return redirect(url_for('pseudoID.exit'))
 
+        surveys = lscontrol.get_surveys(filter="A01")  # Todo: include the actual project name here dynamically!
+        survey_not_added = dict()
+        survey_added = dict()
+        for survey in surveys:
+            if survey['sid'] not in already_added_to:
+                survey_not_added[survey['sid']] = survey['surveyls_title']
+            else:
+                survey_added[survey['sid']] = survey['surveyls_title']
+
+        print("not_added", survey_not_added)
+        print("    added", survey_added)
 
     return render_template('pseudoID/preview.html',
                            items=barcodes,
                            subject=subject,
                            ids=ids,
-                           survey_names=survey_names,
+                           survey_not_added=survey_not_added,
+                           survey_added=survey_added,
                            **lime_warning,
                            **show_pseudonym)
 

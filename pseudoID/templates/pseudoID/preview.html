@@ -41,21 +41,29 @@ h4 {  word-break: break-all; width: 880px; }
 
   <p>   </p>
 
-   {% if session.username %}
-   <fieldset>
-      <label for="to_survey">Add to survey(s) (optional, press&hold Ctr to select multiple surveys):</label>
+    {% if session.username %}
+   <fieldset  {% if show_pseudonym %} disabled {% endif %}>
+      <label for="to_survey">Add to survey(s) (optional):</label>
 
        <p>   </p>
 
-    <select id="to_survey" name="to_survey" multiple size="{{survey_names|length}}">
-      {% for key in survey_names %}
-        <option value="{{ key }}">{{ survey_names[key] }}</option>
+      {% for key in survey_added %}
+        <input type="checkbox" id="{{ survey_added[key] }}" name="checkbox_survey_added" value="{{ key }}" checked disabled>
+        <label for="{{ survey_added[key] }}">{{ survey_added[key] }}</label><br>
       {% endfor %}
-    </select>
+
+       -------
+
+      {% for key in survey_not_added %}
+        <input type="checkbox" id="{{ survey_not_added[key] }}" name="checkbox_survey_not_added" value="{{ key }}">
+        <label for="{{ survey_not_added[key] }}">{{ survey_not_added[key] }}</label><br>
+      {% endfor %}
 
     <p>   </p>
     </fieldset>
     {% endif %}
+
+
 
 
   {% if not show_pseudonym %}
