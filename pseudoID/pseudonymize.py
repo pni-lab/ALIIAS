@@ -15,6 +15,7 @@ bp = Blueprint('pseudoID', __name__, url_prefix='/pseudoID')
 
 handler = SessionHandler()
 handler.set()
+enc = Encryptor(site_tag=handler.site_tag, pseudonym_key=handler.pseudo_key)
 
 possible_duplicate = False
 already_registered = False
@@ -23,7 +24,6 @@ first_name = None
 subject = {}
 ids = {}
 lime_warning = {}
-enc = Encryptor(site_tag=handler.site_tag, pseudonym_key=handler.pseudo_key)
 show_pseudonym = {}
 lscontrol = None
 
@@ -73,7 +73,7 @@ def generate():
     duplicate_warning = False
 
     if lscontrol:
-        surveys = lscontrol.get_surveys(filter=handler.site) #Todo: include the actual project name here dynamically!
+        surveys = lscontrol.get_surveys(filter=handler.site)
         survey_names = []
         for survey in surveys:
             survey_names.append(survey['surveyls_title'])
