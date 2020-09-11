@@ -12,7 +12,7 @@ config['PSEUDOKEYS'] = {}
 
 config['ENCRYPTION'] = {"Type": "AES",
                         "short_id_length": "8",
-                        "char_base": "123456789abcdefghjklmnpqrstuvwxyz"}
+                        "char_base": "123456789abcdefghjkmnpqrstuvwxyz"}
 
 _ls_url_base_ = 'https://www.uni-due.de/~ht2203/limesurvey'
 
