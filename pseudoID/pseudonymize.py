@@ -9,8 +9,12 @@ from pseudoID.encryption import Encryptor
 from pseudoID.ls_api_wrapper import LimeSurveyController
 from pseudoID.utility import PseudonymLogger, norm_str
 from pseudoID.barcode_gen import generate_barcodeset
+from pseudoID.hw_encryption import SessionHandler
 
 bp = Blueprint('pseudoID', __name__, url_prefix='/pseudoID')
+
+handler = SessionHandler()
+handler.set()
 
 possible_duplicate = False
 already_registered = False
@@ -19,7 +23,7 @@ first_name = None
 subject = {}
 ids = {}
 lime_warning = {}
-enc = Encryptor(site_tag=config._site_tag_['Test'])
+enc = Encryptor(site_tag=handler.site_tag, pseudonym_key=handler.pseudo_key)
 show_pseudonym = {}
 lscontrol = None
 
@@ -56,7 +60,7 @@ def generate():
     lime_warning = {}
     show_pseudonym = {}
 
-    surveys = lscontrol.get_surveys(filter="A01") #Todo: include the actual project name here dynamically!
+    surveys = lscontrol.get_surveys(filter=handler.site)
     survey_names = []
     for survey in surveys:
         survey_names.append(survey['surveyls_title'])
@@ -153,7 +157,7 @@ def preview():
     global show_pseudonym
     global subject, ids, lime_warning, logger, lscontrol, survey_not_added
 
-    surveys = lscontrol.get_surveys(filter="A01") #Todo: include the actual project name here dynamically!
+    surveys = lscontrol.get_surveys(filter=handler.site)
     survey_not_added = dict()
     survey_added = dict()
     for survey in surveys:
@@ -197,7 +201,7 @@ def preview():
             # shutdown_server()
             return redirect(url_for('pseudoID.exit'))
 
-        surveys = lscontrol.get_surveys(filter="A01")  # Todo: include the actual project name here dynamically!
+        surveys = lscontrol.get_surveys(filter=handler.site)  # Todo: include the actual project name here dynamically!
         survey_not_added = dict()
         survey_added = dict()
         for survey in surveys:

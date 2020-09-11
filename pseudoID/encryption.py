@@ -7,11 +7,10 @@ from pseudoID.base_conversion import BaseConverter
 conv = BaseConverter(config.settings['ENCRYPTION']['char_base'])
 
 class Encryptor:
-    def __init__(self, user_key=config._user_key_, pseudonym_key_encrypted=config._pseudonym_key_encrypted_, site_tag=None):
-        cipher = AES.new(user_key, AES.MODE_SIV)
+    # todo check old references for encryptor
+    def __init__(self, pseudonym_key, site_tag=None):
         self.site_tag = site_tag
-        self.key = cipher.decrypt_and_verify(pseudonym_key_encrypted[0],
-                                             pseudonym_key_encrypted[1])
+        self.key = pseudonym_key
 
     def long_id(self, message):
         cipher = AES.new(self.key, AES.MODE_SIV)

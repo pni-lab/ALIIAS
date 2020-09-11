@@ -37,6 +37,8 @@ if not os.path.exists(BC_DIR):
 settings = configparser.ConfigParser()
 settings.read(os.path.join(ROOT_DIR, 'settings.conf'))
 
+HANDLER_DIR = os.path.join(ROOT_DIR, 'handler.txt')
+
 # ToDo: remove the hard coded user key
 _user_key_ = b'\xbf\xabb]\xb3\x94\xd8}>Z\x84QO\xdb\tD\xb1wl\xef@7\xa9$\x91\xb0>#\xe4\x10\x07u'
 
