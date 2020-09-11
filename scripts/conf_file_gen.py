@@ -3,25 +3,25 @@ from pseudoID import config
 import os
 # sc: https://linuxhint.com/read_write_ini_conf_python/
 
-config = configparser.ConfigParser()
+cfg_parser = configparser.ConfigParser()
 
-config['BASE'] = {"Log_level": 10,
+cfg_parser['BASE'] = {"Log_level": 10,
                   "opensc_path": '/usr/lib/x86_64-linux-gnu/opensc-pkcs11.so'}
 
-config['PSEUDOKEYS'] = {}
+cfg_parser['PSEUDOKEYS'] = {}
 
-config['ENCRYPTION'] = {"Type": "AES",
+cfg_parser['ENCRYPTION'] = {"Type": "AES",
                         "short_id_length": "8",
                         "char_base": "123456789abcdefghjkmnpqrstuvwxyz"}
 
 _ls_url_base_ = 'https://www.uni-due.de/~ht2203/limesurvey'
 
-config['LIMESURVEY'] = {"active": True,
+cfg_parser['LIMESURVEY'] = {"active": True,
                         "url_base": _ls_url_base_,
                         "url_rc": _ls_url_base_ + '/index.php/admin/remotecontrol',
                         "url_login": _ls_url_base_ + '/index.php/admin/authentication/sa/login'}
 
-config['BARCODES'] = {"n_diff_bc": 6, "n_identical_bc": 3, "blank": True}
+cfg_parser['BARCODES'] = {"x_dim": 750, "y_dim":375, "label_gap": 20, "n_diff_bc": 6, "n_identical_bc": 3, "blank": True}
 
-with open(os.path.join(config.ROOR_DIR, '../pseudoID/settings.conf'), 'w') as configfile:
-    config.write(configfile)
+with open(os.path.join(config.ROOT_DIR, '../pseudoID/settings.conf'), 'w') as configfile:
+    cfg_parser.write(configfile)
