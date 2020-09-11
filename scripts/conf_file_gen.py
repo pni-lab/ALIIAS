@@ -21,7 +21,7 @@ cfg_parser['LIMESURVEY'] = {"active": True,
                         "url_rc": _ls_url_base_ + '/index.php/admin/remotecontrol',
                         "url_login": _ls_url_base_ + '/index.php/admin/authentication/sa/login'}
 
-cfg_parser['BARCODES'] = {"x_dim": 750, "y_dim":375, "label_gap": 20, "n_diff_bc": 6, "n_identical_bc": 3, "blank": True}
+cfg_parser['BARCODES'] = {"x_dim": 750, "y_dim": 375, "label_gap": 20, "n_diff_bc": 6, "n_identical_bc": 3, "blank": True}
 
 with open(os.path.join(config.ROOT_DIR, '../pseudoID/settings.conf'), 'w') as configfile:
     cfg_parser.write(configfile)
