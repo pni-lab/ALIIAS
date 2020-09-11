@@ -31,14 +31,25 @@ def login():
     session['username'] = None
     if request.method == 'POST':
         username = request.form['username']
-        lscontrol = LimeSurveyController(username=username, password=request.form['password'])
+        try:
+         lscontrol = LimeSurveyController(username=username, password=request.form['password'])
+        except AttributeError as error:
+            flash("Unable to connect to the LimeSurvey server. Please check your internet connection!")
+            print(error)
+            logger.add_entry(
+                "LOGIN: Unable to connect to LimeSurvey")
+            return render_template('pseudoID/login.html')
 
         if isinstance(lscontrol.session_key, dict):
             # error logging in
             flash(lscontrol.session_key['status'])
             lscontrol = None
+            logger.add_entry(
+                "LOGIN: Unsuccessful Limesurvey login as " + username)
         else:
             session['username'] = username
+            logger.add_entry(
+                "LOGIN: Successful Limesurvey login as " + username)
             return redirect(url_for('pseudoID.generate'))
 
     return render_template('pseudoID/login.html')
@@ -55,11 +66,16 @@ def generate():
     ids = {}
     lime_warning = {}
     show_pseudonym = {}
+    duplicate_warning = False
 
-    surveys = lscontrol.get_surveys(filter="A01") #Todo: include the actual project name here dynamically!
-    survey_names = []
-    for survey in surveys:
-        survey_names.append(survey['surveyls_title'])
+    if lscontrol:
+        surveys = lscontrol.get_surveys(filter="A01") #Todo: include the actual project name here dynamically!
+        survey_names = []
+        for survey in surveys:
+            survey_names.append(survey['surveyls_title'])
+    else:
+        logger.add_entry(
+            "NO_LIMESURVEY_CONNECTION")
 
     if request.method == 'POST':
         subject['first_name'] = request.form['first_name']
@@ -89,53 +105,38 @@ def generate():
         lime_warning['warning_color'] = 'MediumSeaGreen'
         lime_warning['warning_text'] = "No problems detected."
         lime_warning['warning_details'] = ''
-        for survey in surveys:
 
-            # check if the participant is already added to this survey
-            try:
-                already_added = lscontrol.contains_participant(survey['sid'], short_id, long_id)
-            except AssertionError as error:
-                # duplicate
-                print(error)
-                already_added = False
-                lime_warning['warning_color'] = 'Tomato'
-                lime_warning['warning_text'] = config._warnings_['duplicate']
-                lime_warning['warning_details'] += "Duplicate detected in survey: " + survey['surveyls_title'] + ". "
-                #handle duplicate:
-                ids['short_id'] = ids['short_id'] + random.choice(config._hexchars_)
+        if lscontrol:
+            for survey in surveys:
 
-            if already_added:
-                already_added_to.append(survey['sid'])
+                # check if the participant is already added to this survey
+                try:
+                    already_added = lscontrol.contains_participant(survey['sid'], short_id, long_id)
+                except AssertionError as error:
+                    # duplicate
+                    print(error)
+                    already_added = False
+                    duplicate_warning = True
+                    lime_warning['warning_text'] = config._warnings_['duplicate']
+                    lime_warning['warning_details'] += "Duplicate detected in survey: " + survey['surveyls_title'] + ". "
+                    #handle duplicate:
+                    ids['short_id'] = ids['short_id'] + random.choice(config.settings['ENCRYPTION']['char_base'])
 
-        if len(already_added_to) > 0:
-            lime_warning['warning_details'] += "This participant has already been added to the following surveys: " \
-                                          + str(already_added_to)
+                if already_added:
+                    already_added_to.append(survey['sid'])
+
+            if len(already_added_to) > 0:
+                lime_warning['warning_details'] += "This participant has already been added to the following surveys: " \
+                                              + str(already_added_to)
+            else:
+                lime_warning['warning_details'] += " No participant with these data has been added to LimeSurvey yet."
+
+            lime_warning['warning_details'] += " Please carefully check all data. Typographical errors can result in " \
+                                              "database corruption!" \
+                                              " Click 'Proceed to the pseudonym' to obtain the short ID."
         else:
-            lime_warning['warning_details'] += " No participant with these data has been added to LimeSurvey yet."
-
-        lime_warning['warning_details'] += " Please carefully check all data. Typographical errors can result in " \
-                                          "database corruption!" \
-                                          " Click 'Proceed to the pseudonym' to obtain the short ID."
-
-
-        #response = lscontrol.register_in_cpdb(short_id, long_id)
-
-        #if response['result']['ImportCount'] == 0 and status == 'registered':
-        #    lime_warning['warning_color'] = 'MediumSeaGreen'
-        #    lime_warning['warning_text'] = config._warnings_['known']
-        #    already_registered = True
-        #elif response['result']['ImportCount'] == 0 and status == 'not_registered':
-        #    lime_warning['warning_color'] = 'Tomato'
-        #    lime_warning['warning_text'] = config._warnings_['duplicate']
-        #    possible_duplicate = True
-        #elif response['result']['ImportCount'] != 0 and status == 'not_registered':
-        #    lime_warning['warning_color'] = 'MediumSeaGreen'
-        #    lime_warning['warning_text'] = config._warnings_['new']
-        #elif response['result']['ImportCount'] != 0 and status == 'registered':
-        #    lime_warning['warning_color'] = 'Tomato'
-        #    lime_warning['warning_text'] = config._warnings_['unknown']
-
-       # lime_warning['warning_short'] = "LS: " + str((response['result']['ImportCount'], status))
+            lime_warning['warning_text'] += "NO_LS"
+            lime_warning['warning_details'] += "no ls integration"
 
         logger.add_entry(
             "PREVIEW : " + ids['short_id'] + '\t' + ids['long_id'] + '\t' + lime_warning['warning_text'] +\
@@ -143,24 +144,29 @@ def generate():
 
         return redirect(url_for('pseudoID.preview'))
 
-    return render_template('pseudoID/generate.html', _exp_tag_=config._exp_tag_)
+    return render_template('pseudoID/generate.html', _exp_tag_=config._exp_tag_, duplicate_warning=duplicate_warning)
 
 
 @bp.route('/preview', methods=('GET', 'POST'))
 def preview():
     barcodes = []
+    newly_added = []
     global possible_duplicate
     global show_pseudonym
-    global subject, ids, lime_warning, logger, lscontrol, survey_not_added
+    global subject, ids, lime_warning, logger, lscontrol, already_added_to
 
-    surveys = lscontrol.get_surveys(filter="A01") #Todo: include the actual project name here dynamically!
     survey_not_added = dict()
     survey_added = dict()
-    for survey in surveys:
-        if survey['sid'] not in already_added_to:
-            survey_not_added[survey['sid']] = survey['surveyls_title']
-        else:
-            survey_added[survey['sid']] = survey['surveyls_title']
+    ls_links = dict()
+    if lscontrol:
+        surveys = lscontrol.get_surveys(filter="A01") #Todo: include the actual project name here dynamically!
+        for survey in surveys:
+            if survey['sid'] not in already_added_to:
+                survey_not_added[survey['sid']] = survey['surveyls_title']
+            else:
+                survey_added[survey['sid']] = survey['surveyls_title']
+    else:
+        pass
 
     if request.method == 'POST':
 
@@ -178,11 +184,15 @@ def preview():
         if request.form['proceed'] == "Yes! Proceed to the pseudonym.":
             # register participant to the given survey(s)
             for sid in surveys_to_add:
-                print("add:", ids['short_id'], ids['long_id'], sid)
-                lscontrol.register_to_survey(ids['short_id'], ids['long_id'], sid)
-                logger.add_entry(
-                    "ACCEPTED : " + ids['short_id'] + '\t' + ids['long_id'] + '\t' + lime_warning['warning_text'] + \
-                    lime_warning['warning_details'])
+                if lscontrol:
+                    lscontrol.register_to_survey(ids['short_id'], ids['long_id'], sid)
+                    logger.add_entry(
+                        "ACCEPTED : " + ids['short_id'] + '\t' + ids['long_id'] + '\t' + lime_warning['warning_text'] + \
+                        lime_warning['warning_details'])
+                else:
+                    logger.add_entry(
+                        "ACCEPTED_WITHOUT_LS : " + ids['short_id'] + '\t' + ids['long_id'] + '\t' + lime_warning['warning_text'] + \
+                        lime_warning['warning_details'])
 
             barcodes = generate_barcodeset(ids['short_id'])
             # for f in barcodes:
@@ -197,17 +207,36 @@ def preview():
             # shutdown_server()
             return redirect(url_for('pseudoID.exit'))
 
-        surveys = lscontrol.get_surveys(filter="A01")  # Todo: include the actual project name here dynamically!
-        survey_not_added = dict()
-        survey_added = dict()
-        for survey in surveys:
-            if survey['sid'] not in already_added_to:
-                survey_not_added[survey['sid']] = survey['surveyls_title']
-            else:
-                survey_added[survey['sid']] = survey['surveyls_title']
+        # check if participant was added and update corresponding variables
+        already_added_to = []
+        if lscontrol:
+            for survey in surveys:
 
-        print("not_added", survey_not_added)
-        print("    added", survey_added)
+                # check if the participant is already added to this survey
+                try:
+                    already_added = lscontrol.contains_participant(survey['sid'], ids['short_id'], ids['long_id'])
+                except AssertionError as error:
+                    # duplicate
+                    print(error)
+                    already_added = False
+                if already_added:
+                    already_added_to.append(survey['sid'])
+
+            survey_not_added = dict()
+            bckp_survey_added = survey_added
+            survey_added = dict()
+            for survey in surveys:
+                if survey['sid'] not in already_added_to:
+                    survey_not_added[survey['sid']] = survey['surveyls_title']
+                else:
+                    survey_added[survey['sid']] = survey['surveyls_title']
+                    token=lscontrol.get_token(survey['sid'], ids['short_id'], ids['long_id'])
+                    ls_links[survey['sid']] = config.settings['LIMESURVEY']['url_base'] + "/index.php/" + survey['sid'] + "?token=" + token
+
+                    if survey['sid'] not in bckp_survey_added.keys():
+                        newly_added.append(survey['surveyls_title'])
+        else:
+            pass
 
     return render_template('pseudoID/preview.html',
                            items=barcodes,
@@ -215,6 +244,8 @@ def preview():
                            ids=ids,
                            survey_not_added=survey_not_added,
                            survey_added=survey_added,
+                           newly_added=newly_added,
+                           ls_links=ls_links,
                            **lime_warning,
                            **show_pseudonym)
 
@@ -241,4 +272,6 @@ def exit():
         lscontrol.close_session()
     session['username'] = None
     shutdown_server()
+    logger.add_entry(
+        "EXIT: Regular shutdown")
     return render_template('pseudoID/exit.html')

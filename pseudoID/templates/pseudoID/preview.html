@@ -15,14 +15,22 @@ h3 {  word-break: normal;  width: 880px; }
 h4 {  word-break: break-all; width: 880px; }
 </style>
 
-
+  {% if duplicate_warning %}
   <fieldset>
-    <legend>Error Checking</legend>
-	<h3 style="color:{{warning_color}};"><small>{{warning_text}}</small></h3>
-      <h3 style="color:{{warning_color}};"><small>{{warning_details}}</small></h3>
+    <legend>Warning</legend>
+	<h3 style="color:tomato;"><small>Short ID (but not longID) already registered in LimeSurvey!
+                           If all details are correct, proceed as usual but CONTACT THE DEVELOPERS!</small></h3>
   </fieldset>
+  {% endif %}
 
+  {% if not session.username %}
+      <fieldset>
+    <legend>Warning</legend>
+	<h3 style="color:tomato;"><small>You have not logged in to LimeSurvey or you internet connection has been lost!
+        It is still possible to obtain pseudonyms, but LimeSurvey has to be updated manually!</small></h3>
+  </fieldset>
       <p>   </p>
+  {% endif %}
 
 
   <fieldset>
@@ -49,10 +57,9 @@ h4 {  word-break: break-all; width: 880px; }
 
       {% for key in survey_added %}
         <input type="checkbox" id="{{ survey_added[key] }}" name="checkbox_survey_added" value="{{ key }}" checked disabled>
-        <label for="{{ survey_added[key] }}">{{ survey_added[key] }}</label><br>
+        <label for="{{ survey_added[key] }}">{{ survey_added[key] }} (participant already added to this survey)</label><br>
+        {% if show_pseudonym %} <a href={{ls_links[key]}} target="_blank">Open Survey</a><br> {% endif %}
       {% endfor %}
-
-       -------
 
       {% for key in survey_not_added %}
         <input type="checkbox" id="{{ survey_not_added[key] }}" name="checkbox_survey_not_added" value="{{ key }}">
@@ -60,10 +67,13 @@ h4 {  word-break: break-all; width: 880px; }
       {% endfor %}
 
     <p>   </p>
+
+    {% if show_pseudonym %}
+      <legend>Info</legend>
+	  <h3><small>Participant successfully added to the following surveys: {{newly_added}}</small></h3>
     </fieldset>
+       {% endif %}
     {% endif %}
-
-
 
 
   {% if not show_pseudonym %}
@@ -72,9 +82,10 @@ h4 {  word-break: break-all; width: 880px; }
     <input type="submit" name="proceed" value="No! Undo Transaction.">
     <input type="submit" name="proceed" value="Yes! Proceed to the pseudonym.">
    </fieldset>
+      <p>   </p>
   {% endif %}
 
-      <p>   </p>
+
 
   {% if show_pseudonym %}
   <fieldset>
