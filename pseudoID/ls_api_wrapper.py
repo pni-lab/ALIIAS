@@ -40,21 +40,31 @@ class LimeSurveyController:
         response = self.api.utils.request(data)
         return response['result']
 
+    def get_token(self, survey_id, short_id, long_id):
+        ret = self.get_participants(survey_id=survey_id)
+
+        if isinstance(ret, dict):
+            return ""
+
+        for part in ret:
+            if part['participant_info']['firstname'] == short_id:
+                assert (part['participant_info']['lastname'] == long_id), "Possible Duplicate Detected!"
+                return part['token']
+        return ""
+
+
     def contains_participant(self, survey_id, short_id, long_id):
         ret = self.get_participants(survey_id=survey_id)
 
-        print("**", ret)
-
         if isinstance(ret, dict):
-            print("return false here")
             return False
         for part in ret:
             if part['participant_info']['firstname'] == short_id:
                 assert (part['participant_info']['lastname'] == long_id), "Possible Duplicate Detected!"
                 return True
-            else:
-                return False
-            
+
+        return False
+
 
     def register_to_survey(self, short_id, long_id, survey_id):
         #string $sSessionKey, integer $iSurveyID, array $aParticipantData, boolean $bCreateToken = true): array
