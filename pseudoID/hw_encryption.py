@@ -76,7 +76,7 @@ class HardwareEncryptor:
         return plaintext
 
 
-class SessionHandler(HardwareEncryptor):
+class SessionHandler:
     def __init__(self):
         super().__init__()
         self.user_key = config._user_key_
