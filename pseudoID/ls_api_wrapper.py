@@ -5,11 +5,12 @@ from pseudoID import config
 
 class LimeSurveyController:
 
-    def __init__(self, username, password, url=config._ls_url_rc_):
+    def __init__(self, username, password, url=config.settings['LIMESURVEY']['url_rc']):
         self.username = username  # todo: encrypt with user key
         self.password = password  # todo: encrypt with user key
 
         # Make a session.
+        print(url)
         self.api = LimeSurveyRemoteControl2API(url)
         self.session_req = self.api.sessions.get_session_key(username, password)
         self.session_key = self.session_req.get('result')

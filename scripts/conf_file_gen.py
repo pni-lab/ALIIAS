@@ -14,7 +14,7 @@ cfg_parser['ENCRYPTION'] = {"Type": "AES",
                         "short_id_length": "8",
                         "char_base": "123456789abcdefghjkmnpqrstuvwxyz"}
 
-_ls_url_base_ = 'https://www.uni-due.de/~ht2203/limesurvey'
+_ls_url_base_ = 'https://www.uni-due.de/~ht2203/limesurvey_sfb289_test'
 
 cfg_parser['LIMESURVEY'] = {"active": True,
                         "url_base": _ls_url_base_,
