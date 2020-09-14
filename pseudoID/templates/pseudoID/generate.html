@@ -12,21 +12,25 @@
 
 	<h3 style="color:Tomato;"><small>This version is to be used for testing purposes only. PseudoIDs generated
     with this version will not be usable in the future. </small></h3>
+       <p>   </p>
+    {% if not session.username %}
+	<h3 style="color:tomato;"><small>You have not logged in to LimeSurvey or your internet connection has been lost!
+        It is still possible to obtain pseudonyms, but LimeSurvey has to be updated manually!</small></h3>
+
+  {% endif %}
 
   </fieldset>
-
-
     <p>   </p>
 
-    <label for="exp_tag">Add experimental tag (optional):</label>
+<!--    <label for="exp_tag">Add experimental tag (optional):</label>-->
 
-    <select id="exp_tag" name="exp_tag">
-      {% for key in _exp_tag_ %}
-        <option value="{{ _exp_tag_[key] }}">{{ key }}</option>
-      {% endfor %}
-    </select>
+<!--    <select id="exp_tag" name="exp_tag">-->
+<!--      {% for key in _exp_tag_ %}-->
+<!--        <option value="{{ _exp_tag_[key] }}">{{ key }}</option>-->
+<!--      {% endfor %}-->
+<!--    </select>-->
 
-    <p>   </p>
+<!--    <p>   </p>-->
 
     <label for="first_name">First name</label>
     <input name="first_name" id="first_name" required placeholder="Max/Martina">

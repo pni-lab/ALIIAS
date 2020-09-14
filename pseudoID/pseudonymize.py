@@ -101,7 +101,7 @@ def generate():
 
         short_id = enc.short_id(long_id)
         ids['short_id'] = short_id
-        ids['exp_tag'] = request.form['exp_tag']
+        # ids['exp_tag'] = request.form['exp_tag']
         ids['long_id'] = long_id
 
         # limesurvey integration
@@ -148,7 +148,8 @@ def generate():
 
         return redirect(url_for('pseudoID.preview'))
 
-    return render_template('pseudoID/generate.html', _exp_tag_=config._exp_tag_, duplicate_warning=duplicate_warning)
+    #return render_template('pseudoID/generate.html', _exp_tag_=config._exp_tag_, duplicate_warning=duplicate_warning)
+    return render_template('pseudoID/generate.html', duplicate_warning=duplicate_warning)
 
 
 @bp.route('/preview', methods=('GET', 'POST'))
@@ -159,7 +160,6 @@ def preview():
     global show_pseudonym
     global subject, ids, lime_warning, logger, lscontrol, already_added_to
 
-    surveys = lscontrol.get_surveys(filter=handler.site)
     survey_not_added = dict()
     survey_added = dict()
     ls_links = dict()
@@ -251,6 +251,7 @@ def preview():
                            survey_added=survey_added,
                            newly_added=newly_added,
                            ls_links=ls_links,
+                           duplicate_warning=lime_warning['warning_text'] == config._warnings_['duplicate'],
                            **lime_warning,
                            **show_pseudonym)
 
