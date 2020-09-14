@@ -1,3 +1,6 @@
+14.09.2020: v0.2.1
+Pre-release for testing purposes (without HW-key, with expiration date).
+- v0.2 + bugfix: limesurvey url customization 
 
 14.09.2020: v0.2
 Pre-release for testing purposes (without HW-key, with expiration date).
