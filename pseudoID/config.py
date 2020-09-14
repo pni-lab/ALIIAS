@@ -22,6 +22,7 @@ else:
             running_mode = 'Interactive'
 
 
+
 OUTPUT_DIR = os.path.expanduser('~/pseudoID')
 if not os.path.exists(OUTPUT_DIR):
     os.makedirs(OUTPUT_DIR)
