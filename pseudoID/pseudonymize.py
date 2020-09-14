@@ -89,7 +89,7 @@ def generate():
                                    request.form['dob_m'].zfill(2) + '.' + \
                                    request.form['dob_y']
         subject['maiden_name'] = request.form['maiden_name']
-        status = request.form['registered']
+        #status = request.form['registered']
 
         # do the actual pseudonym generation
         global enc
