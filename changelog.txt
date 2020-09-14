@@ -1,3 +1,13 @@
+
+14.09.2020: v0.2
+Pre-release for testing purposes (without HW-key, with expiration date).
+- Increased Limesurvey functionality:
+  - subjects can be added to the individual studys without an inital registration
+  - surveys can be started directly from PseudoID
+- custom character set for pseudonyms
+- simplified the barcode printing process
+- added core functionality for the hardware encryption
+
 06.08.2020: v0.1
 Pre-release for testing purposes.
 - minimal functionality (pseudonym-generation, LS-integration, re-identification) available
