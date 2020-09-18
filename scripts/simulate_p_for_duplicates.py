@@ -27,8 +27,8 @@ def parfor_subject_sweep():
             else:
                 ciphertext = ciphertext + ' ' + norm_str(element)
 
-        long_id = enc.long_id(ciphertext)
-        short_id.append(enc.short_id(long_id))
+        long_id = enc.get_long_id(ciphertext)
+        short_id.append(enc.get_short_id(long_id))
 
         if n_subjects - len(set(short_id)) == 0:
             duplicate = 0

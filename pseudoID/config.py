@@ -100,5 +100,3 @@ _warnings_ = {'known': 'Participant already registered in LimeSurvey. \n ' \
                          'If all details are correct, you can now proceed with the experiment, but ' \
                          'make sure to CONTACT THE DEVELOPERS!'}
 
-
-_hexchars_ = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'f']

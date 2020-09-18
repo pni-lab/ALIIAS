@@ -27,8 +27,8 @@ for subject in tqdm(data):
         else:
             ciphertext = ciphertext + ' ' + norm_str(element)
     ciphers.append(ciphertext)
-    long_id = enc.long_id(ciphertext)
-    short_id.append(enc.short_id(long_id))
+    long_id = enc.get_long_id(ciphertext)
+    short_id.append(enc.get_short_id(long_id))
 
 # find all the duplicates, based on SID
 helper = set()

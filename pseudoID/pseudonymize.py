@@ -29,6 +29,7 @@ lscontrol = None
 
 logger = PseudonymLogger()
 
+
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
     global lscontrol
@@ -36,7 +37,7 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         try:
-         lscontrol = LimeSurveyController(username=username, password=request.form['password'])
+            lscontrol = LimeSurveyController(username=username, password=request.form['password'])
         except AttributeError as error:
             flash("Unable to connect to the LimeSurvey server. Please check your internet connection!")
             print(error)
@@ -89,17 +90,17 @@ def generate():
                                    request.form['dob_m'].zfill(2) + '.' + \
                                    request.form['dob_y']
         subject['maiden_name'] = request.form['maiden_name']
-        #status = request.form['registered']
+        # status = request.form['registered']
 
         # do the actual pseudonym generation
         global enc
-        long_id = enc.long_id(norm_str(subject['first_name']) + ' ' +
-                              norm_str(subject['family_name']) + ' ' +
-                              norm_str(subject['place_of_birth']) + ' ' +
-                              norm_str(subject['date_of_birth']) + ' ' +
-                              norm_str(subject['maiden_name']))
+        long_id = enc.get_long_id(norm_str(subject['first_name']) + '_' +
+                                  norm_str(subject['family_name']) + '_' +
+                                  norm_str(subject['place_of_birth']) + '_' +
+                                  norm_str(subject['date_of_birth']) + '_' +
+                                  norm_str(subject['maiden_name']))
 
-        short_id = enc.short_id(long_id)
+        short_id = enc.get_short_id(long_id)
         ids['short_id'] = short_id
         # ids['exp_tag'] = request.form['exp_tag']
         ids['long_id'] = long_id
@@ -122,8 +123,9 @@ def generate():
                     already_added = False
                     duplicate_warning = True
                     lime_warning['warning_text'] = config._warnings_['duplicate']
-                    lime_warning['warning_details'] += "Duplicate detected in survey: " + survey['surveyls_title'] + ". "
-                    #handle duplicate:
+                    lime_warning['warning_details'] += "Duplicate detected in survey: " + survey[
+                        'surveyls_title'] + ". "
+                    # handle duplicate:
                     ids['short_id'] = ids['short_id'] + random.choice(config.settings['ENCRYPTION']['char_base'])
 
                 if already_added:
@@ -131,24 +133,24 @@ def generate():
 
             if len(already_added_to) > 0:
                 lime_warning['warning_details'] += "This participant has already been added to the following surveys: " \
-                                              + str(already_added_to)
+                                                   + str(already_added_to)
             else:
                 lime_warning['warning_details'] += " No participant with these data has been added to LimeSurvey yet."
 
             lime_warning['warning_details'] += " Please carefully check all data. Typographical errors can result in " \
-                                              "database corruption!" \
-                                              " Click 'Proceed to the pseudonym' to obtain the short ID."
+                                               "database corruption!" \
+                                               " Click 'Proceed to the pseudonym' to obtain the short ID."
         else:
             lime_warning['warning_text'] += "NO_LS"
             lime_warning['warning_details'] += "no ls integration"
 
         logger.add_entry(
-            "PREVIEW : " + ids['short_id'] + '\t' + ids['long_id'] + '\t' + lime_warning['warning_text'] +\
-        lime_warning['warning_details'])
+            "PREVIEW : " + ids['short_id'] + '\t' + ids['long_id'] + '\t' + lime_warning['warning_text'] + \
+            lime_warning['warning_details'])
 
         return redirect(url_for('pseudoID.preview'))
 
-    #return render_template('pseudoID/generate.html', _exp_tag_=config._exp_tag_, duplicate_warning=duplicate_warning)
+    # return render_template('pseudoID/generate.html', _exp_tag_=config._exp_tag_, duplicate_warning=duplicate_warning)
     return render_template('pseudoID/generate.html', duplicate_warning=duplicate_warning)
 
 
@@ -196,7 +198,8 @@ def preview():
                         lime_warning['warning_details'])
                 else:
                     logger.add_entry(
-                        "ACCEPTED_WITHOUT_LS : " + ids['short_id'] + '\t' + ids['long_id'] + '\t' + lime_warning['warning_text'] + \
+                        "ACCEPTED_WITHOUT_LS : " + ids['short_id'] + '\t' + ids['long_id'] + '\t' + lime_warning[
+                            'warning_text'] + \
                         lime_warning['warning_details'])
 
             barcodes = generate_barcodeset(ids['short_id'])
@@ -235,8 +238,9 @@ def preview():
                     survey_not_added[survey['sid']] = survey['surveyls_title']
                 else:
                     survey_added[survey['sid']] = survey['surveyls_title']
-                    token=lscontrol.get_token(survey['sid'], ids['short_id'], ids['long_id'])
-                    ls_links[survey['sid']] = config.settings['LIMESURVEY']['url_base'] + "/index.php/" + survey['sid'] + "?token=" + token
+                    token = lscontrol.get_token(survey['sid'], ids['short_id'], ids['long_id'])
+                    ls_links[survey['sid']] = config.settings['LIMESURVEY']['url_base'] + "/index.php/" + survey[
+                        'sid'] + "?token=" + token
 
                     if survey['sid'] not in bckp_survey_added.keys():
                         newly_added.append(survey['surveyls_title'])

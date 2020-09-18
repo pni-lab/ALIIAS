@@ -1,6 +1,7 @@
 from limesurveyrc2api import LimeSurveyRemoteControl2API
 from collections import OrderedDict
 from pseudoID import config
+import warnings
 
 
 class LimeSurveyController:
@@ -32,9 +33,10 @@ class LimeSurveyController:
         params = OrderedDict([
             ('sSessionKey', self.session_key),
             ('iSurveyID', survey_id),
+           # ('bUnused', True), # this does not work
             ('iStart', 0),
             ('iLimit', 1000000000),
-            ('aAttributes', 'true')
+            ('aAttributes', False)
         ])
 
         data = self.api.utils.prepare_params('list_participants', params)
@@ -53,7 +55,6 @@ class LimeSurveyController:
                 return part['token']
         return ""
 
-
     def contains_participant(self, survey_id, short_id, long_id):
         ret = self.get_participants(survey_id=survey_id)
 
@@ -66,9 +67,8 @@ class LimeSurveyController:
 
         return False
 
-
     def register_to_survey(self, short_id, long_id, survey_id):
-        #string $sSessionKey, integer $iSurveyID, array $aParticipantData, boolean $bCreateToken = true): array
+        # string $sSessionKey, integer $iSurveyID, array $aParticipantData, boolean $bCreateToken = true): array
         participant_data = [{"firstname": short_id,
                              "lastname": long_id,
                              "language": "de"
@@ -85,6 +85,8 @@ class LimeSurveyController:
         return response
 
     def register_in_cpdb(self, short_id, long_id, logical_delete=False):
+        warnings.warn("the spam module is deprecated", DeprecationWarning,
+                      stacklevel=2)
 
         if logical_delete:
             blacklisted = 'Y'
@@ -109,7 +111,7 @@ class LimeSurveyController:
         # todo when cloning survey: init participant table, link longID with a dummy participant
 
     def close_session(self):
-        #release_session_key(string $sSessionKey): string
+        # release_session_key(string $sSessionKey): string
         params = OrderedDict([
             ('sSessionKey', self.session_key)
         ])

@@ -100,7 +100,7 @@ class SessionHandler:
         with open(path, "r") as file:
             handles = file.readlines()
             for line in handles:
-                helper = self.decrypt(line[:-1]).split(" ")
+                helper = self.decrypt(line[:-1]).split("_")
                 if len(helper) == 4 and helper[1] == "SFB289":
                     self.site=helper[2]
                     self.site_tag=helper[3]
