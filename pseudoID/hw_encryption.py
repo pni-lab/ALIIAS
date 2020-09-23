@@ -25,15 +25,13 @@ class HardwareEncryptor:
 
     """
 
-    def __init__(self, test=True): #todo remove this
+    def __init__(self): #todo remove this
         path_opensc = config.settings['BASE']['opensc_path']
         self.lib = pkcs11.lib(path_opensc)
-        if not test:
-            try:
-                self.token = self.lib.get_token()
-            except pkcs11.exceptions.NoSuchToken:
-                warnings.warn('Dongle not plugged in!')
-
+        try:
+            self.token = self.lib.get_token()
+        except pkcs11.exceptions.NoSuchToken:
+            warnings.warn('Dongle not plugged in!')
         return
 
     def gen_new_pseudokey(self):
@@ -45,8 +43,8 @@ class HardwareEncryptor:
         # self.pseudokey_encrypted
         return
 
-    def encrypt(self, pseudokey=None):
-        if not pseudokey: pseudokey = self.pseudokey
+    def encrypt(self, plaintext=None):
+        if not plaintext: plaintext = self.pseudokey
 
         with self.token.open(user_pin='648219', rw=True) as session:
             # Extract public key
@@ -56,7 +54,7 @@ class HardwareEncryptor:
 
             # Encryption on the local machine
             cipher = PKCS1_v1_5.new(hw_key)
-            crypttext = cipher.encrypt(pseudokey)
+            crypttext = cipher.encrypt(plaintext)
         return crypttext
 
     def decrypt(self, pseudokey_encrypted):
@@ -76,25 +74,10 @@ class HardwareEncryptor:
         return plaintext
 
 
-class SessionHandler:
+class SessionHandler(HardwareEncryptor):
     def __init__(self):
         super().__init__()
-        self.user_key = config._user_key_
 
-    def encrypt(self, plaintext):
-        cipher = AES.new(self.user_key, AES.MODE_SIV)
-        ciphertext, tag = cipher.encrypt_and_digest(plaintext.rjust(64, '0').encode("utf-8"))
-
-        return conv.hex2custom(binascii.hexlify(ciphertext + tag).decode('utf-8'))
-
-    def decrypt(self, decrypt_me):
-        decrypt_me=conv.custom2hex(decrypt_me)
-        tag = binascii.unhexlify(decrypt_me[-32:].encode('utf-8'))
-        message = binascii.unhexlify(decrypt_me[:-32].encode('utf-8'))
-        cipher = AES.new(self.user_key, AES.MODE_SIV)
-        plaintext = cipher.decrypt_and_verify(message, mac_tag=tag)
-
-        return plaintext.decode('utf-8').lstrip('0')
 
     def set(self, path=config.HANDLER_DIR):
         with open(path, "r") as file:
@@ -108,7 +91,7 @@ class SessionHandler:
 
     def extend(self, entry, path=config.HANDLER_DIR):
         with open(path, "a") as file:
-            file.writelines(self.encrypt(entry) + "\n")
+            file.writelines(entry)
 
 
 
