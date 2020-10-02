@@ -46,6 +46,7 @@ class HardwareEncryptor:
     def encrypt(self, plaintext=None):
         if not plaintext: plaintext = self.pseudokey
 
+        # ToDo: ask for pin for REAL 2FA
         with self.token.open(user_pin='648219', rw=True) as session:
             # Extract public key
             hw_key = session.get_key(key_type=KeyType.RSA,
@@ -62,9 +63,9 @@ class HardwareEncryptor:
 
         with self.token.open(user_pin='648219', rw=True) as session:
             # Extract public key
-            hw_key = session.get_key(key_type=KeyType.RSA,
-                                     object_class=ObjectClass.PUBLIC_KEY)
-            hw_key = RSA.importKey(encode_rsa_public_key(hw_key))
+            #hw_key = session.get_key(key_type=KeyType.RSA,
+            #                         object_class=ObjectClass.PUBLIC_KEY)
+            #hw_key = RSA.importKey(encode_rsa_public_key(hw_key))
 
             # Decryption in the HSM
             priv = session.get_key(key_type=KeyType.RSA,
@@ -80,18 +81,20 @@ class SessionHandler(HardwareEncryptor):
 
 
     def set(self, path=config.HANDLER_DIR):
-        with open(path, "r") as file:
+        with open(path, "rb") as file:
             handles = file.readlines()
             for line in handles:
-                helper = self.decrypt(line[:-1]).split("_")
+                helper = self.decrypt(binascii.unhexlify(line)).decode('utf-8').split('_')
+                print(helper)
                 if len(helper) == 4 and helper[1] == "SFB289":
+                    print(helper[2])
                     self.site=helper[2]
                     self.site_tag=helper[3]
                     self.pseudo_key=helper[0].encode("utf-8")
 
     def extend(self, entry, path=config.HANDLER_DIR):
-        with open(path, "a") as file:
-            file.writelines(entry)
+        with open(path, "ab") as file:
+            file.write(entry)
 
 
 
