@@ -4,9 +4,9 @@ import socket
 import webbrowser
 from datetime import datetime, date
 
-_expiration_date_ = datetime(2020, 9, 30)
+_expiration_date_ = datetime(2020, 11, 16)
 
-if date.today() < _expiration_date_.date():
+if date.today() <= _expiration_date_.date():
     hostname = socket.gethostname()
     IPAddr = socket.gethostbyname(hostname)
     # url = IPAddr + "/pseudoID/generate"
