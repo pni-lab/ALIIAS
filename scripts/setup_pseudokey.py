@@ -3,7 +3,7 @@ from Crypto.Random import get_random_bytes
 import binascii
 from os import path
 
-parser = argparse.ArgumentParser(description='generate pseudokey, write to txt')
+parser = argparse.ArgumentParser(description='Generate a new 32 byte pseudokey and write it to a txt file')
 parser.add_argument('-p', '--project', type=str, help='name of the project')
 
 args = parser.parse_args()
@@ -14,7 +14,7 @@ if __name__ == '__main__':
     if not path.exists(filename):
         with open(filename, "w") as file:
             file.write(key)
-        print(args.project)
-        print(key)
+        print('Project: ' + args.project)
+        print('Pseudokey: ' + key)
     else:
         print('file already exists!')

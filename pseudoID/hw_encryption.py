@@ -95,6 +95,7 @@ class SessionHandler(HardwareEncryptor):
     def extend(self, entry, path=config.HANDLER_DIR):
         with open(path, "ab") as file:
             file.write(entry)
+            file.write(b'\n')
 
 
 
