@@ -4,7 +4,7 @@ from pseudoID.hw_encryption import SessionHandler
 
 pseudo_key = b't\xfa\xad\xad\xe7\xb8\xaa\xc5\xb2;W\x84\xe1O2TZ\xdd\xf8\xbe\x80\xa4TG\xc8OS\xee\xf2\x9f\xa7v'
 valid_tag = 'SFB289'
-site = "A12"
+site = "A01"
 site_tag = config._site_tag_[site]
 
 handler = SessionHandler()
@@ -19,7 +19,8 @@ plaintext = handler.decrypt(cipher)
 print(plaintext)
 print(len(plaintext))
 print(len(pseudo_key))
-handler.extend(new_entry)
+
+#handler.extend(new_entry)
 
 #handler.set()
 #print(handler.site_tag)
