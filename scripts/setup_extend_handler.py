@@ -6,10 +6,10 @@ sys.path.append('..')
 from pseudoID import config
 from pseudoID.hw_encryption import SessionHandler
 
-
 parser = argparse.ArgumentParser(description='Encrypt the generated pseudokey with the hardware key and add new entry'
                                              'to the handler file')
 parser.add_argument('-p', '--project', type=str, help='name of the project')
+#parser.add_argument('-p', '--project', type=str, help='name of the project') #todo valid_tag
 
 args = parser.parse_args()
 

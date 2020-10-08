@@ -12,7 +12,8 @@ cfg_parser['PSEUDOKEYS'] = {}
 
 cfg_parser['ENCRYPTION'] = {"Type": "AES",
                         "short_id_length": "8",
-                        "char_base": "123456789abcdefghjkmnpqrstuvwxyz"}
+                        "char_base": "123456789abcdefghjkmnpqrstuvwxyz",
+                            "offline": False}
 
 _ls_url_base_ = 'https://www.uni-due.de/~ht2203/limesurvey_sfb289_test'
 
