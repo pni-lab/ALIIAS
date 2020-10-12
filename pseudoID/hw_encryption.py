@@ -9,7 +9,6 @@ import warnings
 from pseudoID import config
 from pseudoID.base_conversion import BaseConverter
 
-
 # ToDo: store encrypted key in config file
 conv = BaseConverter(config.settings['ENCRYPTION']['char_base'])
 
@@ -25,7 +24,7 @@ class HardwareEncryptor:
 
     """
 
-    def __init__(self): #todo remove this
+    def __init__(self):  # todo remove this
         path_opensc = config.settings['BASE']['opensc_path']
         self.lib = pkcs11.lib(path_opensc)
         try:
@@ -46,6 +45,7 @@ class HardwareEncryptor:
     def encrypt(self, plaintext=None):
         if not plaintext: plaintext = self.pseudokey
 
+        # ToDo: ask for pin for REAL 2FA
         with self.token.open(user_pin='648219', rw=True) as session:
             # Extract public key
             hw_key = session.get_key(key_type=KeyType.RSA,
@@ -57,41 +57,58 @@ class HardwareEncryptor:
             crypttext = cipher.encrypt(plaintext)
         return crypttext
 
-    def decrypt(self, pseudokey_encrypted):
-        if not pseudokey_encrypted: pseudokey = self.pseudokey_encrypted
+    def decrypt(self, ciphertext):
 
         with self.token.open(user_pin='648219', rw=True) as session:
             # Extract public key
-            hw_key = session.get_key(key_type=KeyType.RSA,
-                                     object_class=ObjectClass.PUBLIC_KEY)
-            hw_key = RSA.importKey(encode_rsa_public_key(hw_key))
+            # hw_key = session.get_key(key_type=KeyType.RSA,
+            #                         object_class=ObjectClass.PUBLIC_KEY)
+            # hw_key = RSA.importKey(encode_rsa_public_key(hw_key))
 
             # Decryption in the HSM
             priv = session.get_key(key_type=KeyType.RSA,
                                    object_class=ObjectClass.PRIVATE_KEY)
 
-            plaintext = priv.decrypt(pseudokey_encrypted, mechanism=Mechanism.RSA_PKCS)
-        return plaintext
+            plaintext = priv.decrypt(binascii.unhexlify(ciphertext), mechanism=Mechanism.RSA_PKCS)
+        return plaintext.decode('utf-8')
 
 
-class SessionHandler(HardwareEncryptor):
+class OfflineEncryptor:
+    def __init__(self):
+        self.offline_key = config._offline_key_
+
+    def encrypt(self, plaintext):
+        cipher = AES.new(self.offline_key, AES.MODE_SIV)
+        ciphertext, tag = cipher.encrypt_and_digest(plaintext.encode("utf-8"))
+
+        return binascii.hexlify(ciphertext + tag).decode('utf-8')
+
+    def decrypt(self, ciphertext):
+        ciphertext = binascii.hexlify(ciphertext)
+        tag = ciphertext[-32:]
+        message = ciphertext[:-32]
+        cipher = AES.new(self.offline_key, AES.MODE_SIV)
+        plaintext = cipher.decrypt_and_verify(message, mac_tag=tag)
+        return binascii.hexlify(plaintext)
+
+
+class SessionHandler(HardwareEncryptor if not config.settings['ENCRYPTION']['offline'] else OfflineEncryptor):
     def __init__(self):
         super().__init__()
 
-
     def set(self, path=config.HANDLER_DIR):
-        with open(path, "r") as file:
-            handles = file.readlines()
+        with open(path, "rb") as file:
+            handles = file.read().splitlines()
             for line in handles:
-                helper = self.decrypt(line[:-1]).split("_")
+                helper = self.decrypt(line).split('_')
+                print(helper)
                 if len(helper) == 4 and helper[1] == "SFB289":
-                    self.site=helper[2]
-                    self.site_tag=helper[3]
-                    self.pseudo_key=helper[0].encode("utf-8")
+                    print(helper[2])
+                    self.site = helper[2]
+                    self.site_tag = helper[3]
+                    self.pseudo_key = helper[0].encode("utf-8")
 
     def extend(self, entry, path=config.HANDLER_DIR):
-        with open(path, "a") as file:
-            file.writelines(entry)
-
-
-
+        with open(path, "ab") as file:
+            file.write(entry)
+            file.write(b'\n')
