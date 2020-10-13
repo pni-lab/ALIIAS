@@ -6,7 +6,8 @@ import os
 cfg_parser = configparser.ConfigParser()
 
 cfg_parser['BASE'] = {"Log_level": 10,
-                  "opensc_path": '/usr/lib/x86_64-linux-gnu/opensc-pkcs11.so'}
+                  "opensc_path": '/usr/lib/x86_64-linux-gnu/opensc-pkcs11.so',
+                      "url": 'http://127.0.0.1:5000/'}
 
 cfg_parser['PSEUDOKEYS'] = {}
 
