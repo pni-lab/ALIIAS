@@ -92,7 +92,8 @@ class OfflineEncryptor:
         return binascii.hexlify(plaintext)
 
 
-class SessionHandler(HardwareEncryptor if not config.settings['ENCRYPTION']['offline'] else OfflineEncryptor):
+# class SessionHandler(HardwareEncryptor if not config.settings['ENCRYPTION']['offline'] else OfflineEncryptor):
+class SessionHandler(HardwareEncryptor):
     def __init__(self):
         super().__init__()
 
@@ -100,13 +101,17 @@ class SessionHandler(HardwareEncryptor if not config.settings['ENCRYPTION']['off
         with open(path, "rb") as file:
             handles = file.read().splitlines()
             for line in handles:
-                helper = self.decrypt(line).split('_')
-                print(helper)
-                if len(helper) == 4 and helper[1] == "SFB289":
-                    print(helper[2])
-                    self.site = helper[2]
-                    self.site_tag = helper[3]
-                    self.pseudo_key = helper[0].encode("utf-8")
+                try:
+                    helper = self.decrypt(line).split('_')
+                    print(helper)
+                    if len(helper) == 4 and helper[1] == "SFB289":
+                        print(helper[2])
+                        self.site = helper[2]
+                        self.site_tag = helper[3]
+                        self.pseudo_key = helper[0].encode("utf-8")
+                except:
+                    print('skipped wrong handler')
+
 
     def extend(self, entry, path=config.HANDLER_DIR):
         with open(path, "ab") as file:
