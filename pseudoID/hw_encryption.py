@@ -8,6 +8,7 @@ from pkcs11.util.rsa import encode_rsa_public_key
 import warnings
 from pseudoID import config
 from pseudoID.base_conversion import BaseConverter
+import hashlib
 
 # ToDo: store encrypted key in config file
 conv = BaseConverter(config.settings['ENCRYPTION']['char_base'])
@@ -104,7 +105,11 @@ class SessionHandler(HardwareEncryptor):
                 try:
                     helper = self.decrypt(line).split('_')
                     print(helper)
-                    if len(helper) == 4 and helper[1] == "SFB289":
+
+                    hash_obj = hashlib.md5(helper[1].encode('utf-8'))
+                    valid_tag_hash = hash_obj.hexdigest()
+
+                    if valid_tag_hash == config.settings['ENCRYPTION']['validation_tag']:
                         print(helper[2])
                         self.site = helper[2]
                         self.site_tag = helper[3]
