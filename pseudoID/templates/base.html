@@ -1,8 +1,8 @@
 <!doctype html>
-<title>{% block title %}{% endblock %} - PseudoID</title>
+<title>{% block title %}{% endblock %} - ALIIAS</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <nav>
-  <h1>PseudoID</h1>
+  <h1>ALIIAS</h1>
   <ul>
       {% if session.username %}
         <li><a> Logged in to LimeSurvey as "{{session.username}}"</a>
@@ -10,7 +10,7 @@
         <li><a> NOT LOGGED IN TO LIMESURVEY!</a>
         <li><a href="{{ url_for('pseudoID.login') }}">Log in</a>
       {% endif %}
-      <li><a href="{{ url_for('pseudoID.generate') }}">New PseudoID</a>
+      <li><a href="{{ url_for('pseudoID.generate') }}">New Pseudonym</a>
       <li><a href="{{ url_for('pseudoID.reidentify') }}">Re-Identify</a>
       <li><a href="{{ url_for('pseudoID.exit') }}">Exit</a>
   </ul>
