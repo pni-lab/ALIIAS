@@ -3,12 +3,19 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <nav>
   <h1>ALIIAS</h1>
+
+    {% if session.username %}
+    <img src="/static/dot_ls.png" alt="dot green" width="3%" height="auto" >
+    {% endif %}
+
   <ul>
       {% if session.username %}
-        <li><a>
-            <img src="/static/dot_green.png" alt="dot green" width="8%" height="8%" >
-            {{session.username}}
-        </a>
+
+
+      <li><a>
+      {{session.username}}
+      </a>
+
       {% else %}
         <li><a>
 
@@ -35,7 +42,7 @@
   <ul>
       Author: <a href="https://pni-lab.github.io">PNI-Lab</a>, University Hospital Essen, Germany
       <a href="mailto:sfb289.survey@uni-due.de">(sfb289.survey@uni-due.de)</a>
-      <img src="/static/pni_logo.png" alt="PNI logo" width="12%" height="auto" >
+      <img src="/static/pni_logo.png" alt="PNI logo" width="10%" height="10%" >
 
   </ul>
 </footer>
