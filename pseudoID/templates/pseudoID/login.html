@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Log in to LimeSurvey{% endblock %}</h1>
+  <h1>{% block title %}
+    <img src="/static/logo-limesurvey_2.png" alt="LS logo" width="18%" height="auto" >
+    {% endblock %}</h1>
 {% endblock %}
-
 
 {% block content %}
   <form method="post" autocomplete="off">
@@ -11,10 +12,10 @@
     <p>   </p>
 
     <label for="username">Username</label>
-    <input name="username" id="username" required placeholder="mmustermann">
+    <input name="username" id="username" required placeholder="lsaccount">
 
     <label for="password">Password</label>
-    <input type="password" name="password" id="password" required placeholder="">
+    <input type="password" name="password" id="password" required placeholder="***********">
 
     <input type="submit" value="Log in!">
   </form>
