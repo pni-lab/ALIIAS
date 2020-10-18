@@ -23,7 +23,7 @@ else:
 
 
 
-OUTPUT_DIR = os.path.expanduser('~/pseudoID')
+OUTPUT_DIR = os.path.expanduser('~/ALIIAS')
 if not os.path.exists(OUTPUT_DIR):
     os.makedirs(OUTPUT_DIR)
 
