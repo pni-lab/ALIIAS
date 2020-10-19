@@ -10,6 +10,7 @@ from pseudoID.ls_api_wrapper import LimeSurveyController
 from pseudoID.utility import PseudonymLogger, norm_str
 from pseudoID.barcode_gen import generate_barcodeset
 from pseudoID.hw_encryption import SessionHandler
+from pseudoID._version import get_versions
 
 bp = Blueprint('pseudoID', __name__, url_prefix='/pseudoID')
 
@@ -28,6 +29,10 @@ show_pseudonym = {}
 lscontrol = None
 
 logger = PseudonymLogger()
+
+__version__ = get_versions()['version']
+del get_versions
+logger.add_entry('VERSION: ' + '\t' + str(__version__))
 
 
 @bp.route('/login', methods=('GET', 'POST'))
@@ -145,7 +150,7 @@ def generate():
             lime_warning['warning_details'] += "no ls integration"
 
         logger.add_entry(
-            "PREVIEW : " + ids['short_id'] + '\t' + ids['long_id'] + '\t' + lime_warning['warning_text'] + \
+            "NEW ENTRY: " + '\t' + lime_warning['warning_text'] + \
             lime_warning['warning_details'])
 
         return redirect(url_for('pseudoID.preview'))
@@ -183,7 +188,7 @@ def preview():
         # undo
         if request.form['proceed'] == "No! Undo Transaction.":
             logger.add_entry(
-                "WITHDRAWN : " + ids['short_id'] + '\t' + ids['long_id'] + '\t' + lime_warning['warning_text'] + \
+                "WITHDRAWN ENTRY : "  + '\t' + lime_warning['warning_text'] + \
                 lime_warning['warning_details'])
             subject = ids = lime_warning = None
             return redirect(url_for('pseudoID.generate'))
@@ -194,11 +199,11 @@ def preview():
                 if lscontrol:
                     lscontrol.register_to_survey(ids['short_id'], ids['long_id'], sid)
                     logger.add_entry(
-                        "ACCEPTED : " + ids['short_id'] + '\t' + ids['long_id'] + '\t' + lime_warning['warning_text'] + \
+                        "ACCEPTED: " + '\t' + lime_warning['warning_text'] + \
                         lime_warning['warning_details'])
                 else:
                     logger.add_entry(
-                        "ACCEPTED_WITHOUT_LS : " + ids['short_id'] + '\t' + ids['long_id'] + '\t' + lime_warning[
+                        "ACCEPTED_WITHOUT_LS : "  + '\t' + lime_warning[
                             'warning_text'] + \
                         lime_warning['warning_details'])
 
