@@ -1,17 +1,17 @@
 %\par\noindent\rule{\textwidth\color{pniblue}}{0.4pt}
 \section{Example use-cases}
+\label{use-case:one-session}
 \par\noindent\rule{\textwidth\color{pniblue}}{0.4pt}
 \textbf{1. Initial registration only (one-session use-case):}
-If only questionnaires are collected or all assessments are done in one session, the initial registration with PseudoID might already be sufficient. In this case, the new participant must be assigned to all necessary surveys in LimeSurvey and must be invited to all, during the initial registration. The short ID generated during the initial registration can be used for any additional subsequent assessments, directly following the initial registration.
+If questionnaires are the only type of data collected or all assessments (e.g. questionnaires + behavioral experiment) are done in one session, the initial registration with ALIIAS might already be sufficient. The researcher can instantly obtain the invitation link to the survey an the obtained short ID can be used for subsequent assessments, directly following the initial registration.
 
 \par\noindent\rule{\textwidth\color{pniblue}}{0.4pt}
 \textbf{2. "Batched" initial registration of many subjects (multi-session use-case):}
-With the proposed pseudonymization procedure, the researcher has the opportunity to "batch" initial registrations, i.e. perform the initial registration of many participants in one longer session, based on the personal data previously collected (e.g. during phone interview). The assignment of the participants to specific surveys and the actual experiments (MRI, behavior) can take place at a later time point. In this case, PseudoID can be used multiple times to repeatedly obtain the pseudonym for a given participant. In this case, a database query is performed that allows for checking for typos in the personal data and ensure that the proper short ID is obtained.
+With the proposed pseudonymization procedure, the researcher has the opportunity to "batch" initial registrations, i.e. perform the initial registration of many participants in one longer session, based on the personal data previously collected (e.g. during phone interview). The assignment of the participants to specific surveys and the actual experiments (MRI, behavior) can take place at a later time point. In this case, ALIIAS can be used multiple times to repeatedly obtain the pseudonym for a given participant. ALIIAS displays if the participant was previously registered to any of the surveys. If the experimenter has previously registered the participant, this feature can be used for error checking. (Typographical errors in the personal data result in a different pseudonym which has not been registered yet, see ).
 
 \par\noindent\rule{\textwidth\color{pniblue}}{0.4pt}
 \textbf{3. Repeated assessments (multi-session + repeated measures use-case):}
-Use-case 2 is easy to adapt to repeated assessments (e.g. before and after treatment).
-For convenience, PseudoID provides a pre-defined subset of "experimental tags" (e.g. baseline, week1, week2, etc) which is appended to the short ID.
+Use-case 2 is easy to adapt to repeated assessments (e.g. before and after treatment). Single projects can add arbitrary ”experimental tags” to the shortID (e.g. append ’-w2’ for 'week 2') or use the built in features of the given experimental equipment (e.g. separate ’program cards’ on the MRI console) to distinguish between measurements. 
 
 \par\noindent\rule{\textwidth\color{pniblue}}{0.4pt}
 \textbf{4. Simultaneous assessment of many subjects (parallel-sessions use-case):}
@@ -23,3 +23,13 @@ If the experiment has to be restarted, PseudoID can be repeatedly used to obtain
 
 \par\noindent\rule{\textwidth\color{pniblue}}{0.4pt}
 \textbf{6. Incidental finding:} In case of incidental finding, the LimeSurvey database will be used to link the long ID to the short ID and re-identification is performed by PseudoID (on any computer), given the long ID and the pseudonymization secret stored on the hardware key. 
+
+\par\noindent\rule{\textwidth\color{pniblue}}{0.4pt}
+\section{Quality Checks}
+Typographical errors in the personal data will result in a different pseudonym. This might not be a serious problem if the pseudonym is obtained only once as, in this case, re-identification of this pseudonym will simply result in the mistyped personal data. (Use case \ref{use-case:one-session}).
+However, if ALIIAS is used for obtaining the pseudonym for the same subject multiple times (Use cases 2,3 and 5), typographical errors result in different pseudonyms for the same subject which requires manual adjustment during data consolidation.
+To avoid this, two quality check steps must to be performed.
+\begin{itemize}
+    \item \textbf{QC1:} Typographical are most critical at the initial registration. Therefore, before displaying the pseudonym, ALIIAS shows a preview page, where personal data must be carefully checked for mistakes. The researcher must explicitly state that "All details are correct", before being able to obtain the pseudonym (see label 'QC1' on Fig. \ref{fig:flowchart}).
+    \item \textbf{QC2:} If the initial registration was correct and the researcher already assigned the participant to at least one survey in ALIIAS (recommended to do right at initial registration), than at repeated pseudonymization of the same participant, the preview page of ALIIAS will display the surveys to which the participant was already assigned. This feature can be considered as a additional opportunity for quality checking: in case of typos the researcher will see result contradictory to the expectations. Namely, ALIIAS will display that no participant with the (mistyped) details was added to any of the surveys.
+\end{itemize}

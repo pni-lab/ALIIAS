@@ -20,6 +20,10 @@
 
 \usepackage{array}
 
+\usepackage{wrapfig}
+
+\usepackage{booktabs}       % professional-quality tables
+
 %\renewcommand{\familydefault}{\sfdefault}
 
 % Fonts
@@ -132,7 +136,7 @@
         \setlength{\headheight}{23.96pt}
         \pagestyle{fancy}
         \fancyhf{}
-        \rhead{\color{pniblue}Documentation v\version}
+        \rhead{\color{pniblue}Version \version}
         \lhead{\color{pniblue}\myshorttitle}
         \fancyfoot[C]{Page \thepage /5}
     }
@@ -142,3 +146,10 @@
 \hyphenation{system}
 \hyphenation{neuroscience}
 \hyphenation{Factory}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Following part is for editing, should be commented out in the final version:
+\usepackage{xcolor}
+\newcommand{\todo}[1]{{\color{red}{\textbf{ToDo: #1}}}}
+\usepackage{lipsum}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

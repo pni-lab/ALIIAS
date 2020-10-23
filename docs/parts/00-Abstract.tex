@@ -2,10 +2,10 @@ Pseudonymization is a reversible de-identification process, in which personal da
 
 A proper pseudonymization protocol can motivate the relaxation, to a certain degree, of data controllers’ legal obligations (if properly applied) \cite{pseudonym}, i.e. spare a significant amount of efforts put into data security and privacy, when storing, sharing and publishing experimental data and/or its derivatives.
 
-Issues of privacy protection are part of a rapidly changing 'landscape' shaped by ongoing digitalization efforts (in general and specifically in medical research) and by the recent developments in the corresponding regulations (most importantly the GDPR \cite{gdpr}). Recent developments in  this filed render some of the 'traditional' pseudonymization methods, which has been typically used so far in medical research (e.g. the frequently used sequential numbering of participants), increasingly “outdated”, with significant safety concerns (e.g. vulnerability stemming from storing and regularly updating a document linking the personal data to the IDs, or possibility of adversarial re-identification based on the order of data in the pseudonymized dataset).
+Issues of privacy protection are part of a rapidly changing 'landscape' shaped by ongoing digitalization efforts (in general and specifically in medical research) and by the recent developments in the corresponding regulations (most importantly the GDPR \cite{gdpr}). Recent developments in  this filed render some of the 'traditional' pseudonymization methods, which have been typically used so far in medical research (e.g. the frequently used sequential numbering of participants), increasingly “outdated”, with significant safety concerns (e.g. vulnerability stemming from storing and regularly updating a document linking the personal data to the IDs, or possibility of adversarial re-identification based on the order of data in the pseudonymized dataset).
 
-Here we propose a software tool, called PseudoID, which implements a de-centralized, encryption-based deterministic pseudonymization technique to transform personal data to a pseudonym.
-The 'full version' of the pseudonym (long ID) allows for complete re-identification (given a dedicated secret digital key, owned by the 'pseudonymization entity', i.e. the individual research site). The software also provides a 'human-readable' short ID (8 characters or barcode), which is easy to link to the long ID and is compatible with most experimental procedures.
+Here we propose a software tool, called ALIIAS, which implements a de-centralized, encryption-based deterministic pseudonymization technique to transform personal data to a pseudonym.
+The 'full version' of the pseudonym (long ID) allows for complete re-identification (given a dedicated secret digital key, owned by the 'pseudonymization entity', i.e. the individual research site). The software also provides a 'human-readable' (9 characters) and scannable (barcode)  short ID, which is easy to link to the long ID and is compatible with most experimental procedures.
 
 PseudoID is equipped with integration to LimeSurvey \cite{limesurvey}, an open-source web application for digital, web-accessible surveys and questionnaires.
 
@@ -13,13 +13,13 @@ PseudoID is equipped with integration to LimeSurvey \cite{limesurvey}, an open-s
 
 \textbf{Highlights: }
 \begin{itemize}
-    \item pseudonymization happens as a first step of the experiment, allowing for all succeeding steps to be anonymized;
+    \item pseudonymization happens as a first step of the experiment, so that all succeeding steps already work with anonymized data;
     \item pseudonyms are deterministic, i.e. reproducible in case of multiple measurements;
-    \item pseudonyms are guaranteed to be unique for multi-center experiments of any size;
+    \item pseudonyms are guaranteed to be unique, even for multi-center experiments;
     \item pseudonymization can be performed at multiple computers/sites simultaneously
     \item pseudonymization happens after a two-factor authentication, and requires a hardware key;
     \item no central administration of the link between pseudonym and personal data is needed
-    \item the "pseudonymization secret" is restricted to a single point: to the (arbitrary number of) USB hardware keys.
+    \item the "pseudonymization secret" is restricted to a single point: to the USB hardware keys.
 \end{itemize}
 
 
