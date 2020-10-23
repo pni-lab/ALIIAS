@@ -9,12 +9,17 @@
 
 \author{Tamas Spisak}
 \date{2020}
-\newcommand*\mytitle{\color{pniblue}\textbf{'PseudoID'}}
+\newcommand*\mytitle{\color{pniblue}\textbf{The Users' Manual}}
 
-\newcommand*\mysubtitle{\color{pniblue} a pseudonymization system with \\ LimeSurvey integration \\ - dedicated for SFB289 -}
+\newcommand*\mysubtitle{\color{pniblue} \textbf{A}nonymization with \\
+\textbf{L}imesurvey integration and \\
+\textbf{II} factor \\
+\textbf{A}uthentication for \\
+\textbf{S}cientific research}
+%\emph{ - dedicated for SFB289 -}
 
-\newcommand*\myshorttitle{PseudoID}
-\newcommand*\version{0.1}
+\newcommand*\myshorttitle{ALIIAS: The Users' Manual}
+\newcommand*\version{1.0}
 \title{\mytitle} % Max 144 chars
 
 \schooltutor{}
@@ -39,11 +44,18 @@
     \pagenumbering{arabic}
     \setcounter{page}{2}
 
+    \setlength{\parskip}{1mm}
     \begin{large}
     \input{parts/01-workflow}
     \input{parts/02-usecases}
-    \input{docs/parts/09-installation}
-    \input{parts/10-developers}
+    \input{parts/03-installation}
+    \input{docs/parts/04-setting_up_ls}
+    \input{parts/05-pseudonymization_sop}
+    \input{docs/parts/06-barcode_printing}
+    \input{docs/parts/07-reidentification}
+    \input{docs/parts/08-implementation-details}
+    \input{docs/parts/09-faq}
+    \input{docs/parts/10-cheetsheet}
         
     \end{large}
 
