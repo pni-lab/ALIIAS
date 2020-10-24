@@ -75,6 +75,7 @@
     \graphicspath{{./assets/}}
 
 \usepackage{floatrow}
+\usepackage{lastpage}
 
 % Maths
 \usepackage{amsmath}
@@ -138,7 +139,7 @@
         \fancyhf{}
         \rhead{\color{pniblue}Version \version}
         \lhead{\color{pniblue}\myshorttitle}
-        \fancyfoot[C]{Page \thepage /5}
+        \fancyfoot[C]{Page \thepage \quad of \pageref{LastPage}}
     }
 
     \pagestyle{utt}
@@ -153,3 +154,11 @@
 \newcommand{\todo}[1]{{\color{red}{\textbf{ToDo: #1}}}}
 \usepackage{lipsum}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{tocloft}
+\renewcommand{\cftsecfont}{\bfseries\color{pniblue}}
+\renewcommand{\cftsecpagefont}{\bfseries\color{pniblue}}
+\renewcommand{\cfttoctitlefont}{\Huge\color{pniblue}\headingfont}
+
+\renewcommand{\cftsubsubsecfont}{\bfseries\color{gray}}
+\renewcommand{\cftsubsubsecpagefont}{\bfseries\color{gray}}

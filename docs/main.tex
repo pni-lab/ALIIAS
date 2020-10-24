@@ -29,6 +29,8 @@
 \input{parts/00-Abstract}
 }
 
+\setcounter{tocdepth}{4}
+
 \begin{document}
 
     %\setlength{\parskip}{0mm}
@@ -41,11 +43,18 @@
     \frontpage
     
     
+    \setlength{\parskip}{1mm}
+    
     \pagenumbering{arabic}
     \setcounter{page}{2}
-
-    \setlength{\parskip}{1mm}
+    
+    \tableofcontents
+    \addtocontents{toc}{~\hfill\textbf{\color{pniblue}Page}\par}
+    \thispagestyle{fancy}
+    \pagebreak
+    
     \begin{large}
+    
     \input{parts/01-workflow}
     \input{parts/02-usecases}
     \input{parts/03-installation}
@@ -55,12 +64,16 @@
     \input{docs/parts/07-reidentification}
     \input{docs/parts/08-implementation-details}
     \input{docs/parts/09-faq}
-    \input{docs/parts/10-cheetsheet}
-        
+    
     \end{large}
-
     %\nocite{*}
     \bibliographystyle{apalike}
     \footnotesize
     {\linespread{0}\selectfont\bibliography{references}}
+    
+    \input{docs/parts/10-printer_set-up}
+    \input{docs/parts/11-cheetsheet}
+        
+
+    
 \end{document}
