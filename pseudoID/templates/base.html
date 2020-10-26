@@ -1,20 +1,78 @@
 <!doctype html>
-<title>{% block title %}{% endblock %} - PseudoID</title>
+<style>
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color:  lightgrey;
+}
+
+li {
+  float: right;
+}
+
+li a {
+  display: block;
+  color: #377ba8;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: gray;
+}
+
+ .logo-image{
+    overflow: hidden;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-bottom: -20px;
+}
+
+.disabled {
+    pointer-events:none; //This makes it not clickable
+}
+
+.active {
+  background-color: lightcyan;
+}
+
+ul li img {
+    margin-left: 10px;
+    vertical-align: middle;
+}
+</style>
+
+
+<title>{% block title %}{% endblock %} - ALIIAS</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<nav>
-  <h1>PseudoID</h1>
+
   <ul>
+      <a class="navbar-brand" href="/">
+      <div class="logo-image">
+      <img src="/static/aliias_logo2.png" alt="dot green" width="20%" height="auto" >
+      </div>
+      </a>
+
+
       {% if session.username %}
-        <li><a> Logged in to LimeSurvey as "{{session.username}}"</a>
-      {% else %}
-        <li><a> NOT LOGGED IN TO LIMESURVEY!</a>
-        <li><a href="{{ url_for('pseudoID.login') }}">Log in</a>
-      {% endif %}
-      <li><a href="{{ url_for('pseudoID.generate') }}">New PseudoID</a>
-      <li><a href="{{ url_for('pseudoID.reidentify') }}">Re-Identify</a>
+
       <li><a href="{{ url_for('pseudoID.exit') }}">Exit</a>
+      <li><a href="{{ url_for('pseudoID.reidentify') }}">Re-Identify</a>
+      <li><a href="{{ url_for('pseudoID.generate') }}">New Pseudonym</a>
+      <li class="disabled"><a>
+      {{session.username}} <img src="/static/dot_ls.png" alt="dot green" width="24" height="24" >
+      </a>
+      {% else %}
+      <li><a href="{{ url_for('pseudoID.exit') }}">Exit</a>
+      <li><a href="{{ url_for('pseudoID.reidentify') }}">Re-Identify</a>
+      <li><a href="{{ url_for('pseudoID.generate') }}">New Pseudonym</a>
+      <li><a href="{{ url_for('pseudoID.login') }}">Log in</a>
+      {% endif %}
   </ul>
-</nav>
+
 
 <section class="content">
   <header>
@@ -28,7 +86,14 @@
 
 <footer>
   <ul>
-      Author: <a href="https://pni-lab.github.io">PNI-Lab</a>, University Hospital Essen, Germany
-      <a href="mailto:sfb289.survey@uni-due.de">(sfb289.survey@uni-due.de)</a>
+
+      <li><a href="https://pni-lab.github.io">
+        <img src="/static/pni_logo.png" alt="PNI logo" width="auto" height="50" >
+      </a>
+
+      <li><a href="mailto:sfb289.survey@uni-due.de">
+              <img src="/static/mail2.png" alt="PNI logo" width="auto" height="50" >
+        </a>
+
   </ul>
 </footer>

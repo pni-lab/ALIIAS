@@ -33,3 +33,7 @@ def create_app(test_config=None):
         return redirect(url_for('pseudoID.login'))
 
     return app
+
+from ._version import get_versions
+__version__ = get_versions()['version']
+del get_versions

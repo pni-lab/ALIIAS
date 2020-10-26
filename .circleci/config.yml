@@ -12,8 +12,11 @@ jobs:
       - python/install-deps
       - python/save-cache
       - run:
-          command: ./manage.py test
-          name: Test
+          command: export PYTHONPATH=`pwd`/..; echo $PYTHONPATH # todo: install package
+          name: Install package
+      - run:
+          command: export PYTHONPATH=`pwd`; echo $PYTHONPATH; python examples/ls_api_surveytest.py 
+          name: Test_LS_integration
 
 workflows:
   main:
