@@ -16,7 +16,11 @@ bp = Blueprint('pseudoID', __name__, url_prefix='/pseudoID')
 
 handler = SessionHandler()
 handler.set()
-enc = Encryptor(site_tag=handler.site_tag, pseudonym_key=handler.pseudo_key)
+
+try:
+    enc = Encryptor(site_tag=handler.site_tag, pseudonym_key=handler.pseudo_key)
+except ValueError:
+    flash('No hardware key found!')
 
 possible_duplicate = False
 already_registered = False
@@ -193,10 +197,18 @@ def preview():
             subject = ids = lime_warning = None
             return redirect(url_for('pseudoID.generate'))
 
+
         if request.form['proceed'] == "Yes! Proceed to the pseudonym.":
             # register participant to the given survey(s)
             for sid in surveys_to_add:
                 if lscontrol:
+                    ret = lscontrol.register_to_survey(ids['short_id'], ids['long_id'], sid)
+
+                    if 'result' in ret and 'status' in ret['result'] and ret['result'][
+                        'status'] == 'No survey participants table':
+                        logger.add_entry('No survey participants table found. Please activate survey and initialize survey participant table!')
+                        flash('No survey participants table found. Please activate survey and initialize survey participant table!')
+
                     lscontrol.register_to_survey(ids['short_id'], ids['long_id'], sid)
                     logger.add_entry(
                         "ACCEPTED: " + '\t' + lime_warning['warning_text'] + \
@@ -270,7 +282,10 @@ def reidentify():
     if request.method == 'POST':
         global enc
         long_id = request.form['long_id']
-        flash(enc.reidentify(long_id))
+        try:
+            flash(enc.reidentify(long_id))
+        except ValueError:
+            flash('Wrong key for decryption of this longID!')
     return render_template('pseudoID/reidentify.html')
 
 

@@ -114,7 +114,7 @@ class SessionHandler(HardwareEncryptor):
                         self.site_tag = helper[3]
                         self.pseudo_key = helper[0].encode("utf-8")
                 except:
-                    print('skipped wrong handler')
+                    print('skipped handler')
 
 
     def extend(self, entry, path=config.HANDLER_DIR):

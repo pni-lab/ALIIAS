@@ -1,7 +1,7 @@
 import barcode
 from barcode.writer import ImageWriter
 import PIL
-from PIL import Image, ImageFont
+from PIL import Image, ImageFont, ImageOps
 import pseudoID.config as config
 import pathlib
 import os
@@ -50,7 +50,7 @@ def merge_files_pdf(barcodes_path, short_ID, n=config.settings['BARCODES'].getin
                          dups=config.settings['BARCODES'].getint('n_identical_bc')):
     TARGET_DIR = os.path.join(config.BC_DIR, short_ID)
 
-    first_bc = Image.open(barcodes_path[0])
+    first_bc = ImageOps.expand(Image.open(barcodes_path[0]), border=40, fill='white')
 
     for i in range(dups-1):
         barcodes_path.append(barcodes_path[0])
@@ -59,7 +59,7 @@ def merge_files_pdf(barcodes_path, short_ID, n=config.settings['BARCODES'].getin
 
     barcodes = []
     for bc_path in barcodes_path:
-        barcodes.append(Image.open(bc_path))
+        barcodes.append(ImageOps.expand(Image.open(bc_path), border=40, fill='white'))
 
     path = pathlib.Path(TARGET_DIR).joinpath('barcode_' + short_ID + '_batch.pdf')
     first_bc.save(path, save_all=True, append_images=barcodes)

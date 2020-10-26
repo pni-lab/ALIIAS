@@ -25,7 +25,7 @@ cfg_parser['ENCRYPTION'] = {"Type": "AES",
                             "offline": False,
                             "validation_tag": valid_tag_hash}
 
-_ls_url_base_ = 'https://www.uni-due.de/~ht2203/limesurvey_sfb289_test'
+_ls_url_base_ = 'https://sfb289.survey.uni-due.de'
 
 cfg_parser['LIMESURVEY'] = {"active": True,
                         "url_base": _ls_url_base_,

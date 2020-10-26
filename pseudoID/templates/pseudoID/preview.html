@@ -96,11 +96,11 @@ h4 {  word-break: break-all; width: 880px; }
     <p><small>Long ID</small></p>
     <h4>{{ids['long_id']}}</h4>
 
-    <p><small>Barcodes</small></p>
+    <p><small> Browse to the following file on your PC to print the Barcodes: </small></p>
 
     {% for bc in items %}
-      <a href=file://{{bc}} target="_blank">file://{{bc}}</a>
-    {% endfor %}
+          <h4>{{bc}}</h4>
+      {% endfor %}
 
   </fieldset>
 
