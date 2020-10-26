@@ -10,8 +10,12 @@ valid_tag = b'SFB289'
 hash_obj = hashlib.md5(valid_tag)
 valid_tag_hash = hash_obj.hexdigest()
 
+opensc_robert = 'C:/Program Files/OpenSC Project/OpenSC/pkcs11/opensc-pkcs11.dll'
+opensc_tamas = '/usr/lib/x86_64-linux-gnu/opensc-pkcs11.so'
+opensc_ghouse = '/usr/lib/x86_64-linux-gnu/opensc-pkcs11.so'
+
 cfg_parser['BASE'] = {"Log_level": 10,
-                  "opensc_path": 'C:/Program Files/OpenSC Project/OpenSC/pkcs11/opensc-pkcs11.dll',
+                  "opensc_path": opensc_robert,
                       "url": 'http://127.0.0.1:5000/'}
 
 cfg_parser['PSEUDOKEYS'] = {}
