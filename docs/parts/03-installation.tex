@@ -1,0 +1,41 @@
+\section{SOP: Installation}
+\label{section:sop_installation}
+PseudoID can be installed on Windows computers. The installation procedure requires administrator privileges (i.e authorization from the IT department, in case of centrally-administered computers; for each installation individually).
+
+\begin{itemize}
+    \item Click \todo{refresh link} \href{https://github.com/spisakt/PseudoID/releases}{\underline{here}} to access the latest version of PseudoID.
+    \item Download and extract the zip archive to an arbitrary folder. This will result in the following files\footnote{If you can not see the file extensions, you should activate them under "View" in the explorer}: 
+    \begin{itemize}
+        \item \path{start_pseudoid.exe}
+        \item \path{pseudoid.txt}
+        \item \path{handler.txt}
+        \item \path{settings.conf} 
+        \item \todo{openSC.dll??}
+    \end{itemize}
+    \item If you have administrator privileges on the computer, simply double-click the file called \path{start_pseudoid.exe} to start the software.
+    
+    Refer to the instructions below if you are working on a centrally administered computer.
+\end{itemize} 
+\par\noindent\rule{\textwidth\color{pniblue}}{0.4pt}
+
+\subsection*{Installation on centrally-administered computers}
+
+Please contact the IT department (via phone call or helpdesk ticket) and ask for privileges for running the software. Explain the IT department what the software exactly does: "PseudoID is a research software for SFB289. Technical details: it is a 'flask' application deployed as a standalone exe file. It depends on the OpenSC library, for handling harwarekeys. \todo{shipped with the installation?} It reads the dependency's .dll file and two configuration files from the same folder and runs a webserver on the localhost (Port 5000)".
+
+As an additional information, you can provide the following steps to the IT-administrator (a solution working at the University Hospital Essen).
+
+\begin{enumerate}
+    
+    \item The administrator from the IT department should move the \path{start_pseudoid.exe}, \path{handler.txt} and \path{settings.conf} \todo{and openSC.dll} files to a directory, from which the \path{.exe} can be executed. Caution: They have to be in the SAME folder. 
+    
+    \item The \path{pseudoid.txt} file should be moved to a location that can be accessed by the user, for example the desktop. The file should then be opened with a text editor, to change the current path to the path where the \path{.exe} was moved to.
+    \label{item:admin}
+    
+    \item For example: after installation, the contents of \path{pseudoid.txt} end like this: \\ \path{.\pseudoid.exe}. \\ This should be changed to the NEW path of the \path{start_pseudoid.exe}
+    
+    \item When this has been changed correctly, the file name of \path{pseudoid.txt} has to be changed to \path{start_pseudoid.bat} (you can ignore the warning)
+    
+    \item If everything worked out properly, a double-click on \path{start_pseudoid.bat} should start PseudoID in a new browser window.
+\end{enumerate} 
+
+

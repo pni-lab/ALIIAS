@@ -5,7 +5,14 @@
 \node [name=uttsquare,
 anchor=north west
 ] at (uttbackground_anchor){
-\includegraphics[width=16.5cm]{fig/header.png}};
+\includegraphics[width=6cm]{docs/fig/aliias_logo.png}};
+
+
+\coordinate [right=15mm, below=40mm] (uttbackground_anchor) at (current page.north west);
+\node [name=uttsquare,
+anchor=north west
+] at (uttbackground_anchor){
+\includegraphics[width=13cm]{fig/header.png}};
 
 % Logo company
 \coordinate [right=194mm, below=63mm] (companylogo_anchor) at (current page.north west);
