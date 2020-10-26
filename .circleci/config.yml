@@ -12,7 +12,7 @@ jobs:
       - python/install-deps
       - python/save-cache
       - run:
-          command: export PYTHONPATH=`pwd`:$PYTHONPATH # todo: install package
+          command: export PYTHONPATH=`pwd` # todo: install package
           name: Install package
       - run:
           command: python examples/ls_api_surveytest.py 
