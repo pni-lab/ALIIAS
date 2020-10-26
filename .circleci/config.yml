@@ -12,8 +12,8 @@ jobs:
       - python/install-deps
       - python/save-cache
       - run:
-          command: ./manage.py test
-          name: Test
+          command: python examples/ls_api_surveytest.py 
+          name: Test_LS_integration
 
 workflows:
   main:
