@@ -12,8 +12,8 @@
 \label{fig:ls_conventions}
 \end{wrapfigure}
 
-LimeSurvey is a free and open source on-line statistical survey web app (www.limesurvey.org).
-In LimeSurvey, a series of questions, which are supposed to be filled-in by the same person, in one session; is called a \emph{survey} (Fig. \ref{fig:ls_conventions}).
+LimeSurvey (\href{www.limesurvey.org}{\color{pniblue} www.limesurvey.org}) is a free and open source on-line statistical survey web application.
+In LimeSurvey, a series of questions, which are supposed to be filled-in by the same person, in one session; is called a \emph{survey} ("Umfrage", Fig. \ref{fig:ls_conventions}).
 In SFB289, multiple assessment points or visits within one study will be represented by multiple surveys.
 A survey typically consists of many questionnaires (“Fragebögen”), which are called “question groups” in LimeSurvey.
 LimeSurvey provides the opportunity to limit survey access to those participants only, who were previously registered to a so-called participant table (“Teilnehmertabelle”) of the survey by the researcher. In SFB289, ALIIAS will generate pseudonyms for participants and – after the proper setup of LS – automatically register the participants (with their pseudonyms) to the surveys specified by the researcher. Moreover, the link (URL) for these surveys can also be obtained from ALIIAS. The following steps explain how to set up LimeSurvey for compatibility with ALIIAS.
@@ -26,14 +26,17 @@ The URL for the CRC-wise LimeSurvey server is:
 \hyperref[https://sfb289.survey.uni-due.de/index.php/admin/authentication/sa/login]{https://sfb289.survey.uni-due.de/index.php/admin/authentication/sa/login}
 
 Log in credentials will be sent out individually. 
+
+
 \small\setlength\fboxsep{5pt}\setlength\fboxrule{1pt}
 \fcolorbox{pniblue}{pniblue!5}{\begin{minipage}{0.9\textwidth}
 In case of trouble during log in, see point \ref{faq:ls_login} in section \ref{section:faq} ("Troubleshooting").
 \end{minipage}}
 
+\large
 \par\noindent\rule{\textwidth\color{pniblue}}{0.4pt}
 \subsection*{ Step 2. Creating a new SFB289-survey.}
-\addcontentsline{toc}{subsubsection}{Creating survey}
+\addcontentsline{toc}{subsubsection}{Create survey}
 The single projects in SFB289 can have multiple surveys, e.g. one survey for each measurement time point (“visit”). For studies in which the researcher or study doctor is also supposed to fill in a questionnaire/checklist, multiple surveys for each visit should be used (see step 2.3).
 
 When creating a new survey, we have access to the standard questionnaire battery of SFB289. To include it, new surveys must be created by copying the survey \\ “SFB289\_standard\_questionnaire\_battery” as many times as needed. 
@@ -45,7 +48,7 @@ When creating a new survey, we have access to the standard questionnaire battery
 \end{figure}
 
 \par\noindent\rule{\textwidth\color{pniblue}}{0.4pt}
-\subsubsection*{2.2 Select the “Kopieren” tab, select the survey called “SFB289\_standard\_questionnaire\_battery” for copy. }
+\subsubsection*{2.2 Select the “Kopieren” tab, select the survey called “SFB289\_standard\_questionnaire\_battery” to copy from. }
 \begin{figure}[H]
 \includegraphics[width=1.0\textwidth]{docs/fig/ls_sop2.2.png}
 \end{figure}
@@ -167,6 +170,8 @@ After these steps, the new surveys are ready to be used together with the pseudo
 The surveys only have to be set up in LS once, at project start. After this, the preferred way of interacting with LS is the interface provided by the pseudonymization software ALIIAS. LS should only be used for purposes of double-checking and manual corrections, if required.
 \end{minipage}}
 
+\large
+
 \subsubsection*{Adding and inviting a new participant to a survey}
 ALIIAS provides all interfaces to LS that are typically required during experimental studies. For instance, when generating a new pseudonym, ALIIAS provides the opportunity to automatically register the participant with the new pseudonym in LS to the selected surveys. ALIIAS restricts the visibility of surveys, so that members of a single project can only see and manipulate their own surveys. With ALIIAS, it is easy to find out if a participant has already been registered to any of the surveys. Through ALIIAS, we can obtain the participant-related “invitation” links to any surveys. These links can be simply opened in the browser on any computer or sent out to the participant in an e-mail.
 
@@ -175,6 +180,8 @@ ALIIAS provides all interfaces to LS that are typically required during experime
 \fcolorbox{pniblue}{pniblue!5}{\begin{minipage}{0.9\textwidth}
 For detailed description of the process, refer to the SOP in the next section (section \ref{section:sop_ls})
 \end{minipage}}
+
+\large
 
 \subsubsection*{Saving questionnaire data}
 For legal reasons (and to defend against discrimination attacks), the LS database will be regularly (each night at 2am) “flushed”, that means, questionnaire data (responses) will be automatically moved to a safe local storage. Therefore, the export of questionnaire data is not possible with the export function of LS. Instead, the latest version of the database will be available on a private Sciebo link for the single projects, as a csv file and excel table. This database will be automatically updated each night.

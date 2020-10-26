@@ -1,12 +1,16 @@
 
 \section{Implementation details}
-\subsubsection{Why using Nitrokey HSM?}
+\subsubsection*{Why using Nitrokey HSM?}
+\addcontentsline{toc}{subsubsection}{Why using Nitrokey HSM as hardware key?}
+
 PseudoID guarantees the anonymity and the strictly authorized re-identifyability of personal and sensitive medical data by the use of hardware-keys.
 
-Simply speaking, hardware keys provide a "write-only" slot for the pseudonymization secret. After uploading the secret to the hardware key, it can't be read out anymore, not even by the PseudoID software. Instead, PseudoID places a request to the hardware key to perform the encryption via its built-in hardware cryptography module, i.e. the pseudonymization secret never leaves the key. Hardware keys prevent the copy (stealing) of the digital pseudonymization secret, unless the hardware key was lost or stolen.
+Simply speaking, hardware keys provide a "write-only" slot for the pseudonymization secret. After uploading the secret to the hardware key, it can't be read out anymore, not even by the PseudoID software. Instead, PseudoID places a request to the hardware key to perform the encryption via its built-in hardware cryptography module. That means that the pseudonymization secret \textbf{never leaves the hardware key}. Hardware keys prevent the copy (stealing) of the digital pseudonymization secret, unless the hardware key gets (permanently) lost or stolen (in this case, see point \ref{faq:lostkey} in section \ref{section:faq}, 'Troubleshooting').
 
-The hardware-key support is built upon the open-source software library OpenSC. OpenSC's API (application programming interface) has been validated with the "Nitrokey HSM" hardware key, thus additional development time can be minimised by using this product. Moreover, Nitrokey HSM is the only hardware solution on the market with hidden encrypted storage, and it provides the highest security level for sensitive medical data, as the product is produced exclusively in Germany, without exported hardware-elements, i.e. no risk for “backdoors" or other security issues.
+The hardware-key support is built upon the open-source software library OpenSC. OpenSC's API (application programming interface) has been validated with the "Nitrokey HSM" hardware key. Moreover, Nitrokey HSM is the only hardware solution on the market with hidden encrypted storage, and it provides the highest security level for sensitive medical data, as the product is produced exclusively in Germany, without exported hardware-elements, i.e. no risk for “backdoors" or other security issues.
 
 \par\noindent\rule{\textwidth\color{pniblue}}{0.4pt}
-\subsubsection{Developers and Acknowledgement}
+\subsubsection*{Developers and Acknowledgement}
+\addcontentsline{toc}{subsubsection}{Developers and Acknowledgements}
+
 PseudoID is being developed by Tamas Spisak and Robert Englert (PNI-lab, University Hospital Essen). The proposed pseudonymization workflow is a result of a joint effort of members of the central scientific projects of SFB289 (Ulrike Bingel, Christian Büchel, Winfried Rief, Manfred Schedlowski and Tamas Spisak) and implements insights from several members of SFB289.
