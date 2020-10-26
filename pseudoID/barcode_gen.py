@@ -43,10 +43,30 @@ def generate_barcodeset(short_ID,
         bc = generate_barcode(short_ID + "-" + str(i + 1), outdir=TARGET_DIR)
         barcodes.append(bc)
 
-    merged_path = merge_files(barcodes, short_ID)
+    merged_path = merge_files_pdf(barcodes, short_ID)
     return merged_path
 
-def merge_files(barcodes, short_ID,
+def merge_files_pdf(barcodes_path, short_ID, n=config.settings['BARCODES'].getint('n_diff_bc'),
+                         dups=config.settings['BARCODES'].getint('n_identical_bc')):
+    TARGET_DIR = os.path.join(config.BC_DIR, short_ID)
+
+    first_bc = Image.open(barcodes_path[0])
+
+    for i in range(dups-1):
+        barcodes_path.append(barcodes_path[0])
+
+    barcodes_path.pop(0)
+
+    barcodes = []
+    for bc_path in barcodes_path:
+        barcodes.append(Image.open(bc_path))
+
+    path = pathlib.Path(TARGET_DIR).joinpath('barcode_' + short_ID + '_batch.pdf')
+    first_bc.save(path, save_all=True, append_images=barcodes)
+    return [path]
+
+
+def merge_files_png(barcodes, short_ID,
                          n=config.settings['BARCODES'].getint('n_diff_bc'),
                          dups=config.settings['BARCODES'].getint('n_identical_bc')):
     TARGET_DIR = os.path.join(config.BC_DIR, short_ID)

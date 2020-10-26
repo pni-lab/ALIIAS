@@ -6,7 +6,7 @@ from pseudoID.hw_encryption import SessionHandler
 # ------------------- #
 # CHANGE ME
 site = "A01"
-add_new_entry = False
+add_new_entry = True
 # ------------------- #
 
 valid_tag = 'SFB289'
@@ -20,11 +20,17 @@ suffix = '_' + valid_tag + '_' + site + '_' + site_tag
 plaintext = binascii.hexlify(nitro.pseudokey).decode('utf-8') + suffix
 new_entry = nitro.encrypt(plaintext.encode('utf-8'))
 
+
 print(new_entry)
+print(type(new_entry))
 
 decr = nitro.decrypt(new_entry)
+print(decr)
 
+new_entry = binascii.hexlify(new_entry)
+print(new_entry)
 if add_new_entry:
+    # nitro.extend(new_entry)
     nitro.extend(new_entry)
 
 #nitro.set()
