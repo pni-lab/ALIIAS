@@ -12,6 +12,7 @@ jobs:
       - python/install-deps
       - python/save-cache
       - run:
+          command: echo export PYTHONPATH=`pwd` >> $PYTHONPATH # todo: install package 
           command: python examples/ls_api_surveytest.py 
           name: Test_LS_integration
 
