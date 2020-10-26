@@ -1,0 +1,30 @@
+#
+# python conf_file_gen.py should have already be run
+# PseudoID/settings.conf
+#########################
+
+# step 0
+# label & plug in the key
+
+# step 1
+sc-hsm-tool --initialize --so-pin 3537363231383830 --pin 289289 --label "A12"
+# > Using reader with a card: Nitrokey Nitrokey HSM (DENK01044660000         ) 00 00
+
+# step 2
+cd scripts/hwkey_setup
+python init_nitrokey.py
+
+# step 3
+python create_pseudokey.py -p A12
+# the key file is generated: A01_pseudokey.txt
+# this must be saved at a protected place
+
+# step 4
+python setup_extend_handler.py -p A12 -v SFB289-TrEaTmEnT-ExPeCtAtIoN-PNI
+# start from here to add a new hw key to A01, by creating the A01_pseudokey.txt file here, with the right pseudokey
+
+# step 5
+# output PseudoID/handler.txt
+# then save and delete this: script/hwkey_setup/A01_pseudokey.txt
+
+# Now the key is added to the project (if ALIIAS runs with the right handler file)

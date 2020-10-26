@@ -47,7 +47,7 @@ class HardwareEncryptor:
         if not plaintext: plaintext = self.pseudokey
 
         # ToDo: ask for pin for REAL 2FA
-        with self.token.open(user_pin='648219', rw=True) as session:
+        with self.token.open(user_pin='289289', rw=True) as session:
             # Extract public key
             hw_key = session.get_key(key_type=KeyType.RSA,
                                      object_class=ObjectClass.PUBLIC_KEY)
@@ -60,7 +60,7 @@ class HardwareEncryptor:
 
     def decrypt(self, ciphertext):
 
-        with self.token.open(user_pin='648219', rw=True) as session:
+        with self.token.open(user_pin='289289', rw=True) as session:
             # Extract public key
             # hw_key = session.get_key(key_type=KeyType.RSA,
             #                         object_class=ObjectClass.PUBLIC_KEY)
@@ -104,7 +104,6 @@ class SessionHandler(HardwareEncryptor):
             for line in handles:
                 try:
                     helper = self.decrypt(line).split('_')
-                    print(helper)
 
                     hash_obj = hashlib.md5(helper[1].encode('utf-8'))
                     valid_tag_hash = hash_obj.hexdigest()
