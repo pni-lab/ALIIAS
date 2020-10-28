@@ -30,7 +30,8 @@ if __name__ == '__main__':
 
         nitro = SessionHandler()
         new_entry = nitro.encrypt(plaintext.encode('utf-8'))
-        nitro.extend(binascii.hexlify(new_entry))
+        print(binascii.hexlify(new_entry))
+        nitro.extend(args.project.encode('utf-8') + binascii.hexlify(new_entry))
         print('handler successfully extended!')
     else:
         print('pseudokey file for selected project does not exist!')

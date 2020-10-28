@@ -112,9 +112,10 @@ class SessionHandler(HardwareEncryptor):
                             print("Site: " + self.site)
                             self.site_tag = helper[3]
                             self.pseudo_key = helper[0].encode("utf-8")
+                            break
                     except:
                         print('something went wrong when trying to access the key!')
-                    break
+
         self.close()
 
     def extend(self, entry, path=config.HANDLER_DIR):
