@@ -26,8 +26,34 @@ class HardwareEncryptor:
     """
 
     def __init__(self):  # todo remove this
+        self.no_dongle = False
+        # a wild exception handler chain for finding opensc
         path_opensc = config.settings['BASE']['opensc_path']
-        self.lib = pkcs11.lib(path_opensc)
+        try:
+            self.lib = pkcs11.lib(path_opensc)
+        except RuntimeError:
+            try:
+                #WIN shipped
+                self.lib = pkcs11.lib(config.OPENSC_DEFAULT_WINDOWS_ROOT_DIR)
+            except RuntimeError:
+                try:
+                    #WINDOWS default
+                    self.lib = pkcs11.lib(config.OPENSC_DEFAULT_WINDOWS)
+                except RuntimeError:
+                    try:
+                        # LINUX default
+                        self.lib = pkcs11.lib(config.OPENSC_DEFAULT_LINUX)
+                    except RuntimeError:
+                        try:
+                            # MACOS default
+                            self.lib = pkcs11.lib(config.OPENSC_DEFAULT_MACOS)
+                        except RuntimeError:
+                            try:
+                                # ENV var
+                                self.lib = pkcs11.lib(config.OPENSC_DEFAULT_ENV)
+                            except RuntimeError:
+                                raise EnvironmentError("Unable to locate OpenSC!")
+
         try:
             self.token = self.lib.get_token()
             self.label = self.token.label[0:3]
@@ -35,6 +61,7 @@ class HardwareEncryptor:
             self.session = self.token.open(user_pin='289289', rw=True)
         except pkcs11.exceptions.NoSuchToken:
             warnings.warn('Dongle not plugged in!')
+            self.no_dongle = True
         return
 
     def gen_new_pseudokey(self):
@@ -96,6 +123,10 @@ class SessionHandler(HardwareEncryptor):
         super().__init__()
 
     def set(self, path=config.HANDLER_DIR):
+        if self.no_dongle:
+            self.site = self.site_tag = self.pseudo_key = self.label = None
+
+            return
         with open(path, "rb") as file:
             handles = file.read().splitlines()
             for line in handles:

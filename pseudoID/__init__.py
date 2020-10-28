@@ -28,9 +28,14 @@ def create_app(test_config=None):
     from . import pseudonymize
     app.register_blueprint(pseudonymize.bp)
 
-    @app.route('/')
-    def start():
-        return redirect(url_for('pseudoID.login'))
+    if pseudonymize.handler.no_dongle:
+        @app.route('/')
+        def start():
+            return redirect(url_for('pseudoID.nokey'))
+    else:
+        @app.route('/')
+        def start():
+            return redirect(url_for('pseudoID.login'))
 
     return app
 

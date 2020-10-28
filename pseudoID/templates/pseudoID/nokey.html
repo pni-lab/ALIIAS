@@ -1,0 +1,18 @@
+<!doctype html>
+<title>{% block title %}{% endblock %} - ALIIAS</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<nav>
+  <h1> No hardware key found!</h1>
+</nav>
+<section class="content">
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  <div class="flash">Please insert USB hardware key, close this browser window and restart ALIIAS!</div>
+</section>
+
+<footer>
+  <ul>
+
+  </ul>
+</footer>
