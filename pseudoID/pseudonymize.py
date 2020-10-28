@@ -221,7 +221,7 @@ def preview():
             try:
                 barcodes = generate_barcodeset(ids['short_id'])
             except Exception as e:
-                msg = "Problem when saving barcodes: " + e
+                msg = "Problem when saving barcodes: " + str(e)
                 logger.add_entry(msg)
                 print(msg)
             # for f in barcodes:
