@@ -1,6 +1,6 @@
 \section{SOP: Installation}
 \label{section:sop_installation}
-PseudoID can be installed on Windows computers. The installation procedure requires administrator privileges (i.e authorization from the IT department, in case of centrally-administered computers; for each installation individually).
+ALIIAS can be installed on Windows computers. The installation procedure requires administrator privileges (i.e authorization from the IT department, in case of centrally-administered computers; for each installation individually).
 
 \begin{itemize}
     \item Navigate to the \path{ALIIAS/latest} folder in the SFB289-cloud to access the latest version of ALIIAS.
@@ -11,13 +11,13 @@ PseudoID can be installed on Windows computers. The installation procedure requi
     
     \item Download and extract the zip archive (ALIIAS\_v*.zip) to an arbitrary folder. This will result in the following files\footnote{If you can not see the file extensions, you should activate them under "View" in the explorer}: 
     \begin{itemize}
-        \item \path{start_pseudoid.exe}
-        \item \path{pseudoid.txt}
+        \item \path{start_ALIIAS.exe}
+        \item \path{ALIIAS.txt}
         \item \path{handler.txt}
         \item \path{settings.conf} 
         \item \path{opensc-pkcs11.dll}
     \end{itemize}
-    \item If you have administrator privileges on the computer, simply double-click the file called \path{start_pseudoid.exe} to start the software.
+    \item If you have administrator privileges on the computer, simply double-click the file called \path{start_ALIIAS.exe} to start the software.
     
     Refer to the instructions below if you are working on a centrally administered computer.
 \end{itemize} 
@@ -25,22 +25,36 @@ PseudoID can be installed on Windows computers. The installation procedure requi
 
 \subsection*{Installation on centrally-administered computers}
 
-Please contact the IT department (via phone call or helpdesk ticket) and ask for privileges for running the software. Explain the IT department what the software exactly does: "PseudoID is a research software for SFB289. Technical details: it is a 'flask' application deployed as a standalone exe file. It depends on the OpenSC library, for handling harwarekeys. The dll for this dependency is shipped with the installation for convenience. The path to the dll can be set in the file \path{settings.conf} if needed. ALIIAS on startup reads the dependency's .dll file and two configuration files (from the same folder the executable is in) and runs a webserver on the localhost (Port 5000)".
+Please contact the IT department (via phone call or helpdesk ticket) and ask for privileges for running the software. Explain the IT department what the software exactly does: "ALIIAS is a research software for SFB289. Technical details: it is a 'flask' application deployed as a standalone exe file. It depends on the OpenSC library, for handling harwarekeys. The dll for this dependency is shipped with the installation for convenience. The path to the dll can be set in the file \path{settings.conf} if needed. ALIIAS on startup reads the dependency's .dll file and two configuration files (from the same folder the executable is in) and runs a webserver on the localhost (Port 5000)".
 
 In addition, you can provide the following steps to the IT-administrator (a solution working at the University Hospital Essen).
 
 \begin{enumerate}
     
-    \item The administrator from the IT department should move the \path{start_pseudoid.exe}, \path{handler.txt}, \path{settings.conf} and \path{opensc-pkcs11.dll} files to a directory, from which the \path{.exe} can be executed. Caution: They have to be in the SAME folder. 
+    \item The administrator from the IT department should move the \path{start_ALIIAS.exe}, \path{handler.txt}, \path{settings.conf} and \path{opensc-pkcs11.dll} files to a directory, from which the \path{.exe} can be executed. Caution: They have to be in the SAME folder. 
     
-    \item The \path{pseudoid.txt} file should be moved to a location that can be accessed by the user, for example the desktop. The file should then be opened with a text editor, to change the current path to the path where the \path{.exe} was moved to.
+    \item The \path{ALIIAS.txt} file should be moved to a location that can be accessed by the user, for example the desktop. The file should then be opened with a text editor, to change the current path to the path where the \path{.exe} was moved to.
     \label{item:admin}
     
-    \item For example: after installation, the contents of \path{pseudoid.txt} end like this: \\ \path{.\pseudoid.exe}. \\ This should be changed to the NEW path of the \path{start_pseudoid.exe}
+    \item For example: after installation, the contents of \path{ALIIAS.txt} end like this: \\ \path{.\ALIIAS.exe}. \\ This should be changed to the NEW path of the \path{start_ALIIAS.exe}
     
-    \item When this has been changed correctly, the file name of \path{pseudoid.txt} has to be changed to \path{start_pseudoid.bat} (you can ignore the warning)
+    \item When this has been changed correctly, the file name of \path{ALIIAS.txt} has to be changed to \path{start_ALIIAS.bat} (you can ignore the warning)
     
-    \item If everything worked out properly, a double-click on \path{start_pseudoid.bat} should start PseudoID in a new browser window.
+    \item If everything worked out properly, a double-click on \path{start_ALIIAS.bat} should start ALIIAS in a new browser window.
 \end{enumerate} 
 
+\subsection*{Installation on MacOS}
+Installation is analogous to the Windows installation, except that some file extensions will be different (\path{.so} instead of \path{.dll}, no extension instead of \path{.exe}).
+
+\vspace{2mm}
+
+\small\setlength\fboxsep{5pt}\setlength\fboxrule{1pt}
+\fcolorbox{pniblue}{pniblue!5}{\begin{minipage}{0.9\textwidth}
+WARNING: ALIIAS v1.0 was not exhaustively tested on MacOS.
+\end{minipage}}
+
+\small\setlength\fboxsep{5pt}\setlength\fboxrule{1pt}
+\fcolorbox{pniblue}{pniblue!5}{\begin{minipage}{0.9\textwidth}
+On MacOS, ALIIAS v1.0 takes some more seconds to start up. Upon exit, the ALIIAS command line window (black character terminal) remains open and must be closed manually.
+\end{minipage}}
 
