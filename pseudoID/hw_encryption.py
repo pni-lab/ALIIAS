@@ -73,7 +73,7 @@ class HardwareEncryptor:
 
         try:
             self.token = self.lib.get_token()
-            self.label = self.token.label[0:3]
+            self.label = self.token.label.split(" ")[0]
             print("Token Label: " + self.label)
             self.session = self.token.open(user_pin='289289', rw=True)
         except pkcs11.exceptions.NoSuchToken:
@@ -147,10 +147,10 @@ class SessionHandler(HardwareEncryptor):
         with open(path, "rb") as file:
             handles = file.read().splitlines()
             for line in handles:
-                if self.label == line[0:3].decode('utf-8'):
+                handle = line.decode('utf-8').split('_')
+                if self.label == handle[0]:
                     try:
-                        helper = self.decrypt(line[3:]).split('_')
-
+                        helper = self.decrypt(handle[1]).split('_')
                         hash_obj = hashlib.md5(helper[1].encode('utf-8'))
                         valid_tag_hash = hash_obj.hexdigest()
 
@@ -160,9 +160,10 @@ class SessionHandler(HardwareEncryptor):
                             print("Site: " + self.site)
                             self.site_tag = helper[3]
                             self.pseudo_key = helper[0].encode("utf-8")
+                            # break
                     except:
-                        print('something went wrong when trying to access the key!')
-                    break
+                        print('oops, wrong key!')
+
         self.close()
 
     def extend(self, entry, path=config.HANDLER_DIR):
