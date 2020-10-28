@@ -26,12 +26,42 @@ class HardwareEncryptor:
     """
 
     def __init__(self):  # todo remove this
+        self.no_dongle = False
+        # a wild exception handler chain for finding opensc
         path_opensc = config.settings['BASE']['opensc_path']
-        self.lib = pkcs11.lib(path_opensc)
+        try:
+            self.lib = pkcs11.lib(path_opensc)
+        except RuntimeError:
+            try:
+                #WIN shipped
+                self.lib = pkcs11.lib(config.OPENSC_DEFAULT_WINDOWS_ROOT_DIR)
+            except RuntimeError:
+                try:
+                    #WINDOWS default
+                    self.lib = pkcs11.lib(config.OPENSC_DEFAULT_WINDOWS)
+                except RuntimeError:
+                    try:
+                        # LINUX default
+                        self.lib = pkcs11.lib(config.OPENSC_DEFAULT_LINUX)
+                    except RuntimeError:
+                        try:
+                            # MACOS default
+                            self.lib = pkcs11.lib(config.OPENSC_DEFAULT_MACOS)
+                        except RuntimeError:
+                            try:
+                                # ENV var
+                                self.lib = pkcs11.lib(config.OPENSC_DEFAULT_ENV)
+                            except RuntimeError:
+                                raise EnvironmentError("Unable to locate OpenSC!")
+
         try:
             self.token = self.lib.get_token()
+            self.label = self.token.label.split(" ")[0]
+            print("Token Label: " + self.label)
+            self.session = self.token.open(user_pin='289289', rw=True)
         except pkcs11.exceptions.NoSuchToken:
             warnings.warn('Dongle not plugged in!')
+            self.no_dongle = True
         return
 
     def gen_new_pseudokey(self):
@@ -47,31 +77,25 @@ class HardwareEncryptor:
         if not plaintext: plaintext = self.pseudokey
 
         # ToDo: ask for pin for REAL 2FA
-        with self.token.open(user_pin='289289', rw=True) as session:
-            # Extract public key
-            hw_key = session.get_key(key_type=KeyType.RSA,
-                                     object_class=ObjectClass.PUBLIC_KEY)
-            hw_key = RSA.importKey(encode_rsa_public_key(hw_key))
+        # Extract public key
+        hw_key = self.session.get_key(key_type=KeyType.RSA,
+                                      object_class=ObjectClass.PUBLIC_KEY)
+        hw_key = RSA.importKey(encode_rsa_public_key(hw_key))
 
-            # Encryption on the local machine
-            cipher = PKCS1_v1_5.new(hw_key)
-            crypttext = cipher.encrypt(plaintext)
+        # Encryption on the local machine
+        cipher = PKCS1_v1_5.new(hw_key)
+        crypttext = cipher.encrypt(plaintext)
         return crypttext
 
     def decrypt(self, ciphertext):
+        priv = self.session.get_key(key_type=KeyType.RSA,
+                                    object_class=ObjectClass.PRIVATE_KEY)
 
-        with self.token.open(user_pin='289289', rw=True) as session:
-            # Extract public key
-            # hw_key = session.get_key(key_type=KeyType.RSA,
-            #                         object_class=ObjectClass.PUBLIC_KEY)
-            # hw_key = RSA.importKey(encode_rsa_public_key(hw_key))
-
-            # Decryption in the HSM
-            priv = session.get_key(key_type=KeyType.RSA,
-                                   object_class=ObjectClass.PRIVATE_KEY)
-
-            plaintext = priv.decrypt(binascii.unhexlify(ciphertext), mechanism=Mechanism.RSA_PKCS)
+        plaintext = priv.decrypt(binascii.unhexlify(ciphertext), mechanism=Mechanism.RSA_PKCS)
         return plaintext.decode('utf-8')
+
+    def close(self):
+        self.session.close()
 
 
 class OfflineEncryptor:
@@ -99,23 +123,31 @@ class SessionHandler(HardwareEncryptor):
         super().__init__()
 
     def set(self, path=config.HANDLER_DIR):
+        if self.no_dongle:
+            self.site = self.site_tag = self.pseudo_key = self.label = None
+
+            return
         with open(path, "rb") as file:
             handles = file.read().splitlines()
             for line in handles:
-                try:
-                    helper = self.decrypt(line).split('_')
+                handle = line.decode('utf-8').split('_')
+                if self.label == handle[0]:
+                    try:
+                        helper = self.decrypt(handle[1]).split('_')
+                        hash_obj = hashlib.md5(helper[1].encode('utf-8'))
+                        valid_tag_hash = hash_obj.hexdigest()
 
-                    hash_obj = hashlib.md5(helper[1].encode('utf-8'))
-                    valid_tag_hash = hash_obj.hexdigest()
+                        if valid_tag_hash == config.settings['ENCRYPTION']['validation_tag']:
+                            # print(helper[2])
+                            self.site = helper[2]
+                            print("Site: " + self.site)
+                            self.site_tag = helper[3]
+                            self.pseudo_key = helper[0].encode("utf-8")
+                            # break
+                    except:
+                        print('oops, wrong key!')
 
-                    if valid_tag_hash == config.settings['ENCRYPTION']['validation_tag']:
-                        print(helper[2])
-                        self.site = helper[2]
-                        self.site_tag = helper[3]
-                        self.pseudo_key = helper[0].encode("utf-8")
-                except:
-                    print('skipped handler')
-
+        self.close()
 
     def extend(self, entry, path=config.HANDLER_DIR):
         with open(path, "ab") as file:

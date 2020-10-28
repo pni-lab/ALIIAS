@@ -8,11 +8,12 @@ from pseudoID import config
 hostname = socket.gethostname()
 IPAddr = socket.gethostbyname(hostname)
 # url = IPAddr + "/pseudoID/generate"
-url = config.settings['BASE']['url'] + "/pseudoID/login"
+url = config.settings['BASE']['url']  # + "/pseudoID/login"
+
+app = pseudoID.create_app()
 
 webbrowser.open(url, new=2)
 
-app = pseudoID.create_app()
 app.run()
 
 

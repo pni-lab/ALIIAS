@@ -209,7 +209,6 @@ def preview():
                         logger.add_entry('No survey participants table found. Please activate survey and initialize survey participant table!')
                         flash('No survey participants table found. Please activate survey and initialize survey participant table!')
 
-                    lscontrol.register_to_survey(ids['short_id'], ids['long_id'], sid)
                     logger.add_entry(
                         "ACCEPTED: " + '\t' + lime_warning['warning_text'] + \
                         lime_warning['warning_details'])
@@ -305,3 +304,13 @@ def exit():
     logger.add_entry(
         "EXIT: Regular shutdown")
     return render_template('pseudoID/exit.html')
+
+@bp.route('/nokey')
+def nokey():
+    if lscontrol:
+        lscontrol.close_session()
+    session['username'] = None
+    shutdown_server()
+    logger.add_entry(
+        "EXIT: Regular shutdown")
+    return render_template('pseudoID/nokey.html')
