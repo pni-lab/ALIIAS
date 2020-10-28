@@ -21,8 +21,6 @@ else:
             ROOT_DIR = os.getcwd()
             running_mode = 'Interactive'
 
-
-
 OUTPUT_DIR = os.path.expanduser('~/ALIIAS')
 if not os.path.exists(OUTPUT_DIR):
     os.makedirs(OUTPUT_DIR)
@@ -34,6 +32,12 @@ if not os.path.exists(LOG_DIR):
 BC_DIR = os.path.join(OUTPUT_DIR, 'Barcodes')
 if not os.path.exists(BC_DIR):
     os.makedirs(BC_DIR)
+
+OPENSC_DEFAULT_LINUX = '/usr/lib/x86_64-linux-gnu/opensc-pkcs11.so'
+OPENSC_DEFAULT_MACOS = '/usr//local/lib/opensc-pkcs11.so'
+OPENSC_DEFAULT_WINDOWS = 'C:/Program Files/OpenSC Project/OpenSC/pkcs11/opensc-pkcs11.dll'
+OPENSC_DEFAULT_WINDOWS_ROOT_DIR = os.path.join(ROOT_DIR, 'opensc-pkcs11.dll')
+OPENSC_DEFAULT_ENV = os.getenv('PKCS11_MODULE', "")
 
 settings = configparser.ConfigParser()
 settings.read(os.path.join(ROOT_DIR, 'settings.conf'))

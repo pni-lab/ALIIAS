@@ -13,7 +13,8 @@ class Encryptor:
         self.key = pseudonym_key
 
         # dummy encryption to determine block length
-        self.encrypted_message_length = len(self._encrypt("a a a 01011999 a"))
+        if self.site_tag is not None:
+            self.encrypted_message_length = len(self._encrypt("a a a 01011999 a"))
 
     def _encrypt(self, message):
         cipher = AES.new(self.key, AES.MODE_SIV)

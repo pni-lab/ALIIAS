@@ -304,3 +304,13 @@ def exit():
     logger.add_entry(
         "EXIT: Regular shutdown")
     return render_template('pseudoID/exit.html')
+
+@bp.route('/nokey')
+def nokey():
+    if lscontrol:
+        lscontrol.close_session()
+    session['username'] = None
+    shutdown_server()
+    logger.add_entry(
+        "EXIT: Regular shutdown")
+    return render_template('pseudoID/nokey.html')
