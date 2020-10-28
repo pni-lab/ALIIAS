@@ -209,7 +209,6 @@ def preview():
                         logger.add_entry('No survey participants table found. Please activate survey and initialize survey participant table!')
                         flash('No survey participants table found. Please activate survey and initialize survey participant table!')
 
-                    lscontrol.register_to_survey(ids['short_id'], ids['long_id'], sid)
                     logger.add_entry(
                         "ACCEPTED: " + '\t' + lime_warning['warning_text'] + \
                         lime_warning['warning_details'])
