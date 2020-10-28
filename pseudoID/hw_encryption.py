@@ -6,6 +6,7 @@ import pkcs11
 from pkcs11 import KeyType, ObjectClass, Mechanism
 from pkcs11.util.rsa import encode_rsa_public_key
 import warnings
+import os.path as path
 from pseudoID import config
 from pseudoID.base_conversion import BaseConverter
 import hashlib
@@ -34,25 +35,41 @@ class HardwareEncryptor:
         except RuntimeError:
             try:
                 #WIN shipped
+                if not path.exists(config.OPENSC_DEFAULT_WINDOWS_ROOT_DIR):
+                    raise RuntimeError
                 self.lib = pkcs11.lib(config.OPENSC_DEFAULT_WINDOWS_ROOT_DIR)
             except RuntimeError:
                 try:
-                    #WINDOWS default
-                    self.lib = pkcs11.lib(config.OPENSC_DEFAULT_WINDOWS)
+                    # MACOS/Linux shipped
+                    if not path.exists(config.OPENSC_DEFAULT_MACOS_ROOT_DIR):
+                        raise RuntimeError
+                    self.lib = pkcs11.lib(config.OPENSC_DEFAULT_MACOS_ROOT_DIR)
                 except RuntimeError:
                     try:
-                        # LINUX default
-                        self.lib = pkcs11.lib(config.OPENSC_DEFAULT_LINUX)
+                        #WINDOWS default
+                        if not path.exists(config.OPENSC_DEFAULT_WINDOWS):
+                            raise RuntimeError
+                        self.lib = pkcs11.lib(config.OPENSC_DEFAULT_WINDOWS)
                     except RuntimeError:
                         try:
-                            # MACOS default
-                            self.lib = pkcs11.lib(config.OPENSC_DEFAULT_MACOS)
+                            # LINUX default
+                            if not path.exists(config.OPENSC_DEFAULT_LINUX):
+                                raise RuntimeError
+                            self.lib = pkcs11.lib(config.OPENSC_DEFAULT_LINUX)
                         except RuntimeError:
                             try:
-                                # ENV var
-                                self.lib = pkcs11.lib(config.OPENSC_DEFAULT_ENV)
+                                # MACOS default
+                                if not path.exists(config.OPENSC_DEFAULT_MACOS):
+                                    raise RuntimeError
+                                self.lib = pkcs11.lib(config.OPENSC_DEFAULT_MACOS)
                             except RuntimeError:
-                                raise EnvironmentError("Unable to locate OpenSC!")
+                                try:
+                                    # ENV var
+                                    if not path.exists(config.OPENSC_DEFAULT_ENV):
+                                        raise RuntimeError
+                                    self.lib = pkcs11.lib(config.OPENSC_DEFAULT_ENV)
+                                except RuntimeError:
+                                    raise EnvironmentError("Unable to locate OpenSC!")
 
         try:
             self.token = self.lib.get_token()

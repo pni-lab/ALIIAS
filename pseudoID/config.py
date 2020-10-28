@@ -37,6 +37,7 @@ OPENSC_DEFAULT_LINUX = '/usr/lib/x86_64-linux-gnu/opensc-pkcs11.so'
 OPENSC_DEFAULT_MACOS = '/usr//local/lib/opensc-pkcs11.so'
 OPENSC_DEFAULT_WINDOWS = 'C:/Program Files/OpenSC Project/OpenSC/pkcs11/opensc-pkcs11.dll'
 OPENSC_DEFAULT_WINDOWS_ROOT_DIR = os.path.join(ROOT_DIR, 'opensc-pkcs11.dll')
+OPENSC_DEFAULT_MACOS_ROOT_DIR = os.path.join(ROOT_DIR, 'opensc-pkcs11.so')
 OPENSC_DEFAULT_ENV = os.getenv('PKCS11_MODULE', "")
 
 settings = configparser.ConfigParser()
