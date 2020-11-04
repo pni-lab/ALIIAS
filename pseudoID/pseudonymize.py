@@ -218,7 +218,12 @@ def preview():
                             'warning_text'] + \
                         lime_warning['warning_details'])
 
-            barcodes = generate_barcodeset(ids['short_id'])
+            try:
+                barcodes = generate_barcodeset(ids['short_id'])
+            except Exception as e:
+                msg = "Problem when saving barcodes: " + str(e)
+                logger.add_entry(msg)
+                print(msg)
             # for f in barcodes:
             #    send_from_directory('static', f)
 
