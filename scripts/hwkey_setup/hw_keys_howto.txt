@@ -15,8 +15,8 @@ cd scripts/hwkey_setup
 python init_nitrokey.py
 
 # step 3
-python create_pseudokey.py -p <project_name>
-# the key file is generated: <project_name>_pseudokey.txt
+python create_pseudokey.py -p <project_key>
+# the key file is generated: <project_key>_pseudokey.txt
 # this must be saved at a protected place
 
 # step 4
