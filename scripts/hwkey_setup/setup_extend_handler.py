@@ -24,7 +24,7 @@ if __name__ == '__main__':
         # create suffix for handler line
         site = args.projectkey
         valid_tag = args.validation_password
-        site_tag = config._site_tag_[site]
+        site_tag = config.settings['SITE_TAGS'][site]
         suffix = '_' + valid_tag + '_' + site + '_' + site_tag
 
         plaintext = pseudokey + suffix

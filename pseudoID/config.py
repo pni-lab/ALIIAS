@@ -42,7 +42,7 @@ OPENSC_DEFAULT_ENV = os.getenv('PKCS11_MODULE', "")
 settings = configparser.ConfigParser()
 settings.read(os.path.join(ROOT_DIR, 'settings.conf'))
 
-HANDLER_DIR = os.path.join(ROOT_DIR, 'handler.txt')
+HANDLER_DIR = os.path.join(ROOT_DIR, settings['BASE']['handler_name'] + '.txt')
 
 # ToDo: remove the hard coded user key
 _offline_key_ = b'\xbf\xabb]\xb3\x94\xd8}>Z\x84QO\xdb\tD\xb1wl\xef@7\xa9$\x91\xb0>#\xe4\x10\x07u'
@@ -62,22 +62,22 @@ _exp_tag_ = {
     "Week 4": "-wk4",
 }
 
-_site_tag_ = {
-    "Test": "t",
-    "A01": "1",
-    "A02": "2",
-    "A03": "3",
-    "A04": "4",
-    "A06": "6",
-    "A07": "7",
-    "A08": "8",
-    "A09": "9",
-    "A11": "a",
-    "A12": "b",
-    "A13": "c",
-    "A15": "e",
-    "A16": "f",
-}
+#_site_tag_ = {
+#    "Test": "t",
+#    "A01": "1",
+#    "A02": "2",
+#    "A03": "3",
+#    "A04": "4",
+#    "A06": "6",
+#    "A07": "7",
+#    "A08": "8",
+#    "A09": "9",
+#    "A11": "a",
+#    "A12": "b",
+#    "A13": "c",
+#    "A15": "e",
+#    "A16": "f",
+#}
 
 _warnings_ = {'known': 'Participant already registered in LimeSurvey. \n ' \
                        'No new participant added this time. ' \

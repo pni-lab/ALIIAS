@@ -37,6 +37,7 @@ logger = PseudonymLogger()
 __version__ = get_versions()['version']
 del get_versions
 logger.add_entry('VERSION: ' + '\t' + str(__version__))
+print('VERSION: ' + '\t' + str(__version__))
 
 
 @bp.route('/login', methods=('GET', 'POST'))

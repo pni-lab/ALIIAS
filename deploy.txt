@@ -2,3 +2,5 @@
 
 # for windows:
 pyinstaller -F -p pseudoID\ --add-data "pseudoID\templates;pseudoID\templates" --add-data "pseudoID\static;pseudoID\static" scripts\start_ALIIAS.py
+
+pyinstaller -F -p pseudoID\ -i "pseudoID\static\AlIIAS_icon.ico" --add-data "pseudoID\templates;pseudoID\templates" --add-data "pseudoID\static;pseudoID\static" scripts\start_ALIIAS.py
