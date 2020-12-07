@@ -2,6 +2,8 @@ import configparser
 from pseudoID import config
 import os
 import hashlib
+from pseudoID._version import get_versions
+
 
 # sc: https://linuxhint.com/read_write_ini_conf_python/
 
@@ -14,10 +16,14 @@ opensc_robert = 'C:/Program Files/OpenSC Project/OpenSC/pkcs11/opensc-pkcs11.dll
 opensc_tamas = '/usr/lib/x86_64-linux-gnu/opensc-pkcs11.so'
 opensc_ghouse = '/usr/lib/x86_64-linux-gnu/opensc-pkcs11.so'
 
+__version__ = get_versions()['version']
+del get_versions
+
 cfg_parser['BASE'] = {"Log_level": 10,
                       "opensc_path": opensc_robert,
                       "url": 'http://127.0.0.1:5000/',
-                      "handler_name": "handler"}
+                      "handler_name": "handler",
+                      "version": str(__version__)}
 
 cfg_parser['PSEUDOKEYS'] = {}
 
