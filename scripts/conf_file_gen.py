@@ -54,7 +54,8 @@ cfg_parser['SITE_TAGS'] = {"Test": "t",
                            "A13": "c",
                            "A15": "e",
                            "A16": "f",
-                           "B12": "g"}
+                           "B12": "g",
+                           "A05": "h"}
 
 cfg_parser['BARCODES'] = {"x_dim": 750, "y_dim": 375, "label_gap": 20, "n_diff_bc": 6, "n_identical_bc": 3,
                           "blank": True}
