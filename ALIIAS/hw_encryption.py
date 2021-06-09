@@ -7,8 +7,8 @@ from pkcs11 import KeyType, ObjectClass, Mechanism
 from pkcs11.util.rsa import encode_rsa_public_key
 import warnings
 import os.path as path
-from pseudoID import config
-from pseudoID.base_conversion import BaseConverter
+from ALIIAS import config
+from ALIIAS.base_conversion import BaseConverter
 import hashlib
 
 # ToDo: store encrypted key in config file

@@ -1,16 +1,16 @@
 import random
 
-from pseudoID import config
+from ALIIAS import config
 from flask import (
     Blueprint, flash, redirect, render_template, request, url_for, session
 )
 
-from pseudoID.encryption import Encryptor
-from pseudoID.ls_api_wrapper import LimeSurveyController
-from pseudoID.utility import PseudonymLogger, norm_str
-from pseudoID.barcode_gen import generate_barcodeset
-from pseudoID.hw_encryption import SessionHandler
-from pseudoID._version import get_versions
+from ALIIAS.encryption import Encryptor
+from ALIIAS.ls_api_wrapper import LimeSurveyController
+from ALIIAS.utility import PseudonymLogger, norm_str
+from ALIIAS.barcode_gen import generate_barcodeset
+from ALIIAS.hw_encryption import SessionHandler
+from ALIIAS._version import get_versions
 
 bp = Blueprint('pseudoID', __name__, url_prefix='/pseudoID')
 

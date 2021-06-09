@@ -1,8 +1,8 @@
 import binascii
 
 from Crypto.Cipher import AES
-from pseudoID import config
-from pseudoID.base_conversion import BaseConverter
+from ALIIAS import config
+from ALIIAS.base_conversion import BaseConverter
 
 conv = BaseConverter(config.settings['ENCRYPTION']['char_base'])
 

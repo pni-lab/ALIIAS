@@ -1,6 +1,6 @@
-from pseudoID.namegenerator import generate_n_personal_info
-from pseudoID.encryption import Encryptor
-from pseudoID.utility import norm_str
+from ALIIAS.namegenerator import generate_n_personal_info
+from ALIIAS.encryption import Encryptor
+from ALIIAS.utility import norm_str
 from tqdm import tqdm
 from joblib import Parallel, delayed
 import xlsxwriter

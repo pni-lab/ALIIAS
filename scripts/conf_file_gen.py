@@ -1,8 +1,8 @@
 import configparser
-from pseudoID import config
+from ALIIAS import config
 import os
 import hashlib
-from pseudoID._version import get_versions
+from ALIIAS._version import get_versions
 
 
 # sc: https://linuxhint.com/read_write_ini_conf_python/
@@ -60,5 +60,5 @@ cfg_parser['SITE_TAGS'] = {"Test": "t",
 cfg_parser['BARCODES'] = {"x_dim": 750, "y_dim": 375, "label_gap": 20, "n_diff_bc": 6, "n_identical_bc": 3,
                           "blank": True}
 
-with open(os.path.join(config.ROOT_DIR, '../pseudoID/settings.conf'), 'w') as configfile:
+with open(os.path.join(config.ROOT_DIR, '../ALIIAS/settings.conf'), 'w') as configfile:
     cfg_parser.write(configfile)

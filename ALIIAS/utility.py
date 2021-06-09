@@ -1,5 +1,5 @@
 import os
-from pseudoID import config
+from ALIIAS import config
 
 
 class PseudonymLogger:

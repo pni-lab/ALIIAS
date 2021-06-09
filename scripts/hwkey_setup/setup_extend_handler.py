@@ -3,8 +3,8 @@ import binascii
 from os import path
 import sys
 sys.path.append('../..')
-from pseudoID import config
-from pseudoID.hw_encryption import SessionHandler
+from ALIIAS import config
+from ALIIAS.hw_encryption import SessionHandler
 
 parser = argparse.ArgumentParser(description='Encrypt the generated pseudokey with the hardware key and add new entry'
                                              'to the handler file')

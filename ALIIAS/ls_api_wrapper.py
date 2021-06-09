@@ -1,6 +1,6 @@
 from limesurveyrc2api import LimeSurveyRemoteControl2API
 from collections import OrderedDict
-from pseudoID import config
+from ALIIAS import config
 import warnings
 
 

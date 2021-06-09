@@ -2,7 +2,7 @@ import barcode
 from barcode.writer import ImageWriter
 import PIL
 from PIL import Image, ImageFont, ImageOps
-import pseudoID.config as config
+import ALIIAS.config as config
 import pathlib
 import os
 

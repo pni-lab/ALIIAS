@@ -2,7 +2,7 @@ import os
 from flask import Flask, redirect, url_for
 import sys
 sys.path.append('/..')
-from pseudoID import config
+from ALIIAS import config
 
 def create_app(test_config=None):
     # create and configure the app
