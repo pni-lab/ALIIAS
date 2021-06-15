@@ -2,13 +2,12 @@
 import ALIIAS
 import socket
 import webbrowser
-from datetime import datetime, date
 from ALIIAS import config
 
 hostname = socket.gethostname()
 IPAddr = socket.gethostbyname(hostname)
-# url = IPAddr + "/pseudoID/generate"
-url = config.settings['BASE']['url']  # + "/pseudoID/login"
+
+url = config.settings['BASE']['url']
 
 app = ALIIAS.create_app()
 

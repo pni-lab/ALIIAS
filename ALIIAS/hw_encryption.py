@@ -71,11 +71,15 @@ class HardwareEncryptor:
                                 except RuntimeError:
                                     raise EnvironmentError("Unable to locate OpenSC!")
 
+
+
         try:
             self.token = self.lib.get_token()
             self.label = self.token.label.split(" ")[0]
             print("Token Label: " + self.label)
-            self.session = self.token.open(user_pin='289289', rw=True)
+            # todo: catch when no pin is entered and check number of wrong pin entries
+            if config.DONGLE_PIN is not None:
+                self.session = self.token.open(user_pin=config.DONGLE_PIN, rw=True)
         except pkcs11.exceptions.NoSuchToken:
             warnings.warn('Dongle not plugged in!')
             self.no_dongle = True

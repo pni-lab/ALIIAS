@@ -6,4 +6,5 @@
 # for windows:
 pyinstaller -F -p pseudoID\ --add-data "pseudoID\templates;pseudoID\templates" --add-data "pseudoID\static;pseudoID\static" scripts\start_ALIIAS.py
 
-pyinstaller -F -p pseudoID\ -i "pseudoID\static\AlIIAS_icon.ico" --add-data "pseudoID\templates;pseudoID\templates" --add-data "pseudoID\static;pseudoID\static" scripts\start_ALIIAS.py
+# including icon for the exe
+pyinstaller -F -p ALIIAS\ -i "ALIIAS\static\AlIIAS_icon.ico" --add-data "ALIIAS\templates;ALIIAS\templates" --add-data "ALIIAS\static;ALIIAS\static" scripts\start_ALIIAS.py

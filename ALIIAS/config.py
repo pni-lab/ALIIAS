@@ -1,10 +1,12 @@
-import pickle
-from Crypto.Cipher import AES
-from flask import Flask, redirect, url_for
 import configparser
-import os, sys
+import os
+import sys
+
+from flask import Flask
 
 app = Flask(__name__)
+
+DONGLE_PIN = None
 
 if 'linux' in sys.platform:
     ROOT_DIR = os.path.dirname(os.path.abspath(__file__))  # This is your Project Root
