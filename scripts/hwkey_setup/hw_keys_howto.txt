@@ -2,17 +2,39 @@
 # python conf_file_gen.py should have already be run
 # PseudoID/settings.conf
 #########################
+# Sources for Troubleshooting:
+# https://github.com/OpenSC/OpenSC/wiki/SmartCardHSM#initialize-the-device
+# https://www.nitrokey.com/documentation/installation
+#
+# step 1:
+# Install OpenSC (version > 0.20)
+# https://github.com/OpenSC/OpenSC/releases
 
-# step 0
+# step 2:
 # label & plug in the key
 
-# step 1
+# step 1:
+# In this step, the Nitrokey will be initialized
+# This step can be repeated to reset the Nitrokey!
+# For the following steps, the pin, the so_pin and the label have to be set.
+# - The pin allows access to the key and is prompted for when starting the software, 6 characters are recommended.
+# - The so-pin is the master pin, which allows to alter the content of the key, which should very rarely happen
+#   outside of the initialisation. One use case might be: To unblock the nitrokey if the wrong pin (the short one)
+#   is entered several times
+# - The label should be your project identifier (case sensitive!), so for example A01, BE04, SA13 etc
+#
+# Nitrokey
+# < > indicate fields that have to be filled in!
+# For Linux, run the following in the Terminal:
 sc-hsm-tool --initialize --so-pin <so_pin> --pin <pin> --label <project_name>
+# For Windows, run the following in the cmd window:
+<path>\pkcs11-tool.exe --module <path>\opensc-pkcs11.so --init-token --init-pin --so-pin=<so_pin> --label=<project_name> --pin=<pin>
+# The output should look something like this if done correctly:
 # > Using reader with a card: Nitrokey Nitrokey HSM (DENK01044660000         ) 00 00
 
 # step 2
 cd scripts/hwkey_setup
-python init_nitrokey.py
+python generate_rsa_keypair.py
 
 # step 3
 python create_pseudokey.py -p <project_key>

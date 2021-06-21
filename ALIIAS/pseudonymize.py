@@ -191,11 +191,10 @@ def preview():
         # undo
         if request.form['proceed'] == "No! Undo Transaction.":
             logger.add_entry(
-                "WITHDRAWN ENTRY : "  + '\t' + lime_warning['warning_text'] + \
+                "WITHDRAWN ENTRY : " + '\t' + lime_warning['warning_text'] + \
                 lime_warning['warning_details'])
             subject = ids = lime_warning = None
             return redirect(url_for('pseudoID.generate'))
-
 
         if request.form['proceed'] == "Yes! Proceed to the pseudonym.":
             # register participant to the given survey(s)
@@ -205,15 +204,17 @@ def preview():
 
                     if 'result' in ret and 'status' in ret['result'] and ret['result'][
                         'status'] == 'No survey participants table':
-                        logger.add_entry('No survey participants table found. Please activate survey and initialize survey participant table!')
-                        flash('No survey participants table found. Please activate survey and initialize survey participant table!')
+                        logger.add_entry(
+                            'No survey participants table found. Please activate survey and initialize survey participant table!')
+                        flash(
+                            'No survey participants table found. Please activate survey and initialize survey participant table!')
 
                     logger.add_entry(
                         "ACCEPTED: " + '\t' + lime_warning['warning_text'] + \
                         lime_warning['warning_details'])
                 else:
                     logger.add_entry(
-                        "ACCEPTED_WITHOUT_LS : "  + '\t' + lime_warning[
+                        "ACCEPTED_WITHOUT_LS : " + '\t' + lime_warning[
                             'warning_text'] + \
                         lime_warning['warning_details'])
 
@@ -259,8 +260,17 @@ def preview():
                 else:
                     survey_added[survey['sid']] = survey['surveyls_title']
                     token = lscontrol.get_token(survey['sid'], ids['short_id'], ids['long_id'])
-                    ls_links[survey['sid']] = config.settings['LIMESURVEY']['url_base'] + "/index.php/" + survey[
-                        'sid'] + "?token=" + token
+                    # output: https://acsid.allgpsy.survey.uni-due.de/index.php/935725?token=J6oPzOlqrWARnnW
+                    # actual: https://acsid.allgpsy.uni-due.de/index.php?r=survey/index&sid=935725&token=J6oPzOlqrWARnnW&newtest=Y
+                    # ls_links[survey['sid']] = config.settings['LIMESURVEY']['url_base'] + "/index.php/" + survey[
+                    #    'sid'] + "?token=" + token
+                    ls_links[survey['sid']] = config.settings['LIMESURVEY']['url_base'] + \
+                                              config.settings['LIMESURVEY']['url_path'] + \
+                                              config.settings['LIMESURVEY']['url_query_pre_sid'] + \
+                                              survey['sid'] + \
+                                              config.settings['LIMESURVEY']['url_query_pre_token'] + \
+                                              token + \
+                                              config.settings['LIMESURVEY']['url_query_post_token']
 
                     if survey['sid'] not in bckp_survey_added.keys():
                         newly_added.append(survey['surveyls_title'])
@@ -308,6 +318,7 @@ def exit():
     logger.add_entry(
         "EXIT: Regular shutdown")
     return render_template('pseudoID/exit.html')
+
 
 @bp.route('/nokey')
 def nokey():

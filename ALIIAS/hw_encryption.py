@@ -18,11 +18,11 @@ conv = BaseConverter(config.settings['ENCRYPTION']['char_base'])
 class HardwareEncryptor:
     """
     # example
+    config.DONGLE_PIN = # needs to be set
     nitrokey = HardwareEncryptor()
-    nitrokey.gen_new_pseudokey()
-    print(nitrokey.pseudokey)
-    pseudokey_encrypted = nitrokey.encrypt()
-    nitrokey.decrypt(pseudokey_encrypted)
+    text = b"Hello World!"
+    ciphertext = nitrokey.encrypt(text)
+    plaintext = nitrokey.decrypt(binascii.hexlify(ciphertext))
 
     """
 
@@ -95,7 +95,7 @@ class HardwareEncryptor:
         return
 
     def encrypt(self, plaintext=None):
-        if not plaintext: plaintext = self.pseudokey
+        # if not plaintext: plaintext = self.pseudokey
 
         # ToDo: ask for pin for REAL 2FA
         # Extract public key
