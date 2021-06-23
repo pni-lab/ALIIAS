@@ -10,7 +10,8 @@ parser = argparse.ArgumentParser(description='Encrypt the generated pseudokey wi
                                              'to the handler file')
 parser.add_argument('-p', '--project', type=str, help='name of the project')
 parser.add_argument('-k', '--projectkey', type=str, help='name of the key')
-parser.add_argument('-v', '--validation_password', type=str, help='validation password')
+parser.add_argument('-v', '--validation_password', type=str, help='validation password',
+                    default=config.settings['ENCRYPTION']['validation_tag_default'])
 #parser.add_argument('-p', '--project', type=str, help='name of the project') #todo valid_tag
 
 args = parser.parse_args()

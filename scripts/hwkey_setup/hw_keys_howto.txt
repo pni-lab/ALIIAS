@@ -43,7 +43,7 @@ python create_pseudokey.py -p <project_key>
 
 # step 4
 # start from here to add a new hw key to <project_name>, by creating the <project_name>_pseudokey.txt file here, with the right pseudokey
-python setup_extend_handler.py -p <project_name> -k <project_key> -v <pwd>
+python setup_extend_handler.py -p <project_name> -k <project_key>
 
 # step 5
 # output PseudoID/handler.txt
