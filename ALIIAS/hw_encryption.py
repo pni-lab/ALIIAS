@@ -157,7 +157,6 @@ class SessionHandler(HardwareEncryptor):
                         helper = self.decrypt(handle[1]).split('_')
                         hash_obj = hashlib.md5(helper[1].encode('utf-8'))
                         valid_tag_hash = hash_obj.hexdigest()
-
                         if (valid_tag_hash == config.settings['ENCRYPTION']['validation_tag']) or \
                                 helper[1] == config.settings['ENCRYPTION']['validation_tag_default']:
                             # print(helper[2])
