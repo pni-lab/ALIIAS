@@ -12,6 +12,9 @@ from ALIIAS.barcode_gen import generate_barcodeset
 from ALIIAS.hw_encryption import SessionHandler
 from ALIIAS._version import get_versions
 
+__version__ = get_versions()['version']
+del get_versions
+
 bp = Blueprint('pseudoID', __name__, url_prefix='/pseudoID')
 
 handler = SessionHandler()
@@ -33,9 +36,9 @@ show_pseudonym = {}
 lscontrol = None
 
 logger = PseudonymLogger()
-version = config.settings['BASE']['version']
-logger.add_entry('VERSION: ' + '\t' + version)
-print('VERSION: ' + '\t' + version)
+
+logger.add_entry('VERSION: ' + '\t' + __version__)
+print('VERSION: ' + '\t' + __version__)
 
 
 @bp.route('/login', methods=('GET', 'POST'))
