@@ -10,6 +10,7 @@ import os.path as path
 from ALIIAS import config
 from ALIIAS.base_conversion import BaseConverter
 import hashlib
+from ALIIAS.utility import find_opensc_lib
 
 # ToDo: store encrypted key in config file
 conv = BaseConverter(config.settings['ENCRYPTION']['char_base'])
@@ -29,49 +30,7 @@ class HardwareEncryptor:
     def __init__(self):  # todo remove this
         self.no_dongle = False
         # a wild exception handler chain for finding opensc
-        path_opensc = config.settings['BASE']['opensc_path']
-        try:
-            self.lib = pkcs11.lib(path_opensc)
-        except RuntimeError:
-            try:
-                #WIN shipped
-                if not path.exists(config.OPENSC_DEFAULT_WINDOWS_ROOT_DIR):
-                    raise RuntimeError
-                self.lib = pkcs11.lib(config.OPENSC_DEFAULT_WINDOWS_ROOT_DIR)
-            except RuntimeError:
-                try:
-                    # MACOS/Linux shipped
-                    if not path.exists(config.OPENSC_DEFAULT_MACOS_ROOT_DIR):
-                        raise RuntimeError
-                    self.lib = pkcs11.lib(config.OPENSC_DEFAULT_MACOS_ROOT_DIR)
-                except RuntimeError:
-                    try:
-                        #WINDOWS default
-                        if not path.exists(config.OPENSC_DEFAULT_WINDOWS):
-                            raise RuntimeError
-                        self.lib = pkcs11.lib(config.OPENSC_DEFAULT_WINDOWS)
-                    except RuntimeError:
-                        try:
-                            # LINUX default
-                            if not path.exists(config.OPENSC_DEFAULT_LINUX):
-                                raise RuntimeError
-                            self.lib = pkcs11.lib(config.OPENSC_DEFAULT_LINUX)
-                        except RuntimeError:
-                            try:
-                                # MACOS default
-                                if not path.exists(config.OPENSC_DEFAULT_MACOS):
-                                    raise RuntimeError
-                                self.lib = pkcs11.lib(config.OPENSC_DEFAULT_MACOS)
-                            except RuntimeError:
-                                try:
-                                    # ENV var
-                                    if not path.exists(config.OPENSC_DEFAULT_ENV):
-                                        raise RuntimeError
-                                    self.lib = pkcs11.lib(config.OPENSC_DEFAULT_ENV)
-                                except RuntimeError:
-                                    raise EnvironmentError("Unable to locate OpenSC!")
-
-
+        self.lib = find_opensc_lib()
 
         try:
             self.token = self.lib.get_token()

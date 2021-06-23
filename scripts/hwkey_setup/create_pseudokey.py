@@ -4,7 +4,7 @@ import binascii
 from os import path
 
 parser = argparse.ArgumentParser(description='Generate a new 32 byte pseudokey and write it to a txt file')
-parser.add_argument('-p', '--project', type=str, help='name of the project')
+parser.add_argument('-k', '--projectkey', type=str, help='key for the project')
 
 args = parser.parse_args()
 
