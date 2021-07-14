@@ -25,8 +25,6 @@ def find_sid_duplicates():
     for subject in data:
         long_id = enc.get_long_id(norm_str(subject))
 
-        long_id = sha256(long_id.encode('utf-8')).hexdigest()
-
         short_id[0].append(long_id[0:3])
         short_id[1].append(long_id[0:4])
         short_id[2].append(long_id[0:5])
