@@ -6,6 +6,9 @@
 #### step 1: ####
 # Install OpenSC (version > 0.20)
 # https://github.com/OpenSC/OpenSC/releases
+# install visual studio build tools and "python-pkcs11" and "pycryptodome" package
+# (pycryptodome might be installed as crypto instead of Crypto depending os:
+# https://stackoverflow.com/questions/55393742/no-module-name-crypto)
 
 #### step 2: ####
 # label & plug in the key
@@ -23,10 +26,9 @@
 
 # < > indicate fields that have to be filled in!
 # For Linux, run the following in the Terminal:
-sc-hsm-tool --initialize --so-pin <so_pin> --pin <pin> --label <project_name>
+sc-hsm-tool --initialize --so-pin <so_pin> --pin <pin> --label <dongle_name>
 
 # For Windows, run the following in the cmd window (sc-hsm-tool might also work!):
-<path>\pkcs11-tool.exe --module <path>\opensc-pkcs11.so --init-token --init-pin --so-pin=<so_pin> --label=<project_name> --pin=<pin>
 
 # The output should look something like this if done correctly:
 # > Using reader with a card: Nitrokey Nitrokey HSM (DENK01044660000         ) 00 00
@@ -47,7 +49,6 @@ python generate_rsa_keypair.py --pin <pin>
 python create_pseudokey.py --projectkey <name_projectkey>
 # the key file is generated: <name_projectkey>_pseudokey.txt
 
-
 #### step 6 ####
 # here we add the encrypted projectkey to the "handler" file, which is deployed with the software. Each user of ALIIAS
 # will get the same handler file, so in the initial setup one line of characters will be added to the handler file per
@@ -56,14 +57,15 @@ python create_pseudokey.py --projectkey <name_projectkey>
 # use the same pseudonymisation key "B03", and their projects could be "B03-A" and "B03-B" (use '-' for separation!!!)
 # for example!
 
-python setup_extend_handler.py --p <project_name> --projectkey <project_key>
+
+python setup_extend_handler.py --p <dongle_name> --projectkey <project_key>
 # the handler.txt is extended and should have an additional line which starts with <project_name>_...
 # IMPORTANT: the <name_projectkey> is also the name by which the Limesurvey surveys are filtered, the
 # <project_name> has NO influence on it!
-
+# also: project_name has to be unique!
 
 #### step 7 ####
 # output PseudoID/handler.txt
-# then save and delete this: script/hwkey_setup/<project_name>_pseudokey.txt
+# then save and delete this: script/hwkey_setup/<project_key>_pseudokey.txt
 
 # Now the key is added to the project (if ALIIAS runs with the right handler file)

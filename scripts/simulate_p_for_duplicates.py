@@ -7,7 +7,7 @@ import xlsxwriter
 
 
 n_subjects = 500
-n_runs = 100000
+n_runs = 1000
 n_cores = -1
 
 
@@ -15,7 +15,10 @@ def parfor_subject_sweep():
     data = generate_n_personal_info(n_subjects)
     enc = Encryptor()
     short_id = []
-    duplicate_runs = []
+    duplicate = []
+    short_id_4 = []
+    short_id_5 = []
+
     for subject in data:
         ciphertext = ""
 
@@ -28,12 +31,18 @@ def parfor_subject_sweep():
                 ciphertext = ciphertext + ' ' + norm_str(element)
 
         long_id = enc.get_long_id(ciphertext)
-        short_id.append(enc.get_short_id(long_id))
+        short_id[0].append(long_id[0:4])
+        short_id[1].append(long_id[0:5])
 
-        if n_subjects - len(set(short_id)) == 0:
-            duplicate = 0
-        else:
-            duplicate = 1
+    if n_subjects - len(set(short_id[0])) == 0:
+        duplicate[0] = 0
+    else:
+        duplicate[0] = 1
+
+    if n_subjects - len(set(short_id[1])) == 0:
+        duplicate[1] = 0
+    else:
+        duplicate[1] = 1
 
     return duplicate
 

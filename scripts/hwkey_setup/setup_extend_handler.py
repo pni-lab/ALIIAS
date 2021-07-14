@@ -12,6 +12,7 @@ parser.add_argument('-p', '--project', type=str, help='name of the project')
 parser.add_argument('-k', '--projectkey', type=str, help='name of the key')
 parser.add_argument('-v', '--validation_password', type=str, help='validation password',
                     default=config.settings['ENCRYPTION']['validation_tag_default'])
+parser.add_argument('--pin', type=str)
 #parser.add_argument('-p', '--project', type=str, help='name of the project') #todo valid_tag
 
 args = parser.parse_args()
@@ -30,7 +31,8 @@ if __name__ == '__main__':
 
         plaintext = pseudokey + suffix
 
-        nitro = SessionHandler()
+        #todo: fix the input to sessionhandler
+        nitro = SessionHandler(dongle_pin=args.pin)
         new_entry = nitro.encrypt(plaintext.encode('utf-8'))
         nitro.extend(args.project.encode('utf-8') + '_'.encode('utf-8') + binascii.hexlify(new_entry))
         print('handler successfully extended!')

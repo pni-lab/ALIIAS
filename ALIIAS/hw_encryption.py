@@ -27,7 +27,7 @@ class HardwareEncryptor:
 
     """
 
-    def __init__(self):  # todo remove this
+    def __init__(self):  # todo: init this class with the pin, so it can be used in the setup process
         self.no_dongle = False
         # a wild exception handler chain for finding opensc
         self.lib = find_opensc_lib()
@@ -111,19 +111,24 @@ class SessionHandler(HardwareEncryptor):
             handles = file.read().splitlines()
             for line in handles:
                 handle = line.decode('utf-8').split('_')
+
                 if self.label == handle[0]:
                     try:
                         helper = self.decrypt(handle[1]).split('_')
                         hash_obj = hashlib.md5(helper[1].encode('utf-8'))
                         valid_tag_hash = hash_obj.hexdigest()
+                        # todo: need to be fixed for the sfb version
                         if (valid_tag_hash == config.settings['ENCRYPTION']['validation_tag']) or \
                                 helper[1] == config.settings['ENCRYPTION']['validation_tag_default']:
+
+                        #if helper[1] == config.settings['ENCRYPTION']['validation_tag_default']:
                             # print(helper[2])
                             self.site = helper[2]
                             print("Site: " + self.site)
                             self.site_tag = helper[3]
                             self.pseudo_key = helper[0].encode("utf-8")
                             # break
+
                     except:
                         print('oops, wrong key!')
 
