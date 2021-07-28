@@ -7,9 +7,9 @@ from joblib import Parallel, delayed
 import numpy as np
 from hashlib import sha256
 
-n_subjects = 100
+n_subjects = 10000
 n_runs = 100000
-n_cores = -1
+n_cores = 5
 
 pseudokey = get_random_bytes(32)
 
