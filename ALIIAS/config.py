@@ -47,41 +47,6 @@ settings.read(os.path.join(ROOT_DIR, 'settings.conf'))
 
 HANDLER_DIR = os.path.join(ROOT_DIR, settings['BASE']['handler_name'] + '.txt')
 
-# ToDo: remove the hard coded user key
-_offline_key_ = b'\xbf\xabb]\xb3\x94\xd8}>Z\x84QO\xdb\tD\xb1wl\xef@7\xa9$\x91\xb0>#\xe4\x10\x07u'
-
-_pseudonym_key_encrypted_ = (
-    b'\xf2\xe6\xaf\xc6\x81\x06\xb3~\xd19\x1f\x0b\x01zE\x8ccn\xea\xcb\xd1N\x11H\xf3\xc5\x99\x10#\x0f\xe2\xdc',
-    b'\xbd2n\xb9\x91\xff\x82\xec\xb8\xa3\xd7\xefw@\xb73')
-
-_exp_tag_ = {
-    "": "",
-    "Pre": "-pre",
-    "Post": "-post",
-    "Baseline": "-bsl",
-    "Week 1": "-wk1",
-    "Week 2": "-wk2",
-    "Week 3": "-wk3",
-    "Week 4": "-wk4",
-}
-
-#_site_tag_ = {
-#    "Test": "t",
-#    "A01": "1",
-#    "A02": "2",
-#    "A03": "3",
-#    "A04": "4",
-#    "A06": "6",
-#    "A07": "7",
-#    "A08": "8",
-#    "A09": "9",
-#    "A11": "a",
-#    "A12": "b",
-#    "A13": "c",
-#    "A15": "e",
-#    "A16": "f",
-#}
-
 _warnings_ = {'known': 'Participant already registered in LimeSurvey. \n ' \
                        'No new participant added this time. ' \
                        'Click "Proceed to the pseudonym" to obtain the short ID.',
