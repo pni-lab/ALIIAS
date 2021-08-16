@@ -9,7 +9,7 @@ from ALIIAS.encryption import Encryptor
 from ALIIAS.ls_api_wrapper import LimeSurveyController
 from ALIIAS.utility import PseudonymLogger, norm_str
 from ALIIAS.barcode_gen import generate_barcodeset
-from ALIIAS.hw_encryption import SessionHandler
+from ALIIAS.hw_encryption import SessionHandler, DemoHandler
 from ALIIAS._version import get_versions
 
 __version__ = get_versions()['version']
@@ -17,7 +17,10 @@ del get_versions
 
 bp = Blueprint('pseudoID', __name__, url_prefix='/pseudoID')
 
-handler = SessionHandler()
+if config.settings.getboolean('DEMO', 'active'):
+    handler = DemoHandler()
+else:
+    handler = SessionHandler()
 handler.set()
 
 try:

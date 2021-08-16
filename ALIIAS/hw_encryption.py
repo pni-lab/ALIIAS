@@ -11,12 +11,23 @@ from ALIIAS import config
 from ALIIAS.base_conversion import BaseConverter
 import hashlib
 from ALIIAS.utility import find_opensc_lib
+from abc import ABC, abstractmethod
 
 # ToDo: store encrypted key in config file
 conv = BaseConverter(config.settings['ENCRYPTION']['char_base'])
 
 
-class HardwareEncryptor:
+class EncryptorBase(ABC):
+    @abstractmethod
+    def encrypt(self):
+        pass
+
+    @abstractmethod
+    def decrypt(self):
+        pass
+
+
+class HardwareEncryptor(EncryptorBase):
     """
     # example
     config.DONGLE_PIN = # needs to be set
@@ -78,7 +89,7 @@ class HardwareEncryptor:
         self.session.close()
 
 
-class OfflineEncryptor:
+class OfflineEncryptor(EncryptorBase):
     def __init__(self):
         self.offline_key = config._offline_key_
 
@@ -95,6 +106,18 @@ class OfflineEncryptor:
         cipher = AES.new(self.offline_key, AES.MODE_SIV)
         plaintext = cipher.decrypt_and_verify(message, mac_tag=tag)
         return binascii.hexlify(plaintext)
+
+
+class DemoHandler:
+    def __init__(self):
+        self.no_dongle = False
+        return
+
+    def set(self):
+        self.site = config.settings['DEMO']['key_tag']
+        self.site_tag = config.settings['DEMO']['site_tag']
+        self.pseudo_key = config.settings['DEMO']['pseudo_key'].encode("utf-8")
+
 
 
 # class SessionHandler(HardwareEncryptor if not config.settings['ENCRYPTION']['offline'] else OfflineEncryptor):
@@ -120,8 +143,7 @@ class SessionHandler(HardwareEncryptor):
                         # todo: need to be fixed for the sfb version
                         if (valid_tag_hash == config.settings['ENCRYPTION']['validation_tag']) or \
                                 helper[1] == config.settings['ENCRYPTION']['validation_tag_default']:
-
-                        #if helper[1] == config.settings['ENCRYPTION']['validation_tag_default']:
+                            # if helper[1] == config.settings['ENCRYPTION']['validation_tag_default']:
                             # print(helper[2])
                             self.site = helper[2]
                             print("Site: " + self.site)
