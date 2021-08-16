@@ -88,26 +88,6 @@ class HardwareEncryptor(EncryptorBase):
     def close(self):
         self.session.close()
 
-
-class OfflineEncryptor(EncryptorBase):
-    def __init__(self):
-        self.offline_key = config._offline_key_
-
-    def encrypt(self, plaintext):
-        cipher = AES.new(self.offline_key, AES.MODE_SIV)
-        ciphertext, tag = cipher.encrypt_and_digest(plaintext.encode("utf-8"))
-
-        return binascii.hexlify(ciphertext + tag).decode('utf-8')
-
-    def decrypt(self, ciphertext):
-        ciphertext = binascii.hexlify(ciphertext)
-        tag = ciphertext[-32:]
-        message = ciphertext[:-32]
-        cipher = AES.new(self.offline_key, AES.MODE_SIV)
-        plaintext = cipher.decrypt_and_verify(message, mac_tag=tag)
-        return binascii.hexlify(plaintext)
-
-
 class DemoHandler:
     def __init__(self):
         self.no_dongle = False
