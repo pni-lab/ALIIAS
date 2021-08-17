@@ -3,10 +3,30 @@ import binascii
 from Crypto.Cipher import AES
 from ALIIAS import config
 from ALIIAS.base_conversion import BaseConverter
+from abc import ABC, abstractmethod
 
 conv = BaseConverter(config.settings['ENCRYPTION']['char_base'])
 
-class Encryptor:
+
+class PseudonymizationBase(ABC):
+    @abstractmethod
+    def _encrypt(self):
+        pass
+
+    @abstractmethod
+    def get_long_id(self):
+        pass
+
+    @abstractmethod
+    def get_short_id(self):
+        pass
+
+    @abstractmethod
+    def reidentify(self):
+        pass
+
+
+class Encryptor(PseudonymizationBase):
     # todo check old references for encryptor
     def __init__(self, pseudonym_key, site_tag=None):
         self.site_tag = site_tag
@@ -42,7 +62,6 @@ class Encryptor:
         longID = conv.custom2hex(longID)
         # pad with zeros
         longID = longID.rjust(self.encrypted_message_length, '0')
-
 
         tag = binascii.unhexlify(longID[128:].encode('utf-8'))
         message = binascii.unhexlify(longID[:128].encode('utf-8'))
