@@ -5,7 +5,7 @@ import os.path as path
 
 
 
-class PseudonymLogger:
+class Logger:
     def __init__(self):
 
         i = 1

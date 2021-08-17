@@ -7,8 +7,8 @@ from flask import (
 
 from ALIIAS.encryption import Encryptor
 from ALIIAS.ls_api_wrapper import LimeSurveyController
-from ALIIAS.utility import PseudonymLogger, norm_str
-from ALIIAS.barcode_gen import generate_barcodeset
+from ALIIAS.utility import Logger, norm_str
+from ALIIAS.barcode_gen import generate_barcode_set
 from ALIIAS.hw_encryption import SessionHandler, DemoHandler
 from ALIIAS._version import get_versions
 
@@ -38,7 +38,7 @@ lime_warning = {}
 show_pseudonym = {}
 lscontrol = None
 
-logger = PseudonymLogger()
+logger = Logger()
 
 logger.add_entry('VERSION: ' + '\t' + __version__)
 print('VERSION: ' + '\t' + __version__)
@@ -223,13 +223,13 @@ def preview():
                         "ACCEPTED_WITHOUT_LS : " + '\t' + lime_warning[
                             'warning_text'] + \
                         lime_warning['warning_details'])
-
-            try:
-                barcodes = generate_barcodeset(ids['short_id'])
-            except Exception as e:
-                msg = "Problem when saving barcodes: " + str(e)
-                logger.add_entry(msg)
-                print(msg)
+            if config.settings.getboolean('BARCODES', 'active'):
+                try:
+                    barcodes = generate_barcode_set(ids['short_id'])
+                except Exception as e:
+                    msg = "Problem when saving barcodes: " + str(e)
+                    logger.add_entry(msg)
+                    print(msg)
             # for f in barcodes:
             #    send_from_directory('static', f)
 
