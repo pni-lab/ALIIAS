@@ -21,7 +21,7 @@ li a {
 }
 
 li a:hover {
-  background-color: gray;
+  background-color: silver;
 }
 
  .logo-image{
@@ -45,8 +45,8 @@ ul li img {
 }
 </style>
 
-
 <title>{% block title %}{% endblock %} ALIIAS</title>
+
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
   <ul>
@@ -70,6 +70,10 @@ ul li img {
       <li><a href="{{ url_for('pseudoID.reidentify') }}">Re-Identify</a>
       <li><a href="{{ url_for('pseudoID.generate') }}">New Pseudonym</a>
       <li><a href="{{ url_for('pseudoID.login') }}">Log in</a>
+      {% endif %}
+
+      {% if session.demo %}
+      <li class="disabled"><a style="color: orangered">Demo mode active </a>
       {% endif %}
   </ul>
 
@@ -95,6 +99,7 @@ ul li img {
       <li><a href="">
               <img src="/static/mail2.png" alt="PNI logo" width="auto" height="50" >
         </a>
+
 
 
   </ul>

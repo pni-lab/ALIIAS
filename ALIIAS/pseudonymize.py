@@ -48,6 +48,10 @@ print('VERSION: ' + '\t' + __version__)
 def login():
     global lscontrol
     session['username'] = None
+
+    if config.settings.getboolean('DEMO', 'active'):
+        session['demo'] = True
+
     if request.method == 'POST':
         username = request.form['username']
         try:
