@@ -14,7 +14,7 @@ Features include:
 
 
 ### Demo Version
-We provide a demo version of the software, which works without the need of an physical wardware security toke. Simply unpack the zip and make sure that the .exe file and the settings.conf file are in the same folder. After starting the ALIIAS.exe, the software will open your systems default browser to start the pseudonymization process!
+We provide a demo version of the software, which works without the need of an physical hardware security toke. Simply unpack the zip and make sure that the .exe file and the settings.conf file are in the same folder, no installation needed. After starting the ALIIAS.exe, the software will open your systems default browser to start the pseudonymization process!
 
 To access the LimeSurvey features, we provide the following login credentials:
 username: testuser
