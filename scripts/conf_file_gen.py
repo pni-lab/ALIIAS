@@ -10,17 +10,12 @@ from ALIIAS._version import get_versions
 cfg_parser = configparser.ConfigParser()
 
 # hash_obj = hashlib.md5(valid_tag)
-valid_tag_hash = '281d5a4c850bdfbd9ec1bf34d9629ed8'
-
-opensc_robert = 'C:/Program Files/OpenSC Project/OpenSC/pkcs11/opensc-pkcs11.dll'
-opensc_tamas = '/usr/lib/x86_64-linux-gnu/opensc-pkcs11.so'
-opensc_ghouse = '/usr/lib/x86_64-linux-gnu/opensc-pkcs11.so'
+valid_tag_hash = ''
 
 __version__ = get_versions()['version']
 del get_versions
 
 cfg_parser['BASE'] = {"Log_level": 10,
-                      "opensc_path": opensc_robert,
                       "url": 'http://127.0.0.1:5000/',
                       "handler_name": "handler",
                       "version": str(__version__)}

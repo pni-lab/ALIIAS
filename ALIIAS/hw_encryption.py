@@ -100,7 +100,6 @@ class DemoHandler:
 
 
 
-# class SessionHandler(HardwareEncryptor if not config.settings['ENCRYPTION']['offline'] else OfflineEncryptor):
 class SessionHandler(HardwareEncryptor):
     def __init__(self):
         super().__init__()
