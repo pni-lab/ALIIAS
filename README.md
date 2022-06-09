@@ -32,9 +32,12 @@ https://www.uni-due.de/~ht2203/limesurvey/index.php/admin/index
 
 ## ![plot](./docs/fig/05_pseudonym.PNG)
 
+### Citation
 
+*Englert, Robert and Schedlowski, Manfred and Engler, Harald and Rief, Winfried and Büchel, Christian and Bingel, Ulrike and Spisak, Tamas, ALIIAS: Anonymization with LimeSurvey Integration and II-Factor Authentication for Scientific Research. Available at SSRN: https://ssrn.com/abstract=4089108 or http://dx.doi.org/10.2139/ssrn.4089108*
 
 [![GitHub license](https://img.shields.io/github/license/pni-lab/aliias.svg)](https://github.com/pni-lab/aliias/blob/master/LICENSE)
 [![GitHub release](https://img.shields.io/github/release/pni-lab/aliias.svg)](https://github.com/pni-lab/aliias/releases/tag/v0.9.0)
 [![GitHub issues](https://img.shields.io/github/issues/pni-lab/aliias.svg)](https://GitHub.com/pni-lab/aliias/issues/)
 [![GitHub issues-closed](https://img.shields.io/github/issues-closed/pni-lab/aliias.svg)](https://GitHub.com/pni-lab/aliias/issues?q=is%3Aissue+is%3Aclosed)
+[![DOI:10.2139/ssrn.4089108](http://img.shields.io/badge/DOI-10.2139/ssrn.4089108.svg)](http://dx.doi.org/10.2139/ssrn.4089108)
