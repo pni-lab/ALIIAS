@@ -40,4 +40,4 @@ https://www.uni-due.de/~ht2203/limesurvey/index.php/admin/index
 [![GitHub release](https://img.shields.io/github/release/pni-lab/aliias.svg)](https://github.com/pni-lab/aliias/releases/tag/v0.9.0)
 [![GitHub issues](https://img.shields.io/github/issues/pni-lab/aliias.svg)](https://GitHub.com/pni-lab/aliias/issues/)
 [![GitHub issues-closed](https://img.shields.io/github/issues-closed/pni-lab/aliias.svg)](https://GitHub.com/pni-lab/aliias/issues?q=is%3Aissue+is%3Aclosed)
-[![DOI:10.2139/ssrn.4089108](http://img.shields.io/badge/DOI-10.2139/ssrn.4089108.svg)](http://dx.doi.org/10.2139/ssrn.4089108)
+[![DOI:10.2139/ssrn.4089108](https://zenodo.org/badge/DOI/10.2139/ssrn.4089108.svg)](https://doi.org/10.2139/ssrn.4089108)
