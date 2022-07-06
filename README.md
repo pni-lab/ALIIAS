@@ -1,6 +1,6 @@
 ![plot](./ALIIAS/static/aliias_logo.png)
 
-## Anonymization with LimeSurvey integration and II-factor Authentication for Scientific research
+## Anonymization/Pseudonymization with LimeSurvey integration and II-factor Authentication for Scientific research
 
 We introduce **ALIIAS**, a customizable pseudonymization framework that allows easy and flexible deployment of pseudonymization software!
 Features include:
